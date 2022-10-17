@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,12 +18,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProductsHeaderComponent } from './pages/home/components/products-header/products-header.component';
+import { FiltersComponent } from './pages/home/components/filters/filters.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MatSidenavModule,
     MatGridListModule,
     MatMenuModule,
