@@ -10,16 +10,7 @@ export class ProductCardComponent implements OnInit {
 
   @Input() fullWidthMode = false;
   @Output() addToCart = new EventEmitter<Product>();
-  
-  product: Product | undefined={
-    id: 1,
-    name: 'Product 1',
-    price: 100,
-    description: 'Product 1 description',
-    image: 'https://via.placeholder.com/150',
-    category: 'category 1',
-    quantity: 1
-  };
+  @Input() product: Product | undefined;
 
   constructor() { }
 

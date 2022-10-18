@@ -4,23 +4,19 @@
         <app-filters (showCategory)="onShowCategoryChange($event)"></app-filters>
     </mat-drawer>
     <mat-drawer-content class="p-6">
-        <app-products-header (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
+        <app-products-header 
+        (sortChange)="onSortChange($event)" 
+        (itemsCountChange)="onItemsCountChange($event)"
+        (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
         <mat-grid-list gutterSize="16" [cols]="columnsCount" [rowHeight]="rowHeight">
-            <mat-grid-tile>
-                <app-product-card (addToCart)="onAddToCart($event)" class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
+            <mat-grid-tile *ngFor="let product of products">
+                <app-product-card [product]="product" (addToCart)="onAddToCart($event)" class="w-full"
+                    [fullWidthMode]="columnsCount === 1"></app-product-card>
             </mat-grid-tile>
-            <mat-grid-tile>
-                <app-product-card (addToCart)="onAddToCart($event)" class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <app-product-card class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <app-product-card class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
-            </mat-grid-tile>
-            <!-- <mat-grid-tile *ngFor="let product of products" [colspan]="columnsCount"> -->
-                <!-- <app-product-card [product]="product"></app-product-card> -->
-            <!-- </mat-grid-tile> -->
+
+            <!-- <mat-grid-tile *ngFor="let product of products" [colspan]="columnsCount">
+                <app-product-card [product]="product"></app-product-card>
+         </mat-grid-tile> -->
         </mat-grid-list>
     </mat-drawer-content>
 </mat-drawer-container>
