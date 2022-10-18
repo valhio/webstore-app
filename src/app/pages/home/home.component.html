@@ -7,10 +7,10 @@
         <app-products-header (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
         <mat-grid-list gutterSize="16" [cols]="columnsCount" [rowHeight]="rowHeight">
             <mat-grid-tile>
-                <app-product-card class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
+                <app-product-card (addToCart)="onAddToCart($event)" class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
             </mat-grid-tile>
             <mat-grid-tile>
-                <app-product-card class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
+                <app-product-card (addToCart)="onAddToCart($event)" class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
             </mat-grid-tile>
             <mat-grid-tile>
                 <app-product-card class="w-full" [fullWidthMode]="columnsCount === 1"></app-product-card>
