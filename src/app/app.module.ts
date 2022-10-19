@@ -25,9 +25,10 @@ import { ProductCardComponent } from './pages/home/components/product-card/produ
 import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent, ProductCardComponent, CartComponent],
+  declarations: [AppComponent, HeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent, ProductCardComponent, CartComponent, CheckoutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

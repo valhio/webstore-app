@@ -46,7 +46,7 @@
                 <button (click)="onRemoveFromCart(element)" mat-mini-fab color="warn" class="float-right"><mat-icon>close</mat-icon></button>
             </td>
             <td mat-footer-cell *matFooterCellDef>
-                <button mat-raised-button color="accent" class="float-right">Proceed To Checkout <mat-icon>shopping_cart</mat-icon></button>
+                <button (click)="onCheckout()" mat-raised-button color="accent" class="float-right">Proceed To Checkout <mat-icon>shopping_cart</mat-icon></button>
             </td>
         </ng-container>
 

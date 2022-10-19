@@ -8,7 +8,7 @@ import { CartItem } from '../../models/cart.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent{
+export class HeaderComponent {
   private _cart: Cart = { items: [] };
 
   @Input()
@@ -32,4 +32,7 @@ export class HeaderComponent{
       .reduce((acc, curent) => acc + curent, 0);
   }
 
+  onCheckout(): void {
+    this.cartService.checkout();
+  }
 }
