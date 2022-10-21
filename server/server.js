@@ -45,7 +45,7 @@ app.post("/checkout", async (req, res, next) => {
           shipping_rate_data: {
             type: "fixed_amount",
             fixed_amount: {
-              amount: 5*100,
+              amount: 500,
               currency: "bgn",
             },
             display_name: "Next day Speedy/Econt Post",
@@ -75,6 +75,10 @@ app.post("/checkout", async (req, res, next) => {
         quantity: item.quantity,
       })),
       mode: "payment",
+      // discounts: [{
+      //   coupon: 'ZJtCz5yM',
+      // }],
+      allow_promotion_codes: true,
       success_url: "http://localhost:4242/success.html",
       cancel_url: "http://localhost:4242/cancel.html",
       // checkout: 'http://localhost:4242/checkout.html',

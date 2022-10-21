@@ -11,24 +11,7 @@ import { loadStripe } from '@stripe/stripe-js';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  cart: Cart = {
-    items: [
-      {
-        id: 1,
-        product: 'https://picsum.photos/150',
-        name: 'name1',
-        price: 150,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        product: 'https://picsum.photos/150',
-        name: 'name2',
-        price: 150,
-        quantity: 2,
-      },
-    ],
-  };
+  cart: Cart = {items: []};
 
   dataSource: CartItem[] = [];
   displayedColumns: string[] = [
@@ -44,7 +27,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     // this.dataSource = Json.parse(localStorage.getItem('cart'));
-    // this.dataSource = this.cart.items;
     this.cartService.cart.subscribe((cart) => {
       this.cart = cart;
       // this.dataSource= localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')!) : [];
@@ -57,7 +39,7 @@ export class CartComponent implements OnInit {
   }
 
   onClearCart(): void {
-    this.cartService.onClearCart();
+    this.cartService.clearCart();
   }
 
   onRemoveFromCart(item: CartItem): void {

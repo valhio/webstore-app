@@ -27,6 +27,7 @@ import { CartService } from './services/cart.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent, ProductCardComponent, CartComponent, CheckoutComponent],
@@ -48,6 +49,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatBadgeModule,
     MatSnackBarModule,
     FontAwesomeModule,
+    FormsModule
   ],
   providers: [CartService],
   bootstrap: [AppComponent],

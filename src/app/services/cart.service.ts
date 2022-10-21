@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,10 +8,17 @@ import { loadStripe } from '@stripe/stripe-js';
 @Injectable({
   providedIn: 'root',
 })
-export class CartService {
+export class CartService implements OnInit {
   cart = new BehaviorSubject<Cart>({ items: [] });
 
-  constructor(private _snackBar: MatSnackBar, private http: HttpClient) {}
+  constructor(private _snackBar: MatSnackBar, private http: HttpClient) {
+    // If statement needs to stay, otherwise the header breaks
+    if (localStorage.getItem('cart')) {
+      this.cart.next(JSON.parse(localStorage.getItem('cart') || '{}'));
+    }
+  }
+
+  ngOnInit(): void {}
 
   addToCart(item: CartItem): void {
     const cart = this.cart.getValue();
@@ -24,6 +31,7 @@ export class CartService {
     }
 
     this.cart.next(cart);
+    this.syncItems();
     this._snackBar.open(`${item.name} added to cart.`, 'Close', {
       duration: 3000,
     });
@@ -33,16 +41,15 @@ export class CartService {
     return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
   }
 
-  onClearCart(): void {
-    console.log('asd');
-
+  clearCart(): void {
     this.cart.next({ items: [] });
+    this.syncItems();
   }
 
   removeFromCart(item: CartItem) {
     const filtered = this.cart.getValue().items.filter((i) => i.id !== item.id);
     this.cart.next({ items: filtered });
-
+    this.syncItems();
     this._snackBar.open(`${item.name} removed from cart.`, 'Close', {
       duration: 3000,
     });
@@ -58,6 +65,7 @@ export class CartService {
 
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
+      this.syncItems();
       this._snackBar.open(`${item.name} quantity decremented.`, 'Close', {
         duration: 3000,
       });
@@ -73,12 +81,22 @@ export class CartService {
       })
       .subscribe(async (res: any) => {
         let stripe = await loadStripe(
-          'pk_test_51LuaOkB6gdK47cnCd6CKPCxYdW6DDHpDGEgdxymUIircc0PkOQmVF55FFXvjmJgVPG6bXgqv9OZaJJ3ZRrsh48Ts00xHAHqNYv');
-          stripe?.redirectToCheckout({
-            sessionId:res.id
-          })
-        ;
+          'pk_test_51LuaOkB6gdK47cnCd6CKPCxYdW6DDHpDGEgdxymUIircc0PkOQmVF55FFXvjmJgVPG6bXgqv9OZaJJ3ZRrsh48Ts00xHAHqNYv'
+        );
+        stripe?.redirectToCheckout({
+          sessionId: res.id,
+        });
       });
   }
 
+  placeOrder(): void {
+    this._snackBar.open('Order placed successfully.', 'Close', {
+      duration: 3000,
+    });
+    this.clearCart();
+  }
+
+  syncItems(): void {
+    localStorage.setItem('cart', JSON.stringify(this.cart.getValue()));
+  }
 }
