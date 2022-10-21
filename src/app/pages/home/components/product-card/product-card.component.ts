@@ -8,7 +8,7 @@ import { Product } from 'src/app/models/product.model';
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input() fullWidthMode = false;
+  @Input() columnsCountMode = 1;
   @Output() addToCart = new EventEmitter<Product>();
   @Input() product: Product | undefined;
 

@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from '../../services/store.service';
 
-const ROWS_HEIGHT: { [id: number]: number } = { 1: 250, 3: 335, 4: 350 };
+const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 400, 4: 350 };
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

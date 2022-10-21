@@ -12,7 +12,7 @@
         <mat-grid-list gutterSize="16" [cols]="columnsCount" [rowHeight]="rowHeight">
             <mat-grid-tile *ngFor="let product of products">
                 <app-product-card [product]="product" (addToCart)="onAddToCart($event)" class="w-full"
-                    [fullWidthMode]="columnsCount === 1"></app-product-card>
+                    [columnsCountMode]="columnsCount"></app-product-card>
             </mat-grid-tile>
 
             <!-- <mat-grid-tile *ngFor="let product of products" [colspan]="columnsCount">
