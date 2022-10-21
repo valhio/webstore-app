@@ -7,7 +7,8 @@
         <app-products-header 
         (sortChange)="onSortChange($event)" 
         (itemsCountChange)="onItemsCountChange($event)"
-        (columnsCountChange)="onColumnsCountChange($event)"></app-products-header>
+        (columnsCountChange)="onColumnsCountChange($event)">
+    </app-products-header>
         <mat-grid-list gutterSize="16" [cols]="columnsCount" [rowHeight]="rowHeight">
             <mat-grid-tile *ngFor="let product of products">
                 <app-product-card [product]="product" (addToCart)="onAddToCart($event)" class="w-full"

@@ -1,10 +1,10 @@
-<mat-toolbar class="sticky top-0 z-50 h-14 bg-black-900 text-white flex justify-between">
+<mat-toolbar class="sticky top-0 z-50 h-14 bg-neutral-900 text-white flex justify-between">
   <a routerLink="home" class="text-2xl uppercase font-medium">Kon-crete-shop</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon [matBadge]="getItemsQuantity()" [matBadgeHidden]="getItemsQuantity()===0" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <div class="p-3 divide-y divide-solid text-white">
+    <div class="p-3 divide-y divide-soli">
       <div class="pb-3 flex justify-between">
         <span class="mr-32">{{getItemsQuantity()}} Items</span>
         <a routerLink="cart" class="cursor-pointer">View Cart</a>
