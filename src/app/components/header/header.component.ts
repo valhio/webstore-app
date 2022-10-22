@@ -26,6 +26,10 @@ export class HeaderComponent {
     return this.cartService.getTotal(items);
   }
 
+  onClearCart(): void {
+    this.cartService.clearCart();
+  }
+
   getItemsQuantity(): number {
     return this.cart.items
       .map((item) => item.quantity)

@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from '../../services/store.service';
 
-const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 400, 4: 350 };
+const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 550, 4: 420 };
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -213,7 +213,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProducts(this.size, this.sort, this.page, this.currentCategory)
       .subscribe((_products) => {
         // this.products = _products;
-        this.products = this.testData;
+        this.products = this.testData.slice(0,+this.size);
       });
   }
 

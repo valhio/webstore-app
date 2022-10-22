@@ -1,5 +1,5 @@
 <mat-toolbar class="sticky top-0 z-50 h-14 bg-neutral-900 text-white flex justify-between">
-  <a routerLink="home" class="text-2xl uppercase font-medium">Kon-crete-shop</a>
+  <a routerLink="home" class="text-2xl uppercase font-medium">Con-crete-store</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon [matBadge]="getItemsQuantity()" [matBadgeHidden]="getItemsQuantity()===0" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
@@ -7,7 +7,7 @@
     <div class="p-3 divide-y divide-soli">
       <div class="pb-3 flex justify-between">
         <span class="mr-32">{{getItemsQuantity()}} Items</span>
-        <a routerLink="cart" class="cursor-pointer">View Cart</a>
+        <a (click)="onClearCart()" class="cursor-pointer text-red-600">Clear Cart</a>
       </div>
       <div *ngIf="cart.items.length" class="py-3">
         <div *ngFor="let item of cart.items" class="flex justify-between font-light mb-2">

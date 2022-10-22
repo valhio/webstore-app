@@ -2,7 +2,7 @@
     <div [ngClass]="{'flex':columnsCountMode==1}">
         <img class="mx-auto rounded-lg" [ngClass]="{'h-[250px]': columnsCountMode==1,'rounded-none':columnsCountMode!=1}"
             [src]="product!.image" alt="product-image">
-        <div class="w-full" [ngClass]="{'px-8 flex flex-col justify-between overflow-hidden': columnsCountMode===1, 'px-3 pb-8': columnsCountMode===3,'px-4':columnsCountMode===4}">
+        <div class="w-full" [ngClass]="{'px-8 flex flex-col justify-between overflow-hidden': columnsCountMode===1, 'px-3 pb-2': columnsCountMode===3,'px-4':columnsCountMode===4}">
             <div>
                 <h5 class="pt-2 mb-1 font-medium">Category - {{product.category}}</h5>
                 <p class="truncate hover:whitespace-normal font-bold text-lg">{{product.title}}</p>
