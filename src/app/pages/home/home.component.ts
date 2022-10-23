@@ -254,10 +254,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   onResize(): void {
     let width = window.innerWidth;
     switch (true) {
-      case width < 640:
+      case width < 670:
         this.columnsCount = 1;
         break;
-      case width >= 640 && width < 768:
+      case width >= 670 && width < 768:
         this.columnsCount = 2;
         break;
       case width >= 768 && width < 992:

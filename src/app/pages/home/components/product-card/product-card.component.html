@@ -21,7 +21,7 @@
     </div>
 </mat-card> -->
 
-<div *ngIf="product && (innerWidth>767 || innerWidth<=560)"
+<div *ngIf="(product && (innerWidth>670 || innerWidth<=560) && columnsCountMode!=1) || (product && innerWidth<=560 && columnsCountMode==1)"
     class="max-w-xs mx-auto sm:mx-2 rounded-lg shadow-lg h-full text-center">
     <img class="w-full h-56 object-cover mx-auto" [src]="product.image"
         src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=989&q=80"
@@ -40,12 +40,12 @@
     </div>
 </div>
 
-<div *ngIf="product && innerWidth<=767 && innerWidth> 560">
+<div *ngIf="(product && (innerWidth<=670 && innerWidth> 560) && columnsCountMode==1 ) || (product && (innerWidth>560) && columnsCountMode==1)">
     <div class="grid lg:grid-cols-1">
         <div class="m-2 bg-white rounded-lg shadow-xl flex">
             <img [src]="product.image" 
             src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=989&q=80"
-                class="w-2/5 rounded-l-lg h-full object-cover">
+                class="w-2/5 max-h-[250px] rounded-l-lg h-full object-cover">
             <div class="p-4 pb-1 bg-gray-50 grid">
                 <h2 class="mb-2 text-2xl font-bold text-gray-900" [textContent]="product.title">TITLE</h2>
                 <p class="text-gray-600" [textContent]="product.description">DESCRIPTION</p>
