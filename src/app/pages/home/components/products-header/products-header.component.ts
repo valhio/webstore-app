@@ -11,7 +11,7 @@ export class ProductsHeaderComponent implements OnInit {
   @Output() itemsCountChange = new EventEmitter<number>();
   @Output() sortChange= new EventEmitter<string>();
 
-  sort = 'Ascending';
+  sort = 'name-asc';
   itemsShowCount= 12;
 
   constructor() { }
@@ -21,7 +21,7 @@ export class ProductsHeaderComponent implements OnInit {
 
   onSortUpdate(sort: string):void {
     this.sort = sort;
-    this.sortChange.emit(sort === 'Ascending' ? 'asc' : 'desc');
+    this.sortChange.emit(sort);
   }
 
   onItemsShowCountUpdate(itemsShowCount: number):void {

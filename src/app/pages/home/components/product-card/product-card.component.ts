@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 
 @Component({
@@ -11,14 +11,22 @@ export class ProductCardComponent implements OnInit {
   @Input() columnsCountMode = 1;
   @Output() addToCart = new EventEmitter<Product>();
   @Input() product: Product | undefined;
+  public innerWidth: any;
+
 
   constructor() { }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
   }
 
   onAddToCart() {
     this.addToCart.emit(this.product);
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.innerWidth = window.innerWidth;
   }
 
 }

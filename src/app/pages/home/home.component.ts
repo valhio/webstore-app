@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   columnsCount = 1;
   rowHeight = ROWS_HEIGHT[this.columnsCount];
   currentCategory: string | undefined;
-  sort = 'asc';
+  sort = 'name-asc';
   size = '12';
   page = '1';
   products: Product[] | undefined;
@@ -55,8 +55,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 4,
       title: 'Blue Granite',
       price: 70.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-4.jpg',
       category: 'Stone Wrist Rests',
@@ -66,8 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 5,
       title: 'White & Light Gray Marble',
       price: 65.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-5.jpg',
       category: 'Marble Wrist Rests',
@@ -77,8 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 6,
       title: 'Black & White Quartz',
       price: 60.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-6.jpg',
       category: 'Quartz Wrist Rests',
@@ -86,10 +83,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 7,
-      title: 'Black & White Quartz',
+      title: 'Black & White Quartz V2',
       price: 60.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-7.jpg',
       category: 'Quartz Wrist Rests',
@@ -99,8 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 8,
       title: 'Coral-Blue Resin',
       price: 60.0,
-      description:
-      `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-8.jpg',
       category: 'Resin Wrist Rests',
@@ -110,8 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 9,
       title: 'White-Pearl Resin',
       price: 60.0,
-      description:
-      `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-9.jpg',
       category: 'Resin Wrist Rests',
@@ -121,8 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       id: 10,
       title: 'Coral-Green Marble',
       price: 60.0,
-      description:
-      `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-10.jpg',
       category: 'Resin Wrist Rests',
@@ -130,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 11,
-      title: 'Black & White Marble',
+      title: 'V2 Black & White Marble',
       price: 65.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
          | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
@@ -140,7 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 12,
-      title: 'Black & Orangle Marble',
+      title: 'V2 Black & Orangle Marble',
       price: 60.0,
       description:
         'The Resin wrist rest, which is made of a combination of epoxy resin and has a baking finish surface. It is normal that there may be small bubbles in the resin. So handicrafts are not flawless products.',
@@ -150,7 +143,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 13,
-      title: 'White Granite',
+      title: 'V2 White Granite',
       price: 70.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
@@ -160,10 +153,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 14,
-      title: 'Blue Granite',
+      title: 'V2 Blue Granite',
       price: 70.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-4.jpg',
       category: 'Stone Wrist Rests',
@@ -171,10 +163,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 15,
-      title: 'White & Light Gray Marble',
+      title: 'V2 White & Light Gray Marble',
       price: 65.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-5.jpg',
       category: 'Marble Wrist Rests',
@@ -182,10 +173,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     {
       id: 16,
-      title: 'Black & White Quartz',
+      title: 'V2 Black & White Quartz',
       price: 60.0,
-      description:
-      `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
+      description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
       image: '/assets/images/wrist-rests/wrist-rest-6.jpg',
       category: 'Quartz Wrist Rests',
@@ -200,6 +190,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProducts();
+    this.onResize();
   }
 
   ngOnDestroy(): void {
@@ -213,7 +204,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProducts(this.size, this.sort, this.page, this.currentCategory)
       .subscribe((_products) => {
         // this.products = _products;
-        this.products = this.testData.slice(0,+this.size);
+      
+        // Mocked data START
+        if (this.sort === 'name-asc') {
+          this.testData.sort((a, b) => (a.title > b.title ? 1 : -1));
+        } else if (this.sort === 'name-desc') {
+          this.testData.sort((a, b) => (a.title < b.title ? 1 : -1));
+        } else if ((this.sort === "price-asc")) {
+          this.testData.sort((a, b) => (a.price.toString() > b.price.toString() ? 1 : -1));
+        } else if ((this.sort === 'price-desc')) {
+          this.testData.sort((a, b) => (a.price.toString() < b.price.toString() ? 1 : -1));
+        }
+        this.products = this.testData.slice(0, +this.size);
+        // Mocked data END
       });
   }
 
@@ -245,5 +248,26 @@ export class HomeComponent implements OnInit, OnDestroy {
   onSortChange(sort: string): void {
     this.sort = sort;
     this.getProducts();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    let width = window.innerWidth;
+    switch (true) {
+      case width < 640:
+        this.columnsCount = 1;
+        break;
+      case width >= 640 && width < 768:
+        this.columnsCount = 2;
+        break;
+      case width >= 768 && width < 992:
+        this.columnsCount = 3;
+        break;
+      case width >= 992 && width < 1200:
+        this.columnsCount = 4;
+        break;
+      default:
+        this.columnsCount = 4;
+    }
   }
 }
