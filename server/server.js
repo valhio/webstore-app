@@ -3,7 +3,7 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 
 const app = express();
-app.use(express.static("public"));
+app.use(express.static("src/app/pages/payment"));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cors({ origin: true, credentials: true }));
@@ -79,8 +79,8 @@ app.post("/checkout", async (req, res, next) => {
       //   coupon: 'ZJtCz5yM',
       // }],
       allow_promotion_codes: true,
-      success_url: "http://localhost:4242/success.html",
-      cancel_url: "http://localhost:4242/cancel.html",
+      success_url: "https://webstore-184d5.web.app/payment/success",
+      cancel_url: "http://webstore-184d5.web.app/checkout",
       // checkout: 'http://localhost:4242/checkout.html',
     });
 
