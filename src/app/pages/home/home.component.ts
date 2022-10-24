@@ -257,7 +257,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       case width < 670:
         this.columnsCount = 1;
         break;
-      case width >= 670 && width < 768:
+      case width >= 60 && width < 768:
         this.columnsCount = 2;
         break;
       case width >= 768 && width < 992:

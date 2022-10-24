@@ -30,9 +30,27 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { SuccessComponent } from './pages/payment/success/success.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import {  } from '@angular/fire';
+import { initializeApp,provideFirebaseApp, } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+// import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, HomeComponent, ProductsHeaderComponent, FiltersComponent, ProductCardComponent, CartComponent, CheckoutComponent, SuccessComponent, PageNotFoundComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    HomeComponent,
+    ProductsHeaderComponent,
+    FiltersComponent,
+    ProductCardComponent,
+    CartComponent,
+    CheckoutComponent,
+    SuccessComponent,
+    PageNotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -51,9 +69,16 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MatBadgeModule,
     MatSnackBarModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    // AngularFireModule.initializeApp(yourFirebaseConfig),
+    // AngularFireDatabaseModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    // provideFirestore(() => getFirestore()),
+    // provideFunctions(() => getFunctions()),
+    // AngularFirestoreModule,
+    // AngularFireDatabaseModule,
   ],
-  providers: [CartService],
+  providers: [CartService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

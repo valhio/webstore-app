@@ -3,7 +3,6 @@ const cors = require("cors");
 const bodyparser = require("body-parser");
 
 const app = express();
-app.use(express.static("src/app/pages/payment"));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cors({ origin: true, credentials: true }));
@@ -12,12 +11,17 @@ const stripe = require("stripe")(
   "sk_test_51LuaOkB6gdK47cnCWSZTWE4WsUhyUXCC3CJgtdU034FZteyDDWW1uswXJ6wZEzNhaazu70w8vT7T9OJtejSnO3Ff00ZEJbnYSr"
 );
 
+
+getSessionId = async (req, res) => {
+  return 'asd';
+}
+
 app.post("/checkout", async (req, res, next) => {
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       shipping_address_collection: {
-        allowed_countries: ["BG","RO","GR","RS","MK"],
+        allowed_countries: ["BG", "RO", "GR", "RS", "MK"],
       },
       shipping_options: [
         {
@@ -68,7 +72,7 @@ app.post("/checkout", async (req, res, next) => {
           currency: "bgn",
           product_data: {
             name: item.name,
-            images: ['https://webstore-184d5.web.app'+item.product],
+            images: ["https://webstore-184d5.web.app" + item.product],
           },
           unit_amount: item.price * 100,
         },
@@ -80,8 +84,7 @@ app.post("/checkout", async (req, res, next) => {
       // }],
       allow_promotion_codes: true,
       success_url: "https://webstore-184d5.web.app/payment/success",
-      cancel_url: "http://webstore-184d5.web.app/checkout",
-      // checkout: 'http://localhost:4242/checkout.html',
+      cancel_url: "http://localhost:4242/cancel.html",
     });
 
     // res.status(200).json({session});

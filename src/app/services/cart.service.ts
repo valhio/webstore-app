@@ -1,23 +1,38 @@
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { loadStripe } from '@stripe/stripe-js';
+import { Router } from '@angular/router';
+import { initializeApp } from 'firebase/app';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+// import {AngularFirestore} from '@angular/fire/firestore'
+import { environment } from '../../environments/environment';
+import { AngularFireFunctions as Functions } from '@angular/fire/compat/functions';
+
+declare var Stripe: (arg0: string) => any;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService implements OnInit {
   cart = new BehaviorSubject<Cart>({ items: [] });
+  stripeStatus: string;
 
-  constructor(private _snackBar: MatSnackBar, private http: HttpClient) {
-    // If statement needs to stay, otherwise the header breaks
-    if (localStorage.getItem('cart')) {
-      this.cart.next(JSON.parse(localStorage.getItem('cart') || '{}'));
+  constructor(
+    private _snackBar: MatSnackBar,
+    private afFun: Functions,
+    // @Inject(Functions) private afFun: Functions,
+    ) {
+      // If statement needs to stay, otherwise the header breaks
+      if (localStorage.getItem('cart')) {
+        this.cart.next(JSON.parse(localStorage.getItem('cart') || '{}'));
+      }
+      // afFun.useEmulator('localhost', 5001);
+      this.stripeStatus='';
     }
-  }
-
+    
   ngOnInit(): void {}
 
   addToCart(item: CartItem): void {
@@ -74,19 +89,24 @@ export class CartService implements OnInit {
     }
   }
 
-  checkout(): void {
-    this.http
-      .post('http://localhost:4242/checkout', {
-        items: this.cart.getValue().items,
-      })
-      .subscribe(async (res: any) => {
-        let stripe = await loadStripe(
-          'pk_test_51LuaOkB6gdK47cnCd6CKPCxYdW6DDHpDGEgdxymUIircc0PkOQmVF55FFXvjmJgVPG6bXgqv9OZaJJ3ZRrsh48Ts00xHAHqNYv'
-        );
-        stripe?.redirectToCheckout({
-          sessionId: res.id,
-        });
-      });
+  async checkout() {
+    var stripe = Stripe(environment.stripePublicKey);
+
+    this.afFun.httpsCallable('stripeCheckoutSession')({items: this.cart.getValue().items}).subscribe((res: any) => {      
+      stripe.redirectToCheckout({sessionId: res});
+    });
+
+
+    // let stripe = await loadStripe(
+    //   'pk_test_51LuaOkB6gdK47cnCd6CKPCxYdW6DDHpDGEgdxymUIircc0PkOQmVF55FFXvjmJgVPG6bXgqv9OZaJJ3ZRrsh48Ts00xHAHqNYv'
+    // );    
+    // const checkout = httpsCallable(this.functions, 'createStripeCheckoutSession');
+    // console.log(this.cart.getValue());
+    
+    // const res: any = await checkout({ items: 'asd' });
+    // console.log('res- '+res);
+    
+    // stripe?.redirectToCheckout({ sessionId: res.data.id });
   }
 
   placeOrder(): void {
@@ -94,6 +114,7 @@ export class CartService implements OnInit {
       duration: 3000,
     });
     this.clearCart();
+    localStorage.removeItem('cart');
   }
 
   syncItems(): void {
