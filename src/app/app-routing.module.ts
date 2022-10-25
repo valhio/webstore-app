@@ -8,8 +8,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'payment/success', component: SuccessComponent },
