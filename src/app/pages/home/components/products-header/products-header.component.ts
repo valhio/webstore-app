@@ -12,7 +12,7 @@ export class ProductsHeaderComponent implements OnInit {
   @Output() sortChange= new EventEmitter<string>();
 
   sort = 'name-asc';
-  displaySort = 'Name (A-Z)';
+  displaySort = 'Име (А-Я)';
   itemsShowCount= 12;
 
   constructor() { }
@@ -24,16 +24,16 @@ export class ProductsHeaderComponent implements OnInit {
     this.sort = sort;
     switch (sort) {
       case 'name-asc':
-        this.displaySort = 'Name (A-Z)';
+        this.displaySort = 'Име (А-Я)';
         break;
       case 'name-desc':
-        this.displaySort = 'Name (Z-A)';
+        this.displaySort = 'Име (Я-А)';
         break;
       case 'price-asc':
-        this.displaySort = 'Price (Low to High)';
+        this.displaySort = 'Цена (Ниска към Висока)';
         break;
       case 'price-desc':
-        this.displaySort = 'Price (High to Low)';
+        this.displaySort = 'Цена (Висока към Ниска)';
         break;
     }
     this.sortChange.emit(sort);
