@@ -2,6 +2,7 @@
 
 /src/enviroments/**
 /functions
+/server
 
 # Compiled output
 /dist
