@@ -83,8 +83,8 @@ app.post("/checkout", async (req, res, next) => {
       //   coupon: 'ZJtCz5yM',
       // }],
       allow_promotion_codes: true,
-      success_url: "https://webstore-184d5.web.app/payment/success",
-      cancel_url: "http://localhost:4242/cancel.html",
+      success_url: 'http://localhost:4200/payment/status?action=success',
+      cancel_url: 'http://localhost:4200/payment/status?action=cancel',
     });
 
     // res.status(200).json({session});

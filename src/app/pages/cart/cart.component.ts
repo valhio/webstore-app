@@ -3,7 +3,6 @@ import { Cart } from 'src/app/models/cart.model';
 import { CartItem } from '../../models/cart.model';
 import { CartService } from '../../services/cart.service';
 import { HttpClient } from '@angular/common/http';
-import { loadStripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-cart',
@@ -26,7 +25,6 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private http: HttpClient) {}
 
   ngOnInit(): void {
-    // this.dataSource = Json.parse(localStorage.getItem('cart'));
     this.cartService.cart.subscribe((cart) => {
       this.cart = cart;
       // this.dataSource= localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')!) : [];

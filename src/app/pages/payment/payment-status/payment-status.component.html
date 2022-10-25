@@ -1,0 +1,17 @@
+<div *ngIf="stripeStatus==='success'" class="max-w-7xl mx-auto text-center mt-60">
+    <div class="text-4xl mb-2">Благодарим Ви за поръчката.</div>
+    <p class="mb-4 text-lg">Ако имате въпроси, моля, изпратете имейл на: <a
+            href="mailto:valentingerasimow@gmail.com">valentingerasimow@gmail.com</a></p>
+    <button routerLink="/home"
+        class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към началната
+        страница</button>
+</div>
+
+<div *ngIf="stripeStatus==='cancel'" class="max-w-7xl mx-auto text-center mt-60">
+    <div class="text-4xl mb-2">Транзакцията бе прекъсната.</div>
+    <p class="mb-4 text-lg">Ако имате въпроси, моля, изпратете имейл на: <a
+            href="mailto:valentingerasimow@gmail.com">valentingerasimow@gmail.com</a></p>
+    <button routerLink="/home"
+        class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към началната
+        страница</button>
+</div>

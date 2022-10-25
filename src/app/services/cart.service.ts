@@ -4,6 +4,7 @@ import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment';
 import { AngularFireFunctions as Functions } from '@angular/fire/compat/functions';
+import { ActivatedRoute, Router } from '@angular/router';
 
 declare var Stripe: (arg0: string) => any;
 
@@ -12,18 +13,18 @@ declare var Stripe: (arg0: string) => any;
 })
 export class CartService implements OnInit {
   cart = new BehaviorSubject<Cart>({ items: [] });
-  stripeStatus: string;
 
   constructor(
     private _snackBar: MatSnackBar,
     private afFun: Functions,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
     ) {
       // If statement needs to stay, otherwise the header breaks
       if (localStorage.getItem('cart')) {
         this.cart.next(JSON.parse(localStorage.getItem('cart') || '{}'));
       }
       // afFun.useEmulator('localhost', 5001);
-      this.stripeStatus='';
     }
     
   ngOnInit(): void {}
@@ -50,6 +51,7 @@ export class CartService implements OnInit {
   }
 
   clearCart(): void {
+    localStorage.removeItem('cart');
     this.cart.next({ items: [] });
     this.syncItems();
   }
@@ -93,6 +95,7 @@ export class CartService implements OnInit {
     this._snackBar.open('Order placed successfully.', 'Close', {
       duration: 3000,
     });
+    this.router.navigate(['/payment/status'],{queryParams: {action: 'success'}});
     this.clearCart();
     localStorage.removeItem('cart');
   }

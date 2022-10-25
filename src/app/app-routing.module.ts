@@ -5,6 +5,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/payment/success/success.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'payment/success', component: SuccessComponent },
+  { path: 'payment/status', component: PaymentStatusComponent },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 

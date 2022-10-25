@@ -36,6 +36,7 @@ import { environment } from '../environments/environment';
 // import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { FIREBASE_OPTIONS } from '@angular/fire/compat';
     CheckoutComponent,
     SuccessComponent,
     PageNotFoundComponent,
+    PaymentStatusComponent,
   ],
   imports: [
     BrowserModule,

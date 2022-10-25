@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "webstore-184d5"
+  },
+  "targets": {
+    "webstore-184d5": {
+      "hosting": {
+        "store": [
+          "webstore-184d5"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
