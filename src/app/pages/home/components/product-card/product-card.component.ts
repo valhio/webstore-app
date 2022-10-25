@@ -11,22 +11,18 @@ export class ProductCardComponent implements OnInit {
   @Input() columnsCountMode = 1;
   @Output() addToCart = new EventEmitter<Product>();
   @Input() product: Product | undefined;
-  public innerWidth: any;
+  @Input() innerWidth: number;
 
 
-  constructor() { }
+  constructor() { 
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
-    this.innerWidth = window.innerWidth;
   }
 
   onAddToCart() {
     this.addToCart.emit(this.product);
-  }
-  
-  @HostListener('window:resize', ['$event'])
-  onWindowResize() {
-    this.innerWidth = window.innerWidth;
   }
 
 }

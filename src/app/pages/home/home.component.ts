@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   page = '1';
   products: Product[] | undefined;
   productsSubscription: Subscription | undefined;
+  width = 0;
 
   testData: Product[] = [
     {
@@ -204,16 +205,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAllProducts(this.size, this.sort, this.page, this.currentCategory)
       .subscribe((_products) => {
         // this.products = _products;
-      
+
         // Mocked data START
         if (this.sort === 'name-asc') {
           this.testData.sort((a, b) => (a.title > b.title ? 1 : -1));
         } else if (this.sort === 'name-desc') {
           this.testData.sort((a, b) => (a.title < b.title ? 1 : -1));
-        } else if ((this.sort === "price-asc")) {
-          this.testData.sort((a, b) => (a.price.toString() > b.price.toString() ? 1 : -1));
-        } else if ((this.sort === 'price-desc')) {
-          this.testData.sort((a, b) => (a.price.toString() < b.price.toString() ? 1 : -1));
+        } else if (this.sort === 'price-asc') {
+          this.testData.sort((a, b) =>
+            a.price.toString() > b.price.toString() ? 1 : -1
+          );
+        } else if (this.sort === 'price-desc') {
+          this.testData.sort((a, b) =>
+            a.price.toString() < b.price.toString() ? 1 : -1
+          );
         }
         this.products = this.testData.slice(0, +this.size);
         // Mocked data END
@@ -252,18 +257,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(): void {
-    let width = window.innerWidth;
+    this.width = window.innerWidth;
     switch (true) {
-      case width < 670:
+      case this.width < 670:
         this.columnsCount = 1;
         break;
-      case width >= 60 && width < 768:
+      case this.width >= 60 && this.width < 768:
         this.columnsCount = 2;
         break;
-      case width >= 768 && width < 992:
+      case this.width >= 768 && this.width < 992:
         this.columnsCount = 3;
         break;
-      case width >= 992 && width < 1200:
+      case this.width >= 992 && this.width < 1200:
         this.columnsCount = 4;
         break;
       default:

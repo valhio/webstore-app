@@ -1,26 +1,27 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-products-header',
   templateUrl: './products-header.component.html',
-  styleUrls: ['./products-header.component.scss']
+  styleUrls: ['./products-header.component.scss'],
 })
 export class ProductsHeaderComponent implements OnInit {
-
   @Output() columnsCountChange = new EventEmitter<number>();
   @Output() itemsCountChange = new EventEmitter<number>();
-  @Output() sortChange= new EventEmitter<string>();
+  @Output() sortChange = new EventEmitter<string>();
+  @Input() innerWidth: number;
 
   sort = 'name-asc';
   displaySort = 'Име (А-Я)';
-  itemsShowCount= 12;
+  itemsShowCount = 12;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.innerWidth = window.innerWidth;
   }
 
-  onSortUpdate(sort: string):void {
+  ngOnInit(): void {}
+
+  onSortUpdate(sort: string): void {
     this.sort = sort;
     switch (sort) {
       case 'name-asc':
@@ -39,12 +40,12 @@ export class ProductsHeaderComponent implements OnInit {
     this.sortChange.emit(sort);
   }
 
-  onItemsShowCountUpdate(itemsShowCount: number):void {
+  onItemsShowCountUpdate(itemsShowCount: number): void {
     this.itemsCountChange.emit(itemsShowCount);
     this.itemsShowCount = itemsShowCount;
   }
 
-  onColumnsUpdate(columns: number):void {
+  onColumnsUpdate(columns: number): void {
     this.columnsCountChange.emit(columns);
   }
 }

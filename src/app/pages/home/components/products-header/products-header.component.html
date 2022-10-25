@@ -1,5 +1,5 @@
 <mat-card class="mb-4">
-    <div class="flex justify-between">
+    <div [ngClass]="{'grid justify-center':innerWidth<=420, 'flex justify-between':innerWidth>420}">
         <div>
             <button mat-button [matMenuTriggerFor]="sortByMenu">Сортирай по - {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
             <mat-menu #sortByMenu>
