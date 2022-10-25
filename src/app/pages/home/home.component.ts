@@ -15,11 +15,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   rowHeight = ROWS_HEIGHT[this.columnsCount];
   currentCategory: string | undefined;
   sort = 'name-asc';
-  size = '12';
+  size = 12;
   page = '1';
   products: Product[] | undefined;
   productsSubscription: Subscription | undefined;
   width = 0;
+  autoScrollSizeIncrement = 4;
 
   testData: Product[] = [
     {
@@ -202,7 +203,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getProducts(): void {
     this.productsSubscription = this.storeService
-      .getAllProducts(this.size, this.sort, this.page, this.currentCategory)
+      .getAllProducts(
+        this.size.toString(),
+        this.sort,
+        this.page,
+        this.currentCategory
+      )
       .subscribe((_products) => {
         // this.products = _products;
 
@@ -246,7 +252,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onItemsCountChange(itemsCount: number): void {
-    this.size = itemsCount.toString();
+    this.size = itemsCount;
     this.getProducts();
   }
 
@@ -273,6 +279,21 @@ export class HomeComponent implements OnInit, OnDestroy {
         break;
       default:
         this.columnsCount = 4;
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    //In chrome and some browser scroll is given to body tag
+    let pos = (document.documentElement.scrollTop || document.body.scrollTop) +document.documentElement.offsetHeight;
+    let max = document.documentElement.scrollHeight;
+    // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
+    if (pos == max && this.width <= 640) {
+      this.size += this.autoScrollSizeIncrement;
+      this.testData
+        .slice(+this.size - this.autoScrollSizeIncrement, +this.size)
+        .forEach((i) => this.products?.push(i));
+      // this.getProducts();
     }
   }
 }
