@@ -15,6 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
@@ -72,6 +73,7 @@ import { PaymentStatusComponent } from './pages/payment/payment-status/payment-s
     MatSnackBarModule,
     FontAwesomeModule,
     FormsModule,
+    MatProgressSpinnerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
   ],
   providers: [CartService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],

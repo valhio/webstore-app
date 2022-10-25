@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   productsSubscription: Subscription | undefined;
   width = 0;
   autoScrollSizeIncrement = 4;
+  showSpinner: boolean = false;
 
   testData: Product[] = [
     {
@@ -226,7 +227,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             a.price.toString() < b.price.toString() ? 1 : -1
           );
         }
-        this.products = this.testData.slice(0, +this.size);
+        this.products = this.testData.slice(0, this.size);
         // Mocked data END
       });
   }
@@ -284,16 +285,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll', [])
   onScroll(): void {
-    //In chrome and some browser scroll is given to body tag
-    let pos = (document.documentElement.scrollTop || document.body.scrollTop) +document.documentElement.offsetHeight;
+    let pos =
+      (document.documentElement.scrollTop || document.body.scrollTop) +document.documentElement.offsetHeight;
     let max = document.documentElement.scrollHeight;
+
     // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-    if (pos == max && this.width <= 640) {
-      this.size += this.autoScrollSizeIncrement;
-      this.testData
-        .slice(+this.size - this.autoScrollSizeIncrement, +this.size)
-        .forEach((i) => this.products?.push(i));
-      // this.getProducts();
+    if (pos == max && this.width <= 640 && this.size < this.testData.length) {
+      this.showSpinner = true;
+
+      setTimeout(() => {
+        this.size += this.autoScrollSizeIncrement;
+        this.products?.push(
+          ...this.testData.slice(
+            this.size - this.autoScrollSizeIncrement,
+            this.size <= this.testData.length ? this.size : this.testData.length
+          )
+        );
+        this.showSpinner = false;
+      }, 500);
     }
   }
 }
