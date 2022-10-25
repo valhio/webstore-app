@@ -1,12 +1,12 @@
 <mat-card class="mb-4">
     <div class="flex justify-between">
         <div>
-            <button mat-button [matMenuTriggerFor]="sortByMenu">Sort by - {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
+            <button mat-button [matMenuTriggerFor]="sortByMenu">Сортирай по - {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
             <mat-menu #sortByMenu>
-                <button mat-menu-item (click)="onSortUpdate('name-asc')">Name: Ascending</button>
-                <button mat-menu-item (click)="onSortUpdate('name-desc')">Name: Descending</button>
-                <button mat-menu-item (click)="onSortUpdate('price-asc')">Price: Ascending</button>
-                <button mat-menu-item (click)="onSortUpdate('price-desc')">Price: Descending</button>
+                <button mat-menu-item (click)="onSortUpdate('name-asc')">Име: (А-Я)</button>
+                <button mat-menu-item (click)="onSortUpdate('name-desc')">Име: (Я-А)</button>
+                <button mat-menu-item (click)="onSortUpdate('price-asc')">Цена: (Ниска към Висока)</button>
+                <button mat-menu-item (click)="onSortUpdate('price-desc')">Цена: (Висока към Ниска)</button>
             </mat-menu>
         </div>
         <div class="flex justify-center">
