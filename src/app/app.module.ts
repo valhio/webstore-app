@@ -38,6 +38,7 @@ import { environment } from '../environments/environment';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { PaymentStatusComponent } from './pages/payment/payment-status/payment-s
     FontAwesomeModule,
     FormsModule,
     MatProgressSpinnerModule,
+    InfiniteScrollModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
   ],
   providers: [CartService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],

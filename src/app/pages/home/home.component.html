@@ -7,18 +7,32 @@
         <app-products-header [innerWidth]="width" (sortChange)="onSortChange($event)"
             (itemsCountChange)="onItemsCountChange($event)" (columnsCountChange)="onColumnsCountChange($event)">
         </app-products-header>
-        <!-- <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"> -->
-        <div class="grid"
-            [ngClass]="{'grid-cols-2':columnsCount===2, 'grid-cols-3':columnsCount===3, 'grid-cols-4':columnsCount==4, 'grid-cols-1':columnsCount===1}">
-            <div *ngFor="let product of products" class="pb-4">
-                <app-product-card [innerWidth]="width" [product]="product" (addToCart)="onAddToCart($event)"
-                    class="w-full" [columnsCountMode]="columnsCount"></app-product-card>
+        <div *ngIf="width>640">
+            <div class="grid"
+                [ngClass]="{'grid-cols-2':columnsCount===2, 'grid-cols-3':columnsCount===3, 'grid-cols-4':columnsCount==4, 'grid-cols-1':columnsCount===1}">
+                <div *ngFor="let product of products" class="pb-4">
+                    <app-product-card [innerWidth]="width" [product]="product" (addToCart)="onAddToCart($event)"
+                        class="w-full" [columnsCountMode]="columnsCount"></app-product-card>
+                </div>
             </div>
-            <!-- The height of the div needs to stay. 
-                    Otherwise, when bottom of the page is reached, the spinner appears and if the scroll event is still going, the bottom of the paga will be reached again. 
-                    This will result in two instant "page-bottom triggers" which will execute the "onPageBottomReached" funciton twice and will probably cause problems  -->
-            <div *ngIf="width<=640" class="min-h-[50px] custom-spinner">
-                <mat-spinner *ngIf="showSpinner" [diameter]="50" class="mx-auto"></mat-spinner>
+        </div>
+        <div *ngIf="width<=640">
+            <div class="grid"
+            infinite-scroll
+            [infiniteScrollDistance]="infiniteScrollDistance"
+            [infiniteScrollThrottle]="infiniteScrollThrottle"
+            (scrolled)="onScrollDown()"
+                [ngClass]="{'grid-cols-2':columnsCount===2, 'grid-cols-3':columnsCount===3, 'grid-cols-4':columnsCount==4, 'grid-cols-1':columnsCount===1}">
+                <div *ngFor="let product of products" class="pb-4">
+                    <app-product-card [innerWidth]="width" [product]="product" (addToCart)="onAddToCart($event)"
+                        class="w-full" [columnsCountMode]="columnsCount"></app-product-card>
+                </div>
+                <!-- The height of the div needs to stay. 
+                        Otherwise, when bottom of the page is reached, the spinner appears and if the scroll event is still going, the bottom of the paga will be reached again. 
+                        This will result in two instant "page-bottom triggers" which will execute the "onPageBottomReached" funciton twice and will probably cause problems  -->
+                <div *ngIf="width<=640" class="min-h-[50px] custom-spinner">
+                            <mat-spinner *ngIf="showSpinner" [diameter]="50" class="mx-auto"></mat-spinner>
+                        </div>
             </div>
         </div>
 
@@ -39,6 +53,5 @@
                 Loading...
             </button>
         </div>
-        {{columnsCount}}
     </mat-drawer-content>
 </mat-drawer-container>

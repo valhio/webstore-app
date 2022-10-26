@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { debounce, elementAt, Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from '../../services/store.service';
@@ -22,6 +22,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   width = 0;
   autoScrollSizeIncrement = 4;
   showSpinner: boolean = false;
+
+  // Infinite scroll
+  infiniteScrollThrottle = 0;
+  infiniteScrollDistance = 0;
 
   testData: Product[] = [
     {
@@ -227,7 +231,10 @@ export class HomeComponent implements OnInit, OnDestroy {
             a.price.toString() < b.price.toString() ? 1 : -1
           );
         }
-        this.products = this.testData.slice(0, this.width<=640 ? 6 : this.size);
+        this.products = this.testData.slice(
+          0,
+          this.width <= 640 ? 6 : this.size
+        );
         // Mocked data END
       });
   }
@@ -283,32 +290,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    let pos =
-      (document.documentElement.scrollTop || document.body.scrollTop) +
-      document.documentElement.offsetHeight;
-    let max = document.documentElement.scrollHeight;
-
-    // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-    if (pos == max && this.width <= 640 && this.products!.length < this.testData.length) {
-      this.loadMore();
-    }
+  onScrollDown() {
+    this.loadMore();
   }
 
   loadMore() {
-    this.showSpinner = true;
-    setTimeout(() => {
-      let countOfItemsToDisplay =this.columnsCount == 1 ? 3 : this.size;
-      this.products?.push(
-        ...this.testData.slice(
-          this.products.length,
-          this.products.length + countOfItemsToDisplay > this.testData.length
-            ? this.testData.length
-            : this.products.length + countOfItemsToDisplay
-        )
-      );
-      this.showSpinner = false;
-    }, 500);
+    if (this.testData.length > this.products!.length) {
+      this.showSpinner = true;
+      setTimeout(() => {
+        let countOfItemsToDisplay = this.columnsCount == 1 ? 3 : this.size;
+        this.products?.push(
+          ...this.testData.slice(
+            this.products.length,
+            this.products.length + countOfItemsToDisplay > this.testData.length
+              ? this.testData.length
+              : this.products.length + countOfItemsToDisplay
+          )
+        );
+        this.showSpinner = false;
+      }, 500);
+    }
   }
 }
