@@ -14,9 +14,9 @@
         <a (click)="onClearCart()" class="cursor-pointer text-red-600">Изчисти</a>
       </div>
       <div *ngIf="cart.items.length" class="py-3">
-        <div *ngFor="let item of cart.items" class="flex justify-between mb-2 text-sm">
-          <span class="mr-2 font-light"> {{item.name}} x {{item.quantity}}</span>
-          <span class="font-medium">{{ item.price | currency:' '}} лв.</span>
+        <div *ngFor="let item of cart.items" class="grid grid-cols-3 justify-between mb-2 text-sm">
+          <span class="mr-2 font-light col-span-2 overflow-x-auto"> {{item.name +' x '+ item.quantity}}</span>
+          <span class="font-medium flex justify-end">{{ item.price | currency:' '}} лв.</span>
         </div>
       </div>
       <div>
@@ -27,12 +27,12 @@
         <div class="grid grid-cols-2 gap-2">
           <div>
             <button routerLink="/cart" mat-raised-button class="w-full uppercase">
-              Към Количката
+              Количка
             </button>
           </div>
           <div>
             <button routerLink="/checkout" mat-raised-button class="w-full uppercase" color='primary'>
-              Към Завършване
+              Завършване
             </button>
           </div>
         </div>
