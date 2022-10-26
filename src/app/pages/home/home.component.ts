@@ -303,7 +303,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             ? 3
             : this.products.length % this.columnsCount == 0
             ? this.columnsCount
-            : (this.columnsCount - (this.products.length % this.columnsCount)+4);
+            : (this.columnsCount - (this.products.length % this.columnsCount))+this.columnsCount;
 
         this.products?.push(
           ...this.testData.slice(

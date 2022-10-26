@@ -1,0 +1,263 @@
+<div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
+    <div class="px-4">
+        <!-- Cart Content Start -->
+        <div class="space-y-3 rounded-lg border px-2 py-4 sm:px-6">
+            <div class="max-h-48 min-w-fit overflow-y-auto">
+                <div *ngFor="let product of dataSource" class="flex rounded-lg bg-white sm:flex-row">
+                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" [src]="product.product"
+                        alt="product image">
+                    <div class="flex w-full flex-col px-4 py-4">
+                        <span class="font-medium">{{product.name}}</span>
+                        <span class="float-right text-gray-400">Количество: {{product.quantity}}</span>
+                        <p class="text-lg font-bold">{{product.price*product.quantity | currency:' '}} лв.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cart Content End -->
+
+        <!-- Delivery Methods Start -->
+        <form class="mt-6 grid gap-2">
+            <span class="ml-3 text-lg font-medium">Методи за доставка</span>
+            <div class="relative">
+                <input class="peer hidden" id="radio_1" type="radio" name="radio" checked />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_1">
+                    <img class="w-10 ml-2 object-contain" src="/assets/images/checkout/location-icon.png" alt="" />
+                    <div class="sm:ml-5 grid">
+                        <span class=" font-medium">До Адрес</span>
+                        <span class="text-slate-500 text-sm">Доставка: 1-2 дни (за България)</span>
+                    </div>
+                </label>
+            </div>
+            <div class="relative">
+                <input class="peer hidden" id="radio_2" type="radio" name="radio" />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_2">
+                    <img class="w-16 object-contain" src="/assets/images/checkout/DPD-Emblem.png" alt="" />
+                    <div class="sm:ml-5 grid">
+                        <span class="mt-2 font-medium">Спиди Офис</span>
+                        <span class="text-slate-500 text-sm leading-6">Доставка: 1-2 дни (за България)</span>
+                    </div>
+                </label>
+            </div>
+            <div class="relative">
+                <input class="peer hidden" id="radio_3" type="radio" name="radio" />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_3">
+                    <img class="w-12 object-contain" src="/assets/images/checkout/ECONT-Emblem.png" alt="" />
+                    <div class="sm:ml-5 grid">
+                        <span class="mt-2 font-medium">Еконт Офис</span>
+                        <span class="text-slate-500 text-sm leading-6">Доставка: 1-2 дни (за България)</span>
+                    </div>
+                </label>
+            </div>
+        </form>
+        <!-- Delivery Methods End -->
+
+        <!-- Payment Methods Start -->
+        <form class="mt-6 grid gap-2">
+            <span class="ml-3 text-lg font-medium">Начин на плащане</span>
+            <div class="relative">
+                <input class="peer hidden" id="radio_payment_on_delivery" [value]="false"
+                    [(ngModel)]="isCardPaymentSelected" type="radio" name="radio" checked />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_payment_on_delivery">
+                    <div class="ml-5 flex">
+                        <i class="fa-regular fa-money-bill-1 my-auto text-3xl pr-2"></i>
+                        <div class="grid">
+                            <span class="mt-2 mr-1 font-medium">Наложен платеж</span>
+                            <span class="mt-2 text-slate-500 text-sm">(при доставка / вземане от офис)</span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="relative">
+                <input class="peer hidden" id="radio_card_payment" [value]="true" [(ngModel)]="isCardPaymentSelected"
+                    type="radio" name="radio" />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8  bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_card_payment">
+                    <div class="mx-6 w-full">
+                        <div class="flex">
+                            <i class="fa-regular fa-credit-card text-3xl pr-2 my-auto"></i>
+                            <span class="my-auto whitespace-nowrap font-medium">Карта</span>
+                            <div class="grid my-auto mx-auto">
+                                <div class="flex justify-between">
+                                    <i class="fa-brands fa-cc-visa text-4xl"></i>
+                                    <i class="fa-brands fa-cc-mastercard text-4xl"></i>
+                                    <i class="fa-brands fa-cc-amex text-4xl"></i>
+                                </div>
+                                <!-- <div><i class="fa-brands fa-stripe text-5xl fa-2xl"></i></div> -->
+                                <div class="flex justify-between">
+                                    <i class="fa-brands fa-apple-pay text-5xl"></i>
+                                    <span class="text-5xl">/</span>
+                                    <i class="fa-brands fa-google-pay text-5xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="relative">
+                <input class="peer hidden" id="radio_paypal_payment" [value]="true" type="radio" name="radio" />
+                <span
+                    class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8  bg-white"></span>
+                <label
+                    class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-100 flex cursor-pointer select-none rounded-lg border border-gray-300 p-2 sm:p-4"
+                    for="radio_paypal_payment">
+                    <div class="mx-6 w-full">
+                        <div class="flex">
+                            <i class="fa-brands fa-paypal text-3xl px-2 my-auto"></i>
+                            <span class="my-auto whitespace-nowrap font-medium">PayPal</span>
+                            <div class="flex justify-center my-auto mx-auto">
+                                <div><i class="fa-brands fa-cc-paypal text-5xl fa-2xl"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </form>
+        <!-- Payment Methods End -->
+    </div>
+
+    <div class="mt-10 rounded-lg border bg-gray-50 px-4 pt-8 lg:mt-0 mb-20">
+        <!-- Shipping Information Start -->
+        <ng-container>
+            <p class="text-xl font-medium">Информация за доставка</p>
+            <p class="text-gray-400">Завършете поръчката си, като предоставите данните си за доставка.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                <div class="mr-2 w-full">
+                    <label for="firstName" class="mt-4 mb-2 block text-sm font-medium">Име</label>
+                    <div class="relative">
+                        <input type="text" id="firstName" name="firstName"
+                            class="w-full rounded-md border border-gray-200 px-4 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Име" />
+                        <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                            <mat-icon class="text-gray-400">perm_identity</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label for="lastName" class="mt-4 mb-2 block text-sm font-medium">Фамилия</label>
+                    <div class="relative">
+                        <input type="text" id="lastName" name="lastName"
+                            class="w-full rounded-md border border-gray-200 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Фамилия" />
+                        <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                            <mat-icon class="text-gray-400">perm_identity</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <label for="email" class="mt-4 mb-2 block text-sm font-medium">Имейл</label>
+            <div class="relative">
+                <input type="text" id="email" name="email"
+                    class="w-full rounded-md border border-gray-200 px-4 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="вашият.имейл@gmail.com" />
+                <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                    <mat-icon class="text-gray-400">alternate_email</mat-icon>
+                </div>
+            </div>
+
+            <label for="phone-number" class="mt-4 mb-2 block text-sm font-medium">Телефон</label>
+            <div class="relative">
+                <input type="text" id="phone-number" name="phone-number"
+                    class="w-full rounded-md border border-gray-200 px-4 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Телефонен номер" />
+                <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                    <mat-icon class="text-gray-400">contact_phone</mat-icon>
+                </div>
+            </div>
+
+            <label for="address" class="mt-4 mb-2 block text-sm font-medium">Адрес</label>
+            <div class="relative">
+                <input type="text" id="address" name="address"
+                    class="w-full rounded-md border border-gray-200 px-4 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Адрес за доставка" />
+                <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                    <mat-icon class="text-gray-400">location_on</mat-icon>
+                </div>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="mr-2 w-full">
+                    <label for="city" class="mt-4 mb-2 block text-sm font-medium">Град</label>
+                    <div class="relative">
+                        <input type="text" id="city" name="city"
+                            class="w-full rounded-md border border-gray-200 px-4 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Град" />
+                        <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                            <mat-icon class="text-gray-400">share_location</mat-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label for="post-code" class="mt-4 mb-2 block text-sm font-medium">Пощенски код</label>
+                    <div class="relative">
+                        <input type="text" id="post-code" name="post-code"
+                            class="w-full rounded-md border border-gray-200 py-3 pl-10 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                            placeholder="Пощенски код" />
+                        <div class="pointer-events-none absolute inset-y-0 left-0 inline-flex items-center px-3">
+                            <mat-icon class="text-gray-400">share_location</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <label for="additional-info" class="mt-4 mb-2 block text-sm font-medium">Допълнителна информация
+                (незадължително
+                поле)</label>
+            <div class="relative">
+                <textarea type="text" id="additional-info" name="additional-info"
+                    class="w-full max-h-40 min-h-[45px] rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Бележки за доставка"></textarea>
+                <div class="pointer-events-none absolute inset-y-[10px] left-0 items-center px-3">
+                    <mat-icon class="text-gray-400">notes</mat-icon>
+                </div>
+            </div>
+
+            <!-- Total -->
+            <div class="mt-6 border-t border-b py-2">
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-medium text-gray-900">Общо</p>
+                    <p class="font-medium text-gray-900">{{getTotal(dataSource) | currency: ' '}} лв.</p>
+                </div>
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-medium text-gray-900">Доставка</p>
+                    <p class="font-medium text-gray-900">8.00 лв.</p>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center justify-between">
+                <p class="text-sm font-medium text-gray-900">Дължима сума</p>
+                <p class="text-2xl font-medium text-gray-900">{{getTotal(dataSource)+8.00 | currency:' '}} лв.</p>
+            </div>
+        </ng-container>
+        <!-- Shipping Information End -->
+
+        <!-- Action Button Start -->
+        <button (click)="isCardPaymentSelected ? onCheckout() : onPlaceOrder() "
+            class="mt-2 mb-8 w-full uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">{{isCardPaymentSelected
+            ? "Към Плащане" : "Поръчай"}}
+        </button>
+        <!-- Action Button End -->
+    </div>
+</div>

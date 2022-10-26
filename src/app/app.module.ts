@@ -39,6 +39,8 @@ import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CheckoutHeaderComponent } from './pages/checkout/checkout-header/checkout-header.component';
+import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-body.component';
 
 
 @NgModule({
@@ -54,6 +56,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     SuccessComponent,
     PageNotFoundComponent,
     PaymentStatusComponent,
+    CheckoutHeaderComponent,
+    CheckoutBodyComponent,
   ],
   imports: [
     BrowserModule,

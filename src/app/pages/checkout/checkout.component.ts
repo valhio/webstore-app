@@ -8,29 +8,14 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  isCardPaymentSelected: boolean = false;
-  isPayPalSelected: boolean = false;
-  cart: Cart = { items: [] };
   dataSource: CartItem[] = [];
 
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.cartService.cart.subscribe((_cart) => {
-      this.cart = _cart;
-      this.dataSource = this.cart.items;
+      this.dataSource = _cart.items;
     });
   }
 
-  getTotal(items: CartItem[]): number {
-    return this.cartService.getTotal(items);
-  }
-
-  onCheckout(): void {
-    this.cartService.checkout();
-  }
-
-  onPlaceOrder(): void {
-    this.cartService.placeOrder();
-  }
 }
