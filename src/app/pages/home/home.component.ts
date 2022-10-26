@@ -227,7 +227,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             a.price.toString() < b.price.toString() ? 1 : -1
           );
         }
-        this.products = this.testData.slice(0, this.size);
+        this.products = this.testData.slice(0, this.width<=640 ? 6 : this.size);
         // Mocked data END
       });
   }
@@ -299,7 +299,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadMore() {
     this.showSpinner = true;
     setTimeout(() => {
-      let countOfItemsToDisplay =this.columnsCount == 1 ? 4 : this.columnsCount;
+      let countOfItemsToDisplay =this.columnsCount == 1 ? 3 : this.size;
       this.products?.push(
         ...this.testData.slice(
           this.products.length,
