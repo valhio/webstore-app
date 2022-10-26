@@ -4,27 +4,27 @@
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon [matBadge]="getItemsQuantity()" [matBadgeHidden]="getItemsQuantity()===0" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
-  <mat-menu #menu="matMenu">
-    <div class="p-3 divide-y divide-soli">
+  <mat-menu #menu="matMenu" class="menu-without-scroll">
+    <div class="p-3 divide-y divide-solid overflow-visible">
       <div class="pb-3 flex justify-between">
-        <span class="mr-32">{{getItemsQuantity()}} Items</span>
-        <a (click)="onClearCart()" class="cursor-pointer text-red-600">Clear Cart</a>
+        <span class="">{{getItemsQuantity()}} - Продукта</span>
+        <a (click)="onClearCart()" class="cursor-pointer text-red-600">Изпразни</a>
       </div>
       <div *ngIf="cart.items.length" class="py-3">
         <div *ngFor="let item of cart.items" class="flex justify-between font-light mb-2">
-          {{item.name}} x {{item.quantity}}
-          <span class="font-medium">{{ item.price | currency}}</span>
+          <span class="mr-2"> {{item.name}} x {{item.quantity}}</span>
+          <span class="font-medium">{{ item.price | currency:' '}} лв.</span>
         </div>
       </div>
       <div>
         <div class="flex justify-between py-3 font-light">
-          Total:
+          Общо:
           <span class="font-medium">{{ getTotal(cart.items) | currency:' '}} лв.</span>
         </div>
         <div class="flex justify-center">
           <div class="mr-2 w-full">
             <button routerLink="/cart" mat-raised-button class="w-full">
-              View Cart
+              Към Количката
             </button>
           </div>
           <div class="w-full">
