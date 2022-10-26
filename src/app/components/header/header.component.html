@@ -5,31 +5,34 @@
     <mat-icon [matBadge]="getItemsQuantity()" [matBadgeHidden]="getItemsQuantity()===0" matBadgeColor="warn">shopping_cart</mat-icon>
   </button>
   <mat-menu #menu="matMenu" class="menu-without-scroll">
-    <div class="p-3 divide-y divide-solid overflow-visible">
-      <div class="pb-3 flex justify-between">
+    <div *ngIf="getItemsQuantity()==0">
+      <div class="text-lg mx-3 my-2">Вашата количка е празна.</div>
+    </div>
+    <div *ngIf="getItemsQuantity()!=0" class="p-3 divide-y divide-solid overflow-visible">
+      <div class="pb-3 flex justify-between text-sm">
         <span class="">{{getItemsQuantity()}} - Продукта</span>
-        <a (click)="onClearCart()" class="cursor-pointer text-red-600">Изпразни</a>
+        <a (click)="onClearCart()" class="cursor-pointer text-red-600">Изчисти</a>
       </div>
       <div *ngIf="cart.items.length" class="py-3">
-        <div *ngFor="let item of cart.items" class="flex justify-between font-light mb-2">
-          <span class="mr-2"> {{item.name}} x {{item.quantity}}</span>
+        <div *ngFor="let item of cart.items" class="flex justify-between mb-2 text-sm">
+          <span class="mr-2 font-light"> {{item.name}} x {{item.quantity}}</span>
           <span class="font-medium">{{ item.price | currency:' '}} лв.</span>
         </div>
       </div>
       <div>
-        <div class="flex justify-between py-3 font-light">
+        <div class="flex justify-between py-3 text-base font-medium">
           Общо:
           <span class="font-medium">{{ getTotal(cart.items) | currency:' '}} лв.</span>
         </div>
-        <div class="flex justify-center">
-          <div class="mr-2 w-full">
-            <button routerLink="/cart" mat-raised-button class="w-full">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <button routerLink="/cart" mat-raised-button class="w-full uppercase">
               Към Количката
             </button>
           </div>
-          <div class="w-full">
-            <button routerLink="/checkout" mat-raised-button class="w-full" color='primary'>
-              Checkout
+          <div>
+            <button routerLink="/checkout" mat-raised-button class="w-full uppercase" color='primary'>
+              Към Завършване
             </button>
           </div>
         </div>

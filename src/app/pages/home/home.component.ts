@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'name-asc';
   size = 12;
   page = '1';
-  products: Product[] | undefined;
+  products: Product[] =[];
   productsSubscription: Subscription | undefined;
   width = 0;
   autoScrollSizeIncrement = 4;
@@ -298,7 +298,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.testData.length > this.products!.length) {
       this.showSpinner = true;
       setTimeout(() => {
-        let countOfItemsToDisplay = this.columnsCount == 1 ? 3 : this.size;
+        let countOfItemsToDisplay = this.columnsCount == 1 ? 3 : this.columnsCount;
         this.products?.push(
           ...this.testData.slice(
             this.products.length,
