@@ -12,14 +12,14 @@ export class PaymentStatusComponent implements OnInit {
   stripeStatus: string;
 
   constructor(private activatedRoute: ActivatedRoute, private cartService: CartService) {
-    this.stripeStatus='';
-   }
-
-  ngOnInit(): void {
+    // this.stripeStatus='';
     this.stripeStatus = this.getStripeStatus();
     if(this.stripeStatus === 'success') {
       this.cartService.clearCart()
     }
+   }
+
+  ngOnInit(): void {
   }
 
   getStripeStatus(): string {

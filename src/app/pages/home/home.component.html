@@ -17,7 +17,7 @@
             <!-- The height of the div needs to stay. 
                     Otherwise, when bottom of the page is reached, the spinner appears and if the scroll event is still going, the bottom of the paga will be reached again. 
                     This will result in two instant "page-bottom triggers" which will execute the "onPageBottomReached" funciton twice and will probably cause problems  -->
-            <div class="min-h-[50px]">
+            <div class="min-h-[50px] custom-spinner">
                 <mat-spinner *ngIf="showSpinner" [diameter]="50" class="mx-auto"></mat-spinner>
             </div>
         </div>
