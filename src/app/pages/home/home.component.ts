@@ -286,23 +286,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', [])
   onScroll(): void {
     let pos =
-      (document.documentElement.scrollTop || document.body.scrollTop) +document.documentElement.offsetHeight;
+      (document.documentElement.scrollTop || document.body.scrollTop) +
+      document.documentElement.offsetHeight;
     let max = document.documentElement.scrollHeight;
 
     // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
-    if (pos == max && this.width <= 640 && this.size < this.testData.length) {
-      this.showSpinner = true;
-
-      setTimeout(() => {
-        this.size += this.autoScrollSizeIncrement;
-        this.products?.push(
-          ...this.testData.slice(
-            this.size - this.autoScrollSizeIncrement,
-            this.size <= this.testData.length ? this.size : this.testData.length
-          )
-        );
-        this.showSpinner = false;
-      }, 500);
+    if (pos == max && this.width <= 640 && this.products!.length < this.testData.length) {
+      this.loadMore();
     }
+  }
+
+  loadMore() {
+    this.showSpinner = true;
+    setTimeout(() => {
+      let countOfItemsToDisplay =this.columnsCount == 1 ? 4 : this.columnsCount;
+      this.products?.push(
+        ...this.testData.slice(
+          this.products.length,
+          this.products.length + countOfItemsToDisplay > this.testData.length
+            ? this.testData.length
+            : this.products.length + countOfItemsToDisplay
+        )
+      );
+      this.showSpinner = false;
+    }, 500);
   }
 }
