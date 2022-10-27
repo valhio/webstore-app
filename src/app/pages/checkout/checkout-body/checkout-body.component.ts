@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -13,7 +14,7 @@ export class CheckoutBodyComponent implements OnInit {
   cart: Cart = { items: [] };
   dataSource: CartItem[] = [];
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService,private _snackBar: MatSnackBar,) {}
 
   ngOnInit(): void {
     this.cartService.cart.subscribe((_cart) => {
@@ -34,4 +35,9 @@ export class CheckoutBodyComponent implements OnInit {
     this.cartService.placeOrder();
   }
 
+  notImplementedYet(){
+    this._snackBar.open('Not implemented yet', 'Close', {
+      duration: 3000,
+    });
+  }
 }
