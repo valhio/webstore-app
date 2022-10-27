@@ -1,4 +1,4 @@
-<div *ngIf="dataSource.length >0">
+<ng-container *ngIf="dataSource.length >0; else emptyCart">
   <div class="max-w-7xl mx-auto">
     <app-checkout-header></app-checkout-header>
 
@@ -9,14 +9,14 @@
 
     <app-checkout-body></app-checkout-body>
   </div>
-</div>
+</ng-container>
 
-<div *ngIf="dataSource.length==0">
+<ng-template #emptyCart>
   <div class="max-w-7xl mx-auto text-center pt-10">
     <div class="text-4xl mb-2">Вашата количка е празна.</div>
-    <p class="mb-4 text-base">Изглежда, че не сте добавили продукти в количката си.</p>
+    <p class="mb-4 text-base">Изглежда, че вашата количка е празна.</p>
     <button routerLink="/home"
       class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към началната
       страница</button>
   </div>
-</div>
+</ng-template>
