@@ -249,12 +249,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
-  onAddToCart(product: Product): void {
+  onAddToCart(product: Product): void {    
     this.cartService.addToCart({
       id: product.id,
-      product: product.image,
-      name: product.title,
+      title: product.title,
       price: product.price,
+      description: product.description,
+      image: product.image,
+      category: product.category,
       quantity: 1,
     });
   }
@@ -303,7 +305,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             ? 3
             : this.products.length % this.columnsCount == 0
             ? this.columnsCount
-            : (this.columnsCount - (this.products.length % this.columnsCount))+this.columnsCount;
+            : this.columnsCount -
+              (this.products.length % this.columnsCount) +
+              this.columnsCount;
 
         this.products?.push(
           ...this.testData.slice(

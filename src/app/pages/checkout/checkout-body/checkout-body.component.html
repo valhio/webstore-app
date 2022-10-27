@@ -4,10 +4,10 @@
         <div class="space-y-3 rounded-lg border px-2 py-4 sm:px-6">
             <div class="max-h-48 min-w-fit overflow-y-auto">
                 <div *ngFor="let product of dataSource" class="flex rounded-lg bg-white sm:flex-row">
-                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" [src]="product.product"
+                    <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" [src]="product.image"
                         alt="product image">
                     <div class="flex w-full flex-col px-4 py-4">
-                        <span class="font-medium">{{product.name}}</span>
+                        <span class="font-medium">{{product.title}}</span>
                         <span class="float-right text-gray-400">Количество: {{product.quantity}}</span>
                         <p class="text-lg font-bold">{{product.price*product.quantity | currency:' '}} лв.</p>
                     </div>

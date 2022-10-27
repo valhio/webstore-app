@@ -29,21 +29,22 @@ export class CartService implements OnInit {
     
   ngOnInit(): void {}
 
-  addToCart(item: CartItem): void {
+  addToCart(item: CartItem): void {     
     const cart = this.cart.getValue();
-    const index = cart.items.findIndex((i) => i.id === item.id);
-
-    if (index) {
-      cart.items.push(item);
-    } else {
+    const index = cart.items.findIndex((i) => i.id == item.id);
+    
+    if (index!==-1) {
       cart.items[index].quantity += 1;
+    } else {            
+      cart.items.push(item);
     }
 
     this.cart.next(cart);
     this.syncItems();
-    this._snackBar.open(`${item.name} added to cart.`, 'Close', {
+    this._snackBar.open(`${item.title} added to cart.`, 'Close', {
       duration: 3000,
     });
+    
   }
 
   getTotal(items: CartItem[]): number {
@@ -60,7 +61,7 @@ export class CartService implements OnInit {
     const filtered = this.cart.getValue().items.filter((i) => i.id !== item.id);
     this.cart.next({ items: filtered });
     this.syncItems();
-    this._snackBar.open(`${item.name} removed from cart.`, 'Close', {
+    this._snackBar.open(`${item.title} removed from cart.`, 'Close', {
       duration: 3000,
     });
   }
@@ -76,7 +77,7 @@ export class CartService implements OnInit {
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
       this.syncItems();
-      this._snackBar.open(`${item.name} quantity decremented.`, 'Close', {
+      this._snackBar.open(`${item.title} quantity decremented.`, 'Close', {
         duration: 3000,
       });
     } else {
