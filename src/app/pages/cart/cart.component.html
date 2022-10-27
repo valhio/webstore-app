@@ -69,92 +69,140 @@
     <button mat-raised-button routerLink="/home">Start Shopping</button>
 </mat-card> -->
 
+<ng-container *ngIf="dataSource.length>0; else emptyCart">
+    <div class="flex max-w-5xl h-full my-auto mx-auto flex-col overflow-y-hidden bg-white shadow-xl">
+        <div class="flex-1 overflow-y-auto py-4 px-4 sm:px-6">
+            <div class="flex items-start justify-between">
+                <h2 class="text-lg font-semibold text-gray-900" id="slide-over-title">Shopping cart</h2>
+                <div class="ml-3 flex h-7 items-center">
+                    <button (click)="onClearCart()"
+                        class="font-medium underline mt-1 text-base text-rose-600 hover:text-indigo-500">Clear
+                        All</button>
+                </div>
+            </div>
 
-<div class="flex max-w-5xl h-full my-auto mx-auto flex-col overflow-y-hidden bg-white shadow-xl">
-    <div class="flex-1 overflow-y-auto py-4 px-4 sm:px-6">
-        <div class="flex items-start justify-between">
-            <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
-            <div class="ml-3 flex h-7 items-center">
-                <button type="button" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                    <span class="sr-only">Close panel</span>
-                    <!-- Heroicon name: outline/x-mark -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+            <div class="mt-2">
+                <div class="flow-root">
+                    <ul role="list" class="-my-6 divide-y divide-gray-200">
+                        <ng-container *ngFor="let product of dataSource">
+                            <!-- Desktop View -->
+                            <div class="hidden sm:block">
+                                <li class="flex py-6">
+                                    <div
+                                        class="h-24 w-24 sm:h-48 sm:w-48 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                        <img [src]="product.image" alt="image"
+                                            class="h-full w-full object-cover object-center">
+                                    </div>
+                                    <div class="ml-4 flex flex-1 flex-col">
+                                        <div>
+                                            <div
+                                                class="flex items-center flex-row justify-between text-xl font-medium text-gray-900">
+                                                <span [textContent]="product.title">TITLE</span>
+                                                <button (click)="onRemoveFromCart(product)"
+                                                    class="font-medium text-indigo-600 hover:text-indigo-500 flex align-top">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>
+                                            </div>
+                                            <span class="mt-4 text-sm text-gray-500"
+                                                [textContent]="product.description">
+                                                DESCRIPTION
+                                            </span>
+                                        </div>
+                                        <div class="flex flex-1 flex-col sm:flex-row sm:items-end justify-between">
+                                            <div
+                                                class="flex flex-1 justify-between items-center text-base text-gray-900 font-medium mx-2">
+                                                <span>Price: {{product.price | currency:' '}} лв.</span>
+                                                <div>
+                                                    <!-- <span>Quantity: </span> -->
+                                                    <button (click)="onRemoveQuantity(product)" mat-icon-button>
+                                                        <mat-icon>remove</mat-icon>
+                                                    </button>
+                                                    {{product.quantity}}
+                                                    <button (click)="onAddQuantity(product)" mat-icon-button>
+                                                        <mat-icon>add</mat-icon>
+                                                    </button>
+                                                </div>
+                                                <span>Total: {{product.price*product.quantity|currency:''}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                            <!-- Mobile View -->
+                            <div class="block sm:hidden">
+                                <li class="py-3">
+                                    <div class="flex text-small">
+                                        <div
+                                            class="h-24 w-24 sm:h-48 sm:w-48 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                            <img [src]="product.image" alt="image" class="object-cover object-center">
+                                        </div>
+                                        <div class="grid grid-cols-12 justify-between text-gray-900">
+                                            <div class="col-span-11 ml-2 max-h-24 overflow-y-auto">
+                                                <span [textContent]="product.title"
+                                                    class="text-base font-medium">TITLE</span>
+                                                <span class="flex pt-1.5 text-xs text-gray-500"
+                                                    [textContent]="product.description">
+                                                    DESCRIPTION
+                                                </span>
+                                            </div>
+                                            <button (click)="onRemoveFromCart(product)" type="button"
+                                                class="font-medium text-indigo-600 hover:text-indigo-500 flex align-top">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex justify-between items-center mx-3 text-base font-medium text-gray-900">
+                                        <span>{{product.price | currency:' '}} лв.</span>
+                                        <div>
+                                            <button (click)="onRemoveQuantity(product)" mat-icon-button>
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                            {{product.quantity}}
+                                            <button (click)="onAddQuantity(product)" mat-icon-button>
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                        <span class="text-gray-900">{{product.price*product.quantity|
+                                            currency:''}}</span>
+                                    </div>
+                                </li>
+                            </div>
+                        </ng-container>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="mt-2">
-            <div class="flow-root">
-                <ul role="list" class="-my-6 divide-y divide-gray-200">
-                    <ng-container *ngFor="let product of dataSource">
-                        <li class="flex py-6">
-                            <div
-                                class="h-36 w-36 sm:h-48 sm:w-48 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                <img [src]="product.image"
-                                    alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-                                    class="h-full w-full object-cover object-center">
-                            </div>
-
-                            <div class="ml-4 flex flex-1 flex-col">
-                                <div>
-                                    <div class="flex flex-col items-center sm:flex-row sm:justify-between text-base font-medium text-gray-900">
-                                        <span href="#" [textContent]="product.title">TITLE</span>
-                                        <span class="ml-4">{{product.price | currency:' '}} лв.</span>
-                                    </div>
-                                    <span class="mt-4 text-sm text-gray-500 hidden sm:block"
-                                        [textContent]="product.description">
-                                        DESCRIPTION
-                                    </span>
-                                </div>
-                                <div class="flex flex-1 flex-col sm:flex-row sm:items-end justify-between text-sm">
-                                    <div class="flex flex-row items-center mx-auto sm:mx-0">
-                                        <span class="text-gray-900 font-medium">Quantity: </span>
-                                        <button (click)="onRemoveQuantity(product)" mat-icon-button>
-                                            <mat-icon>remove</mat-icon>
-                                        </button>
-                                        {{product.quantity}}
-                                        <button (click)="onAddQuantity(product)" mat-icon-button>
-                                            <mat-icon>add</mat-icon>
-                                        </button>
-                                    </div>
-
-                                    <div class="flex flex-col items-center">
-                                        <button type="button"
-                                            class="font-medium px-2 text-indigo-600 hover:text-indigo-500">Remove</button>
-                                        <span class="mt-2 text-lg font-medium text-gray-900">Total:
-                                            {{product.price*product.quantity | currency:''}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ng-container>
-                    <!-- More products... -->
-                </ul>
+        <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+            <div class="flex justify-between text-xl font-medium text-gray-900">
+                <p>Subtotal</p>
+                <p>{{getTotal(dataSource) | currency:''}}</p>
+            </div>
+            <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+            <div class="mt-6 flex justify-center">
+                <button routerLink="/checkout" type="button" class="w-full sm:w-96 rounded-md border border-transparent 
+                bg-indigo-600 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</button>
+            </div>
+            <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                <span>or
+                    <button routerLink="" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        Continue Shopping
+                        <span aria-hidden="true"> &rarr;</span>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
+</ng-container>
 
-    <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-        <div class="flex justify-between text-lg font-medium text-gray-900">
-            <p>Subtotal</p>
-            <p>{{getTotal(dataSource) | currency:''}}</p>
-        </div>
-        <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-        <div class="mt-6">
-            <a href="#"
-                class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
-        </div>
-        <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-            <p>
-                or
-                <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">
-                    Continue Shopping
-                    <span aria-hidden="true"> &rarr;</span>
-                </button>
-            </p>
-        </div>
+<ng-template #emptyCart>
+    <div class="max-w-7xl mx-auto text-center pt-10">
+        <div class="text-4xl mb-2">Вашата количка е празна.</div>
+        <p class="mb-4 text-base">Изглежда, че вашата количка е празна.</p>
+        <button routerLink="/home"
+            class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към
+            началната
+            страница</button>
     </div>
-</div>
+</ng-template>

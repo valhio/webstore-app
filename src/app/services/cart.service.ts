@@ -4,7 +4,7 @@ import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment';
 import { AngularFireFunctions as Functions } from '@angular/fire/compat/functions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 declare var Stripe: (arg0: string) => any;
 
@@ -17,7 +17,6 @@ export class CartService implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     private afFun: Functions,
-    private activatedRoute: ActivatedRoute,
     private router: Router
     ) {
       // If statement needs to stay, otherwise the header breaks
@@ -43,6 +42,7 @@ export class CartService implements OnInit {
     this.syncItems();
     this._snackBar.open(`${item.title} added to cart.`, 'Close', {
       duration: 3000,
+      panelClass: ['custom-snack-bar'],
     });
     
   }
@@ -63,6 +63,7 @@ export class CartService implements OnInit {
     this.syncItems();
     this._snackBar.open(`${item.title} removed from cart.`, 'Close', {
       duration: 3000,
+      panelClass: ['custom-snack-bar'],
     });
   }
 
@@ -77,8 +78,9 @@ export class CartService implements OnInit {
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
       this.syncItems();
-      this._snackBar.open(`${item.title} quantity decremented.`, 'Close', {
+      this._snackBar.open(`${item.title} x1 removed from cart.`, 'Close', {
         duration: 3000,
+        panelClass: ['custom-snack-bar'],
       });
     } else {
       this.removeFromCart(item);
@@ -95,6 +97,7 @@ export class CartService implements OnInit {
   placeOrder(): void {
     this._snackBar.open('Order placed successfully.', 'Close', {
       duration: 3000,
+      panelClass: ['custom-snack-bar'],
     });
     this.router.navigate(['/payment/status'],{queryParams: {action: 'success'}});
     this.clearCart();
