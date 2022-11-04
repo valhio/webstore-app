@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment';
 import { AngularFireFunctions as Functions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
+import { StoreService } from './store.service';
 
 declare var Stripe: (arg0: string) => any;
 
@@ -17,34 +18,44 @@ export class CartService implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     private afFun: Functions,
-    private router: Router
-    ) {
-      // If statement needs to stay, otherwise the header breaks
-      if (localStorage.getItem('cart')) {
-        this.cart.next(JSON.parse(localStorage.getItem('cart') || '{}'));
-      }
-      // afFun.useEmulator('localhost', 5001);
+    private router: Router,
+    private storeService: StoreService
+  ) {
+    // If statement needs to stay, otherwise the header breaks
+    if (localStorage.getItem('cart')) {
+
+      // This code block is so that the user can't add "custom" items to the cart
+      JSON.parse(localStorage.getItem('cart')!).items.forEach(
+        (item: CartItem) => {
+          let obj = storeService.findMockById(item.id); // Find the item in the store by its id
+          if (obj) {
+            obj.quantity = item.quantity; // Set the quantity of the item in the store to the quantity of the item in the cart
+            this.cart.getValue().items.push(obj); // Push the item to the cart
+          }
+        }
+      );
     }
-    
+    // afFun.useEmulator('localhost', 5001);
+  }
+
   ngOnInit(): void {}
 
-  addToCart(item: CartItem): void {     
+  addToCart(item: CartItem): void {
     const cart = this.cart.getValue();
     const index = cart.items.findIndex((i) => i.id == item.id);
-    
-    if (index!==-1) {
+
+    if (index !== -1) {
       cart.items[index].quantity += 1;
-    } else {            
+    } else {
       cart.items.push(item);
     }
 
     this.cart.next(cart);
     this.syncItems();
-    this._snackBar.open(`${item.title} added to cart.`, 'Close', {
+    this._snackBar.open(`${item.name} added to cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
     });
-    
   }
 
   getTotal(items: CartItem[]): number {
@@ -61,7 +72,7 @@ export class CartService implements OnInit {
     const filtered = this.cart.getValue().items.filter((i) => i.id !== item.id);
     this.cart.next({ items: filtered });
     this.syncItems();
-    this._snackBar.open(`${item.title} removed from cart.`, 'Close', {
+    this._snackBar.open(`${item.name} removed from cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
     });
@@ -78,7 +89,7 @@ export class CartService implements OnInit {
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
       this.syncItems();
-      this._snackBar.open(`${item.title} x1 removed from cart.`, 'Close', {
+      this._snackBar.open(`${item.name} x1 removed from cart.`, 'Close', {
         duration: 3000,
         panelClass: ['custom-snack-bar'],
       });
@@ -89,9 +100,13 @@ export class CartService implements OnInit {
 
   async checkout() {
     var stripe = Stripe(environment.stripePublicKey);
-    this.afFun.httpsCallable('stripeCheckoutSession')({items: this.cart.getValue().items}).subscribe((res: any) => {      
-      stripe.redirectToCheckout({sessionId: res});
-    });
+    this.afFun
+      .httpsCallable('stripeCheckoutSession')({
+        items: this.cart.getValue().items,
+      })
+      .subscribe((res: any) => {
+        stripe.redirectToCheckout({ sessionId: res });
+      });
   }
 
   placeOrder(): void {
@@ -99,7 +114,9 @@ export class CartService implements OnInit {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
     });
-    this.router.navigate(['/payment/status'],{queryParams: {action: 'success'}});
+    this.router.navigate(['/payment/status'], {
+      queryParams: { action: 'success' },
+    });
     this.clearCart();
     localStorage.removeItem('cart');
   }

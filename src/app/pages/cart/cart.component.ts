@@ -27,7 +27,6 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cart.subscribe((cart) => {
       this.cart = cart;
-      // this.dataSource= localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')!) : [];
       this.dataSource = this.cart.items;
     });
   }
