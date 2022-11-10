@@ -35,7 +35,7 @@ export class CartService implements OnInit {
         }
       );
     }
-    // afFun.useEmulator('localhost', 5001);
+    // afFun.useEmulator('localhost', 5001); // Funciton deployment emulator 
   }
 
   ngOnInit(): void {}
