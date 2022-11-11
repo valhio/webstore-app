@@ -1,6 +1,6 @@
 <div *ngIf="(product && (innerWidth>670 || innerWidth<=560) && columnsCountMode!=1) || (product && innerWidth<=560 && columnsCountMode==1)"
     class="max-w-xs mx-auto sm:mx-2 rounded-lg shadow-lg h-full text-center">
-    <img class="w-full h-56 object-cover mx-auto" [src]="product.image" alt="product" />
+    <img class="w-full h-56 object-cover mx-auto" [src]="product.imageUrl" alt="product" />
     <div class="px-6 py-4">
         <p class="font-bold text-lg text-gray-900" [textContent]="product.name">TITLE</p>
         <p class="font-medium text-sm text-gray-600 truncate" [textContent]="product.description">DESCRIPTION</p>
@@ -17,8 +17,8 @@
     *ngIf="(product && (innerWidth<=670 && innerWidth> 560) && columnsCountMode==1 ) || (product && (innerWidth>560) && columnsCountMode==1)">
     <div class="grid lg:grid-cols-1">
         <div class="m-2 bg-white rounded-lg shadow-xl flex">
-            <img [src]="product.image" class="w-2/5 max-h-[250px] rounded-l-lg h-full object-cover">
-            <div class="p-4 pb-1 bg-gray-50 grid">
+            <img [src]="product.imageUrl" class="w-2/5 max-h-[250px] rounded-l-lg h-full object-cover">
+            <div class="p-4 pb-1 bg-gray-50 grid w-full">
                 <h2 class="mb-2 text-2xl font-bold text-gray-900" [textContent]="product.name">TITLE</h2>
                 <p class="text-gray-600" [textContent]="product.description">DESCRIPTION</p>
                 <div class="flex justify-between items-center text-gray-800">

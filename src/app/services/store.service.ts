@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Product } from '../models/product.model';
+import {map} from 'rxjs/operators'
+import { ApiResponse } from '../interface/api-response';
+import { Page } from '../interface/page';
+
 
 const STORE_BASE_URL = 'https://fakestoreapi.com';
 
@@ -37,15 +41,19 @@ export class StoreService {
     return mock ? mock : null;
   }
 
+  fetchApiData(keyword: string = '', page: number = 0, size: number = 10, sort:String ='asc'): Observable<ApiResponse<Page<Product>>> {
+    return this.http.get<any>(`http://localhost:8080/api/v1/products?keyword=${keyword}&page=${page}&size=${size}&sort=${sort}`);
+  }
+
   mockData: Product[] = [
     {
       id: 1,
-      name: 'Black & White Marble',
+      name: "Black & White Marble",
       price: 65.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
          | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-1.jpg',
-      category: 'Quartz Stone Wrist Rests',
+      imageUrl: "/assets/images/wrist-rests/wrist-rest-1.jpg",
+      category: "Quartz Stone Wrist Rests",
       quantity: 1,
     },
     {
@@ -54,7 +62,7 @@ export class StoreService {
       price: 60.0,
       description:
         'The Resin wrist rest, which is made of a combination of epoxy resin and has a baking finish surface. It is normal that there may be small bubbles in the resin. So handicrafts are not flawless products.',
-      image: '/assets/images/wrist-rests/wrist-rest-2.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-2.jpg',
       category: 'Marble Wrist Rests',
       quantity: 1,
     },
@@ -64,7 +72,7 @@ export class StoreService {
       price: 70.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-3.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-3.jpg',
       category: 'Stone Wrist Rests',
       quantity: 1,
     },
@@ -74,7 +82,7 @@ export class StoreService {
       price: 70.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-4.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-4.jpg',
       category: 'Stone Wrist Rests',
       quantity: 1,
     },
@@ -84,7 +92,7 @@ export class StoreService {
       price: 65.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-5.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-5.jpg',
       category: 'Marble Wrist Rests',
       quantity: 1,
     },
@@ -94,7 +102,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-6.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-6.jpg',
       category: 'Quartz Wrist Rests',
       quantity: 1,
     },
@@ -104,7 +112,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-7.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-7.jpg',
       category: 'Quartz Wrist Rests',
       quantity: 1,
     },
@@ -114,7 +122,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-8.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-8.jpg',
       category: 'Resin Wrist Rests',
       quantity: 1,
     },
@@ -124,7 +132,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-9.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-9.jpg',
       category: 'Resin Wrist Rests',
       quantity: 1,
     },
@@ -134,7 +142,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Resin | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-10.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-10.jpg',
       category: 'Resin Wrist Rests',
       quantity: 1,
     },
@@ -144,7 +152,7 @@ export class StoreService {
       price: 65.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
          | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-1.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-1.jpg',
       category: 'Quartz Stone Wrist Rests',
       quantity: 1,
     },
@@ -154,7 +162,7 @@ export class StoreService {
       price: 60.0,
       description:
         'The Resin wrist rest, which is made of a combination of epoxy resin and has a baking finish surface. It is normal that there may be small bubbles in the resin. So handicrafts are not flawless products.',
-      image: '/assets/images/wrist-rests/wrist-rest-2.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-2.jpg',
       category: 'Marble Wrist Rests',
       quantity: 1,
     },
@@ -164,7 +172,7 @@ export class StoreService {
       price: 70.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-3.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-3.jpg',
       category: 'Stone Wrist Rests',
       quantity: 1,
     },
@@ -174,7 +182,7 @@ export class StoreService {
       price: 70.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-4.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-4.jpg',
       category: 'Stone Wrist Rests',
       quantity: 1,
     },
@@ -184,7 +192,7 @@ export class StoreService {
       price: 65.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-5.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-5.jpg',
       category: 'Marble Wrist Rests',
       quantity: 1,
     },
@@ -194,7 +202,7 @@ export class StoreService {
       price: 60.0,
       description: `Material: Quartz stones | Dimensions: 60%: 296 x 80 x 20 mm;  65%/75%: 320 x 80 x 20 mm 80%:360 x 80 x 20 mm
       | Package Weight: 60% :Around 880g;  65%: Around 990g | Including: Wrist rest, Rubber feet   `,
-      image: '/assets/images/wrist-rests/wrist-rest-6.jpg',
+      imageUrl: '/assets/images/wrist-rests/wrist-rest-6.jpg',
       category: 'Quartz Wrist Rests',
       quantity: 1,
     },

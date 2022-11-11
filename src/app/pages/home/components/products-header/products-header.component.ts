@@ -24,16 +24,16 @@ export class ProductsHeaderComponent implements OnInit {
   onSortUpdate(sort: string): void {
     this.sort = sort;
     switch (sort) {
-      case 'name-asc':
+      case 'name asc':
         this.displaySort = 'Име (А-Я)';
         break;
-      case 'name-desc':
+      case 'name desc':
         this.displaySort = 'Име (Я-А)';
         break;
-      case 'price-asc':
+      case 'price asc':
         this.displaySort = 'Цена (Ниска към Висока)';
         break;
-      case 'price-desc':
+      case 'price desc':
         this.displaySort = 'Цена (Висока към Ниска)';
         break;
     }

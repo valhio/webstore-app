@@ -1,8 +1,16 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { debounce, elementAt, Subscription } from 'rxjs';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Pipe,
+} from '@angular/core';
+import { BehaviorSubject, debounce, elementAt, Subscription } from 'rxjs';
 import { Product } from 'src/app/models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from '../../services/store.service';
+import { Page } from '../../interface/page';
+import { ApiResponse } from '../../interface/api-response';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 550, 4: 420 };
 @Component({
@@ -10,25 +18,22 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 550, 4: 420 };
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   columnsCount = 1;
   rowHeight = ROWS_HEIGHT[this.columnsCount];
   currentCategory: string | undefined;
   sort = 'name-asc';
   size = 12;
-  page = '1';
-  productsDisplayed: Product[] = [];
-  mockData : Product[] = [];
-  productsSubscription: Subscription | undefined;
+  page = 0;
+  productsData: Product[] = [];
+  displayedProducts: Product[] = [];
+  responseSubject = new BehaviorSubject<ApiResponse<Page<Product>>>(null!); // null is the initial value
   width = 0;
-  autoScrollSizeIncrement = 4;
   showSpinner: boolean = false;
 
   // Infinite scroll
   infiniteScrollThrottle = 0;
   infiniteScrollDistance = 0;
-
-  
 
   constructor(
     private cartService: CartService,
@@ -38,46 +43,33 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.onResize();
     this.getProducts();
-  }
-
-  ngOnDestroy(): void {
-    if (this.productsSubscription) {
-      this.productsSubscription?.unsubscribe();
-    }
+    this.initLoadProducts();
   }
 
   getProducts(): void {
-    // this.productsSubscription = this.storeService
-    //   .getAllProducts(
-    //     this.size.toString(),
-    //     this.sort,
-    //     this.page,
-    //     this.currentCategory
-    //   )
-    //   .subscribe((_products) => {
-    //     this.productsDisplayed = _products;
-    //   });
-
-    this.productsSubscription = this.storeService
-      .getMockData()
+    this.storeService
+      .fetchApiData(
+        '',
+        this.page,
+        this.size,
+        this.sort
+        // this.currentCategory
+      )
       .subscribe((_products) => {
-        this.mockData = _products;
-        if (this.sort === 'name-asc') {
-          _products.sort((a, b) => (a.name > b.name ? 1 : -1));
-        } else if (this.sort === 'name-desc') {
-          _products.sort((a, b) => (a.name < b.name ? 1 : -1));
-        } else if (this.sort === 'price-asc') {
-          _products.sort((a, b) =>
-            a.price.toString() > b.price.toString() ? 1 : -1
-          );
-        } else if (this.sort === 'price-desc') {
-          _products.sort((a, b) =>
-            a.price.toString() < b.price.toString() ? 1 : -1
-          );
+        if (_products.data.page.content.length > 0) {
+          this.responseSubject.next(_products);
+          this.productsData.push(..._products.data.page.content);
+          this.displayedProducts.length == 0
+            ? this.initLoadProducts()
+            : this.loadMore();
         }
-        this.productsDisplayed = _products.slice(0, this.width <= 640 ? 6 : this.size);
       });
+  }
 
+  initLoadProducts() {
+    this.displayedProducts.push(
+      ...this.productsData.slice(0, this.width <= 640 ? 6 : this.size)
+    );
   }
 
   onColumnsCountChange(columns: number): void {
@@ -90,13 +82,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getProducts();
   }
 
-  onAddToCart(product: Product): void {    
+  onAddToCart(product: Product): void {
     this.cartService.addToCart({
       id: product.id,
       name: product.name,
       price: product.price,
       description: product.description,
-      image: product.image,
+      imageUrl: product.imageUrl,
       category: product.category,
       quantity: 1,
     });
@@ -138,28 +130,34 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    if (this.mockData.length > this.productsDisplayed!.length) {
+    if (this.productsData.length > this.displayedProducts!.length) {
       this.showSpinner = true;
       setTimeout(() => {
         let countOfItemsToDisplay =
           this.columnsCount == 1
             ? 3
-            : this.productsDisplayed.length % this.columnsCount == 0
+            : this.displayedProducts.length % this.columnsCount == 0
             ? this.columnsCount
             : this.columnsCount -
-              (this.productsDisplayed.length % this.columnsCount) +
+              (this.displayedProducts.length % this.columnsCount) +
               this.columnsCount;
 
-        this.productsDisplayed?.push(
-          ...this.mockData.slice(
-            this.productsDisplayed.length,
-            this.productsDisplayed.length + countOfItemsToDisplay > this.mockData.length
-              ? this.mockData.length
-              : this.productsDisplayed.length + countOfItemsToDisplay
+        this.displayedProducts?.push(
+          ...this.productsData.slice(
+            this.displayedProducts.length,
+            this.displayedProducts.length + countOfItemsToDisplay >
+              this.productsData.length
+              ? this.productsData.length
+              : this.displayedProducts.length + countOfItemsToDisplay
           )
         );
         this.showSpinner = false;
       }, 500);
+    } else {
+      if (this.page + 1 < this.responseSubject.value.data.page.totalPages) {
+        ++this.page;
+        this.getProducts();
+      }
     }
   }
 }
