@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div *ngIf="width>640 && displayedProducts.length<responseSubject.value.data.page.totalElements" class="flex justify-center">
+        <div *ngIf="width>640 && (totalElements$ | async)! > displayedProducts.length" class="flex justify-center">
             <button *ngIf="!showSpinner" (click)="loadMore()" mat-raised-button
                 class="w-52 uppercase bg-gray-900 hover:bg-gray-800 text-white text-base">More</button>
             <button *ngIf="showSpinner" mat-raised-button

@@ -23,19 +23,17 @@ export class CartService implements OnInit {
   ) {
     // If statement needs to stay, otherwise the header breaks
     if (localStorage.getItem('cart')) {
-
       // This code block is so that the user can't add "custom" items to the cart
       JSON.parse(localStorage.getItem('cart')!).items.forEach(
         (item: CartItem) => {
-          let obj = storeService.findMockById(item.id); // Find the item in the store by its id
-          if (obj) {
-            obj.quantity = item.quantity; // Set the quantity of the item in the store to the quantity of the item in the cart
-            this.cart.getValue().items.push(obj); // Push the item to the cart
-          }
+          storeService.findProductById(item.id).subscribe((res) => {            
+            res.data.product.quantity = item.quantity; // Set the quantity of the item in the store to the quantity of the item in the cart
+            this.cart.getValue().items.push(res.data.product); // Push the item to the cart
+          });
         }
       );
     }
-    // afFun.useEmulator('localhost', 5001); // Funciton deployment emulator 
+    // afFun.useEmulator('localhost', 5001); // Funciton deployment emulator
   }
 
   ngOnInit(): void {}

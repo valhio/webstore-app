@@ -3,7 +3,5 @@ export interface ApiResponse<T> {
   statusCode:number;
   status:string;
   message:string;
-  data:{
-    page:T
-  };
+  data:T
 }

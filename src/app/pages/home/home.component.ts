@@ -27,9 +27,12 @@ export class HomeComponent implements OnInit {
   page = 0;
   productsData: Product[] = [];
   displayedProducts: Product[] = [];
-  responseSubject = new BehaviorSubject<ApiResponse<Page<Product>>>(null!); // null is the initial value
   width = 0;
   showSpinner: boolean = false;
+  
+  responseSubject = new BehaviorSubject<ApiResponse<Page<Product>>>(null!); // null is the initial value
+  totalElementsSubject = new BehaviorSubject<number>(0);
+  totalElements$ = this.totalElementsSubject.asObservable();
 
   // Infinite scroll
   infiniteScrollThrottle = 0;
@@ -43,7 +46,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.onResize();
     this.getProducts();
-    this.initLoadProducts();
   }
 
   getProducts(): void {
@@ -58,6 +60,8 @@ export class HomeComponent implements OnInit {
       .subscribe((_products) => {
         if (_products.data.page.content.length > 0) {
           this.responseSubject.next(_products);
+          this.totalElementsSubject.next(_products.data.page.totalElements);
+          
           this.productsData.push(..._products.data.page.content);
           this.displayedProducts.length == 0
             ? this.initLoadProducts()
