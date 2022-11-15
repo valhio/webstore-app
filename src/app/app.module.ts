@@ -41,6 +41,8 @@ import { PaymentStatusComponent } from './pages/payment/payment-status/payment-s
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CheckoutHeaderComponent } from './pages/checkout/checkout-header/checkout-header.component';
 import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-body.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -78,6 +80,7 @@ import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-b
     MatSnackBarModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     MatProgressSpinnerModule,
     InfiniteScrollModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

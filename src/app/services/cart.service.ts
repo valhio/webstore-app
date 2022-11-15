@@ -19,19 +19,19 @@ export class CartService implements OnInit {
     private _snackBar: MatSnackBar,
     private afFun: Functions,
     private router: Router,
-    private storeService: StoreService
+    storeService: StoreService
   ) {
-    // If statement needs to stay, otherwise the header breaks
-    if (localStorage.getItem('cart')) {
-      // This code block is so that the user can't add "custom" items to the cart
-      JSON.parse(localStorage.getItem('cart')!).items.forEach(
-        (item: CartItem) => {
-          storeService.findProductById(item.id).subscribe((res) => {            
-            res.data.product.quantity = item.quantity; // Set the quantity of the item in the store to the quantity of the item in the cart
-            this.cart.getValue().items.push(res.data.product); // Push the item to the cart
-          });
-        }
-      );
+    let cart = localStorage.getItem('cart');
+    if (cart) {
+      // This is a security measure to prevent users from adding invalid items to the cart
+      JSON.parse(cart).items.forEach((item: CartItem) => {
+        storeService.findProductById(item.id).subscribe((res) => {
+          let newCart = this.cart.getValue();
+          res.data.product.quantity = item.quantity; // Set the quantity of the cart product to the quantity of the localStorage's product quantity
+          newCart.items.push(res.data.product); // Push the item to the cart
+          this.cart.next(newCart)
+        });
+      });
     }
     // afFun.useEmulator('localhost', 5001); // Funciton deployment emulator
   }
@@ -49,7 +49,7 @@ export class CartService implements OnInit {
     }
 
     this.cart.next(cart);
-    this.syncItems();
+    this.syncLocalStorageCart();
     this._snackBar.open(`${item.name} added to cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
@@ -63,13 +63,13 @@ export class CartService implements OnInit {
   clearCart(): void {
     localStorage.removeItem('cart');
     this.cart.next({ items: [] });
-    this.syncItems();
+    this.syncLocalStorageCart();
   }
 
   removeFromCart(item: CartItem) {
     const filtered = this.cart.getValue().items.filter((i) => i.id !== item.id);
     this.cart.next({ items: filtered });
-    this.syncItems();
+    this.syncLocalStorageCart();
     this._snackBar.open(`${item.name} removed from cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
@@ -86,7 +86,7 @@ export class CartService implements OnInit {
 
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
-      this.syncItems();
+      this.syncLocalStorageCart();
       this._snackBar.open(`${item.name} x1 removed from cart.`, 'Close', {
         duration: 3000,
         panelClass: ['custom-snack-bar'],
@@ -119,7 +119,7 @@ export class CartService implements OnInit {
     localStorage.removeItem('cart');
   }
 
-  syncItems(): void {
+  syncLocalStorageCart(): void {
     localStorage.setItem('cart', JSON.stringify(this.cart.getValue()));
   }
 }
