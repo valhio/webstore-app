@@ -14,6 +14,7 @@ declare var Stripe: (arg0: string) => any;
 })
 export class CartService implements OnInit {
   cart = new BehaviorSubject<Cart>({ items: [] });
+  storeService: StoreService;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -21,6 +22,7 @@ export class CartService implements OnInit {
     private router: Router,
     storeService: StoreService
   ) {
+    this.storeService = storeService;
     let cart = localStorage.getItem('cart');
     if (cart) {
       // This is a security measure to prevent users from adding invalid items to the cart
@@ -107,7 +109,9 @@ export class CartService implements OnInit {
       });
   }
 
-  placeOrder(): void {
+  placeOrder(order:any): void {
+    this.storeService.placeOrder(order).subscribe((res) => {
+      
     this._snackBar.open('Order placed successfully.', 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
@@ -117,6 +121,7 @@ export class CartService implements OnInit {
     });
     this.clearCart();
     localStorage.removeItem('cart');
+  });
   }
 
   syncLocalStorageCart(): void {

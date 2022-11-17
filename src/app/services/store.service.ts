@@ -41,4 +41,8 @@ export class StoreService {
     return this.http.get<ApiResponse<any>>(`${STORE_BASE_URL}/products/${id}`);
   }
 
+  placeOrder(order: any): Observable<ApiResponse<any>> {
+    return this.http.post<ApiResponse<any>>(`${STORE_BASE_URL}/orders/new`, order);
+  }
+
 }

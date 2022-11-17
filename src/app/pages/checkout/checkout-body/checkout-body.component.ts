@@ -35,17 +35,15 @@ export class CheckoutBodyComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.orderForm = this.fb.group({
-      user: this.fb.group({
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
-        email: ['', [Validators.required]],
-        phone: ['', [Validators.required]],
-      }),
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
       address: ['', [Validators.required]],
       city: ['', [Validators.required]],
       postCode: ['', [Validators.required]],
       notes: [''],
-      products: [''],
+      lineItems: [''],
       paymentMethod: [this.payment.CASH],
       amount: [0, [Validators.required]],
       deliveryFee: [this.deliveryFee, [Validators.required]],
@@ -65,10 +63,11 @@ export class CheckoutBodyComponent implements OnInit {
         this.orderForm.patchValue({
           amount: productsTotal,
           total: productsTotal + this.deliveryFee,
-          products: this.dataSource.map((e) => {
+          lineItems: this.dataSource.map(item=>{
             return {
-              id: e.id,
-            };
+              product: {id: item.id},
+              quantity: item.quantity
+            }
           }),
         });
       },
@@ -84,7 +83,7 @@ export class CheckoutBodyComponent implements OnInit {
   }
 
   onPlaceOrder(): void {
-    this.cartService.placeOrder();
+    this.cartService.placeOrder(this.orderForm.value);
   }
 
   notImplementedYet() {
