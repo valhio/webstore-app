@@ -1,18 +1,19 @@
 import { HttpClient, HttpHeaders, HttpResponse, } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../models/loginUser';
 import { RegisterUser } from '../models/registerUser';
 import { User } from '../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService {
+export class AuthenticationService implements OnDestroy {
   public _host: string = environment.apiUrl;
   private _isAuthenticated: boolean = false;
   // private _user: User = new User({});
@@ -20,10 +21,15 @@ export class AuthenticationService {
   private userSubject: BehaviorSubject<User>;
   private tokenSubject: BehaviorSubject<string>;
   private jwtHelper = new JwtHelperService();
+  private subscriptions: Subscription[] = [];
 
   constructor(private http: HttpClient, private router: Router) {
     this.userSubject = new BehaviorSubject<User>(new User({}));
     this.tokenSubject = new BehaviorSubject<string>('');
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   setUser(user: User) {
@@ -63,17 +69,28 @@ export class AuthenticationService {
     return this.http.post<User>(`${ this._host }/api/v1/user/register`, user, { observe: 'response' });
   }
 
-  logout(): Observable<any> {
-    return this.http.post<any>(`${ this._host }/api/v1/user/api/logout`, {})
-      .pipe(
-        tap(() => {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          this.userSubject.next(new User({}));
-          this.tokenSubject.next('');
-          this.router.navigate(['/login']);
-        })
-      );
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.userSubject.next(new User({}));
+    this.tokenSubject.next('');
+    // this.router.navigate(['/login'])
+
+    // this.subscriptions.push(
+    //   this.http.post<any>(`${ this._host }/api/v1/user/api/logout`, {})
+    //     .subscribe(
+    //       {
+    //         next: () => {
+    //           localStorage.removeItem('token');
+    //           localStorage.removeItem('user');
+    //           this.userSubject.next(new User({}));
+    //           this.tokenSubject.next('');
+    //         },
+    //         error: (err) => console.log(err),
+    //         complete: () => this.router.navigate(['/login'])
+    //       }
+    //     )
+    // )
   }
 
   updateUserInLocalStorage(user: User) {

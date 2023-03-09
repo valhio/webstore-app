@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Cart } from 'src/app/models/cart.model';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart.model';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class HeaderComponent {
     this._cart = cart;
   }
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private authenticationService: AuthenticationService) { }
 
   getTotal(items: CartItem[]): number {
     return this.cartService.getTotal(items);
@@ -38,5 +39,13 @@ export class HeaderComponent {
 
   onCheckout(): void {
     this.cartService.checkout();
+  }
+
+  onLogout(): void {    
+    this.authenticationService.logout()
+  }
+
+  isAuthenticated(): boolean {
+    return this.authenticationService.isAuthenticated();
   }
 }

@@ -30,9 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin(user: LoginUser): void {
-    console.log('user:',user);
-    
-
     this.isLoading = true;
     this._subscriptions.push(
       this.authenticationService.login(user).subscribe(
