@@ -1,5 +1,5 @@
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment';
@@ -12,9 +12,10 @@ declare var Stripe: (arg0: string) => any;
 @Injectable({
   providedIn: 'root',
 })
-export class CartService implements OnInit {
+export class CartService implements OnInit, OnDestroy {
   cart = new BehaviorSubject<Cart>({ items: [] });
   storeService: StoreService;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -27,18 +28,24 @@ export class CartService implements OnInit {
     if (cart) {
       // This is a security measure to prevent users from adding invalid items to the cart
       JSON.parse(cart).items.forEach((item: CartItem) => {
-        storeService.findProductById(item.id).subscribe((res) => {
-          let newCart = this.cart.getValue();
-          res.data.product.quantity = item.quantity; // Set the quantity of the cart product to the quantity of the localStorage's product quantity
-          newCart.items.push(res.data.product); // Push the item to the cart
-          this.cart.next(newCart)
-        });
+        this.subscriptions.push(
+          storeService.findProductById(item.id).subscribe((res) => {
+            let newCart = this.cart.getValue();
+            res.data.product.quantity = item.quantity; // Set the quantity of the cart product to the quantity of the localStorage's product quantity
+            newCart.items.push(res.data.product); // Push the item to the cart
+            this.cart.next(newCart)
+          })
+        );
       });
     }
     // afFun.useEmulator('localhost', 5001); // Funciton deployment emulator
   }
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  ngOnInit(): void { }
 
   addToCart(item: CartItem): void {
     const cart = this.cart.getValue();
@@ -52,7 +59,7 @@ export class CartService implements OnInit {
 
     this.cart.next(cart);
     this.syncLocalStorageCart();
-    this._snackBar.open(`${item.name} added to cart.`, 'Close', {
+    this._snackBar.open(`${ item.name } added to cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
     });
@@ -72,7 +79,7 @@ export class CartService implements OnInit {
     const filtered = this.cart.getValue().items.filter((i) => i.id !== item.id);
     this.cart.next({ items: filtered });
     this.syncLocalStorageCart();
-    this._snackBar.open(`${item.name} removed from cart.`, 'Close', {
+    this._snackBar.open(`${ item.name } removed from cart.`, 'Close', {
       duration: 3000,
       panelClass: ['custom-snack-bar'],
     });
@@ -89,7 +96,7 @@ export class CartService implements OnInit {
     if (cart.items[index].quantity > 0) {
       this.cart.next(cart);
       this.syncLocalStorageCart();
-      this._snackBar.open(`${item.name} x1 removed from cart.`, 'Close', {
+      this._snackBar.open(`${ item.name } x1 removed from cart.`, 'Close', {
         duration: 3000,
         panelClass: ['custom-snack-bar'],
       });
@@ -100,28 +107,35 @@ export class CartService implements OnInit {
 
   async checkout() {
     var stripe = Stripe(environment.stripePublicKey);
-    this.afFun
-      .httpsCallable('stripeCheckoutSession')({
-        items: this.cart.getValue().items,
-      })
-      .subscribe((res: any) => {
-        stripe.redirectToCheckout({ sessionId: res });
-      });
+    this.subscriptions.push(
+      this.afFun
+        .httpsCallable('stripeCheckoutSession')({
+          items: this.cart.getValue().items,
+        })
+        .subscribe((res: any) => {
+          stripe.redirectToCheckout({ sessionId: res });
+        })
+    )
   }
 
-  placeOrder(order:any): void {
-    this.storeService.placeOrder(order).subscribe((res) => {
-      
-    this._snackBar.open('Order placed successfully.', 'Close', {
-      duration: 3000,
-      panelClass: ['custom-snack-bar'],
-    });
-    this.router.navigate(['/payment/status'], {
-      queryParams: { action: 'success' },
-    });
-    this.clearCart();
-    localStorage.removeItem('cart');
-  });
+  placeOrder(order: any): void {
+    console.log('cartService');
+    
+    this.subscriptions.push(
+      this.storeService.placeOrder(order).subscribe((res) => {
+        console.log('cartService placeOrder res');
+        
+        this._snackBar.open('Order placed successfully.', 'Close', {
+          duration: 3000,
+          panelClass: ['custom-snack-bar'],
+        });
+        this.router.navigate(['/payment/status'], {
+          queryParams: { action: 'success' },
+        });
+        this.clearCart();
+        localStorage.removeItem('cart');
+      })
+    );
   }
 
   syncLocalStorageCart(): void {

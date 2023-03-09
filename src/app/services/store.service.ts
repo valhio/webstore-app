@@ -33,7 +33,7 @@ export class StoreService {
   //   return this.http.get<string[]>(`${STORE_BASE_URL}/products/categories`);
   // }
 
-  fetchApiData(keyword: string = '', page: number = 0, size: number = 10, sort:String ='asc'): Observable<ApiResponse<Page<Product>>> {
+  fetchApiData(keyword: string = '', page: number = 0, size: number = 10, sort:String ='asc'): Observable<ApiResponse<Page<Product[]>>> {    
     return this.http.get<any>(`http://localhost:8080/api/v1/products?keyword=${keyword}&page=${page}&size=${size}&sort=${sort}`);
   }
 
@@ -41,7 +41,7 @@ export class StoreService {
     return this.http.get<ApiResponse<any>>(`${STORE_BASE_URL}/products/${id}`);
   }
 
-  placeOrder(order: any): Observable<ApiResponse<any>> {
+  placeOrder(order: any): Observable<ApiResponse<any>> {    
     return this.http.post<ApiResponse<any>>(`${STORE_BASE_URL}/orders/new`, order);
   }
 

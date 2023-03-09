@@ -9,6 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from 'src/app/services/cart.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { Subscription } from 'rxjs';
+import { OnDestroy } from '@angular/core';
 
 enum PaymentMethods {
   STRIPE = 'stripe',
@@ -21,9 +24,10 @@ enum PaymentMethods {
   templateUrl: './checkout-body.component.html',
   styleUrls: ['./checkout-body.component.scss'],
 })
-export class CheckoutBodyComponent implements OnInit {
-  payment = PaymentMethods;
+export class CheckoutBodyComponent implements OnInit, OnDestroy {
 
+  private subscriptions: Subscription[] = [];
+  payment = PaymentMethods;
   orderForm: FormGroup;
   cart: Cart = { items: [] };
   dataSource: CartItem[] = [];
@@ -32,18 +36,20 @@ export class CheckoutBodyComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private _snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authenticationService: AuthenticationService
   ) {
     this.orderForm = this.fb.group({
+      userId: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required]],
       phone: ['', [Validators.required]],
       address: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      postCode: ['', [Validators.required]],
+      zipCode: ['', [Validators.required]],
       notes: [''],
-      lineItems: [''],
+      orderItems: [''],
       paymentMethod: [this.payment.CASH],
       amount: [0, [Validators.required]],
       deliveryFee: [this.deliveryFee, [Validators.required]],
@@ -54,24 +60,31 @@ export class CheckoutBodyComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
   ngOnInit(): void {
-    this.cartService.cart.subscribe({
-      next: (cart) => {
-        this.cart = cart;
-        this.dataSource = cart.items;
-        let productsTotal = this.getTotal(this.dataSource);
-        this.orderForm.patchValue({
-          amount: productsTotal,
-          total: productsTotal + this.deliveryFee,
-          lineItems: this.dataSource.map(item=>{
-            return {
-              product: {id: item.id},
-              quantity: item.quantity
-            }
-          }),
-        });
-      },
-    });
+    this.subscriptions.push(
+      this.cartService.cart.subscribe({
+        next: (cart) => {
+          this.cart = cart;
+          this.dataSource = cart.items;
+          let productsTotal = this.getTotal(this.dataSource);
+          this.orderForm.patchValue({
+            amount: productsTotal,
+            total: productsTotal + this.deliveryFee,
+            orderItems: this.dataSource.map(item => {
+              return {
+                productId: item.id,
+                quantity: item.quantity,
+                pricePerItem: item.price,
+              }
+            }),
+          });
+        },
+      })
+    );
   }
 
   getTotal(items: CartItem[]): number {
@@ -83,7 +96,21 @@ export class CheckoutBodyComponent implements OnInit {
   }
 
   onPlaceOrder(): void {
-    this.cartService.placeOrder(this.orderForm.value);
+    this.subscriptions.push(
+      this.authenticationService.getUser().subscribe({
+        next: (user) => {
+          this.orderForm.patchValue({
+            userId: user.userId || null,
+          });
+          console.log('orderForm');
+
+          this.cartService.placeOrder(this.orderForm.value);
+        },
+        error: (err) => {
+          console.log(err.message);
+        }
+      })
+    );
   }
 
   notImplementedYet() {

@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit {
   displayedProducts: Product[] = [];
   width = 0;
   showSpinner: boolean = false;
-  
-  responseSubject = new BehaviorSubject<ApiResponse<Page<Product>>>(null!); // null is the initial value
+
+  responseSubject = new BehaviorSubject<ApiResponse<any>>(null!); // null is the initial value
   totalElementsSubject = new BehaviorSubject<number>(0);
   totalElements$ = this.totalElementsSubject.asObservable();
 
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private storeService: StoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onResize();
@@ -57,12 +57,12 @@ export class HomeComponent implements OnInit {
         this.sort
         // this.currentCategory
       )
-      .subscribe((_products) => {
-        if (_products.data.page.content.length > 0) {
+      .subscribe((_products: any) => {
+        if (_products.data.products.content.length > 0) {
           this.responseSubject.next(_products);
-          this.totalElementsSubject.next(_products.data.page.totalElements);
-          
-          this.productsData.push(..._products.data.page.content);
+          this.totalElementsSubject.next(_products.data.products.totalElements);
+
+          this.productsData.push(..._products.data.products.content);
           this.displayedProducts.length == 0
             ? this.initLoadProducts()
             : this.loadMore();
@@ -141,8 +141,8 @@ export class HomeComponent implements OnInit {
           this.columnsCount == 1
             ? 3
             : this.displayedProducts.length % this.columnsCount == 0
-            ? this.columnsCount
-            : this.columnsCount -
+              ? this.columnsCount
+              : this.columnsCount -
               (this.displayedProducts.length % this.columnsCount) +
               this.columnsCount;
 
@@ -158,7 +158,7 @@ export class HomeComponent implements OnInit {
         this.showSpinner = false;
       }, 500);
     } else {
-      if (this.page + 1 < this.responseSubject.value.data.page.totalPages) {
+      if (+this.page + 1 < this.responseSubject.value.data.products.totalPages) {
         ++this.page;
         this.getProducts();
       }
