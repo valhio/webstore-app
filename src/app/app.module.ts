@@ -15,7 +15,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
@@ -25,22 +25,27 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
 import { ProductCardComponent } from './pages/home/components/product-card/product-card.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuccessComponent } from './pages/payment/success/success.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import {  } from '@angular/fire';
-import { initializeApp,provideFirebaseApp, } from '@angular/fire/app';
+import { } from '@angular/fire';
+import { initializeApp, provideFirebaseApp, } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 // import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideFunctions,getFunctions } from '@angular/fire/functions';
+import { provideFunctions, getFunctions } from '@angular/fire/functions';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CheckoutHeaderComponent } from './pages/checkout/checkout-header/checkout-header.component';
 import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-body.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { ManagementComponent } from './pages/management/management.component';
+
 
 
 @NgModule({
@@ -58,6 +63,9 @@ import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-b
     PaymentStatusComponent,
     CheckoutHeaderComponent,
     CheckoutBodyComponent,
+    LoginComponent,
+    RegisterComponent,
+    ManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -78,11 +86,15 @@ import { CheckoutBodyComponent } from './pages/checkout/checkout-body/checkout-b
     MatSnackBarModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     MatProgressSpinnerModule,
     InfiniteScrollModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
   ],
-  providers: [CartService, { provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [CartService,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

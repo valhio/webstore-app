@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { CartService } from '../../services/cart.service';
 
@@ -17,5 +18,4 @@ export class CheckoutComponent implements OnInit {
       this.dataSource = _cart.items;
     });
   }
-
 }

@@ -6,14 +6,22 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SuccessComponent } from './pages/payment/success/success.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PaymentStatusComponent } from './pages/payment/payment-status/payment-status.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { AuthenticationGuard } from './guard/authentication.guard';
+import { RoleGuard } from './guard/role.guard';
+import { ManagementComponent } from './pages/management/management.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', redirectTo: '', pathMatch: 'full' },
+  { path: 'management', component: ManagementComponent, canActivate: [AuthenticationGuard,RoleGuard], data: { expectedRole: 'ROLE_SUPER_ADMIN' }},
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'payment/success', component: SuccessComponent },
   { path: 'payment/status', component: PaymentStatusComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
@@ -21,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

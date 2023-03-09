@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:8080',
   stripePublicKey:
     'pk_test_51LuaOkB6gdK47cnCeWVIsE5YGwzQjrNGja8B5YeQ0baGsmwfdj38IraZfNvZXiPH3SJ0Ok3gXiL9Nn77Ku9NcOb800gjNXsYgP',
   firebase: {
