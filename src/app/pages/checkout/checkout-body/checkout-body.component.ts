@@ -102,8 +102,6 @@ export class CheckoutBodyComponent implements OnInit, OnDestroy {
           this.orderForm.patchValue({
             userId: user.userId || null,
           });
-          console.log('orderForm');
-
           this.cartService.placeOrder(this.orderForm.value);
         },
         error: (err) => {

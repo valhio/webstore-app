@@ -119,12 +119,8 @@ export class CartService implements OnInit, OnDestroy {
   }
 
   placeOrder(order: any): void {
-    console.log('cartService');
-    
     this.subscriptions.push(
       this.storeService.placeOrder(order).subscribe((res) => {
-        console.log('cartService placeOrder res');
-        
         this._snackBar.open('Order placed successfully.', 'Close', {
           duration: 3000,
           panelClass: ['custom-snack-bar'],

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse, } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap, Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -16,8 +16,6 @@ import { map } from 'rxjs/operators';
 export class AuthenticationService implements OnDestroy {
   public _host: string = environment.apiUrl;
   private _isAuthenticated: boolean = false;
-  // private _user: User = new User({});
-  // private _token: string = '';
   private userSubject: BehaviorSubject<User>;
   private tokenSubject: BehaviorSubject<string>;
   private jwtHelper = new JwtHelperService();
@@ -26,6 +24,8 @@ export class AuthenticationService implements OnDestroy {
   constructor(private http: HttpClient, private router: Router) {
     this.userSubject = new BehaviorSubject<User>(new User({}));
     this.tokenSubject = new BehaviorSubject<string>('');
+    this.tokenSubject.next(localStorage.getItem('token') || '');
+    this.userSubject.next(JSON.parse(localStorage.getItem('user') || '{}'));
   }
 
   ngOnDestroy(): void {
@@ -115,9 +115,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   isUserLoggedIn(): boolean {
-    this.tokenSubject.next(localStorage.getItem('token') || '');
-    this.userSubject.next(JSON.parse(localStorage.getItem('user') || '{}'));
-    const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);
+    const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);    
     /*If the token is not expired, 
     the username in the token is the same as the username in the user object, 
     the role in the token is the same as the role in the user object, 
