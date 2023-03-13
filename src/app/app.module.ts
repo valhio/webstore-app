@@ -46,6 +46,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ManagementComponent } from './pages/management/management.component';
 import { OrdersComponent } from './pages/home/components/orders/orders.component';
+import { InvoiceDialogComponent } from './pages/home/components/orders/invoice-dialog/invoice-dialog.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -67,7 +69,8 @@ import { OrdersComponent } from './pages/home/components/orders/orders.component
     LoginComponent,
     RegisterComponent,
     ManagementComponent,
-    OrdersComponent
+    OrdersComponent,
+    InvoiceDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +94,7 @@ import { OrdersComponent } from './pages/home/components/orders/orders.component
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     InfiniteScrollModule,
+    MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
   ],
   providers: [CartService,
