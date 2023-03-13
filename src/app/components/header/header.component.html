@@ -57,10 +57,9 @@
           <mat-icon>perm_identity</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu" class="menu-without-scroll">
-          <ng-container *ngIf="getItemsQuantity()!=0; else emptyCart">
             <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
-                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Orders</a>
+                <a routerLink="/orders" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Orders</a>
               </li>
               <li>
                 <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
@@ -70,7 +69,6 @@
                   class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
               </li>
             </ul>
-          </ng-container>
         </mat-menu>
       </div>
     </ng-container>

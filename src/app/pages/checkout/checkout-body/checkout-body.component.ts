@@ -51,9 +51,9 @@ export class CheckoutBodyComponent implements OnInit, OnDestroy {
       notes: [''],
       orderItems: [''],
       paymentMethod: [this.payment.CASH],
-      amount: [0, [Validators.required]],
+      productsTotal: [0, [Validators.required]],
       deliveryFee: [this.deliveryFee, [Validators.required]],
-      total: [
+      totalAmount: [
         this.getTotal(this.dataSource) + this.deliveryFee,
         [Validators.required],
       ],
@@ -72,8 +72,8 @@ export class CheckoutBodyComponent implements OnInit, OnDestroy {
           this.dataSource = cart.items;
           let productsTotal = this.getTotal(this.dataSource);
           this.orderForm.patchValue({
-            amount: productsTotal,
-            total: productsTotal + this.deliveryFee,
+            productsTotal: productsTotal,
+            totalAmount: productsTotal + this.deliveryFee,
             orderItems: this.dataSource.map(item => {
               return {
                 productId: item.id,

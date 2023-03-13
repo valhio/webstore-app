@@ -45,6 +45,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { ManagementComponent } from './pages/management/management.component';
+import { OrdersComponent } from './pages/home/components/orders/orders.component';
 
 
 
@@ -65,7 +66,8 @@ import { ManagementComponent } from './pages/management/management.component';
     CheckoutBodyComponent,
     LoginComponent,
     RegisterComponent,
-    ManagementComponent
+    ManagementComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
