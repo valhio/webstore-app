@@ -77,6 +77,7 @@ export class CheckoutBodyComponent implements OnInit, OnDestroy {
             orderItems: this.dataSource.map(item => {
               return {
                 productId: item.id,
+                productName: item.name,
                 quantity: item.quantity,
                 pricePerItem: item.price,
               }
