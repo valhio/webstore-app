@@ -49,6 +49,7 @@ import { OrdersComponent } from './pages/home/components/orders/orders.component
 import { InvoiceDialogComponent } from './pages/home/components/orders/invoice-dialog/invoice-dialog.component';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { OrdersManagementComponent } from './pages/management/orders-management/orders-management.component';
+import { OrderComponent } from './pages/order/order.component';
 
 
 
@@ -72,7 +73,8 @@ import { OrdersManagementComponent } from './pages/management/orders-management/
     ManagementComponent,
     OrdersComponent,
     InvoiceDialogComponent,
-    OrdersManagementComponent
+    OrdersManagementComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

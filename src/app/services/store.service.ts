@@ -48,4 +48,8 @@ export class StoreService {
   getOrdersForUser(userId: string): Observable<any[]> {
     return this.http.get<any[]>(`${STORE_BASE_URL}/orders/user/${userId}`);
   }
+
+  getOrderByOrderId(orderId: string): Observable<any> {
+    return this.http.get<any>(`${STORE_BASE_URL}/orders/${orderId}`);
+  }
 }
