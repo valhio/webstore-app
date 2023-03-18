@@ -3,13 +3,15 @@
         <div class="px-4 space-y-2 sm:px-0 sm:flex sm:items-baseline sm:justify-between sm:space-y-0">
             <div class="flex sm:items-baseline sm:space-x-4">
                 <h1 class="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Order #{{order.id}}</h1>
-                <a href="#" class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">View
-                    invoice<span aria-hidden="true"> →</span></a>
+                <a [routerLink]="'/orders/'+order.id+'/invoice'"
+                    class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
+                    View invoice<span aria-hidden="true"> →</span></a>
             </div>
             <p class="text-sm text-gray-600">Order placed <time [dateTime]="order.orderDate"
                     class="font-medium text-gray-900">{{order.orderDate | date:'MMMM dd, yyyy'}}</time></p>
-            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">View invoice<span
-                    aria-hidden="true"> →</span></a>
+            <a [routerLink]="'/orders/'+order.id+'/invoice'"
+                class="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">
+                View invoice<span aria-hidden="true"> →</span></a>
         </div>
 
         <!-- Products -->
