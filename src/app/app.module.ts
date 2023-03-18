@@ -50,6 +50,7 @@ import { InvoiceDialogComponent } from './pages/home/components/orders/invoice-d
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { OrdersManagementComponent } from './pages/management/orders-management/orders-management.component';
 import { OrderComponent } from './pages/order/order.component';
+import { EditOrderDialogComponent } from './pages/order/edit-order-dialog/edit-order-dialog.component';
 
 
 
@@ -74,7 +75,8 @@ import { OrderComponent } from './pages/order/order.component';
     OrdersComponent,
     InvoiceDialogComponent,
     OrdersManagementComponent,
-    OrderComponent
+    OrderComponent,
+    EditOrderDialogComponent
   ],
   imports: [
     BrowserModule,

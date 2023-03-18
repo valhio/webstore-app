@@ -70,7 +70,8 @@
                                             <a href="#" class="text-gray-700 block px-4 py-2 text-sm">
                                                 View
                                             </a>
-                                            <button mat-button (click)="openInvoice(order)" class="text-gray-700 block px-4 py-2 text-sm">
+                                            <button mat-button (click)="openInvoice(order)"
+                                                class="text-gray-700 block px-4 py-2 text-sm">
                                                 Invoice
                                             </button>
                                         </div>
@@ -91,6 +92,32 @@
                                 </div>
                             </div>
 
+                            <div class="border-b border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
+                                <h4 class="sr-only">Status</h4>
+                                <p class="text-sm font-medium text-gray-900">
+                                    {{getOrderStatus(order.orderStatus, order.lastModifiedDate)}}
+                                </p>
+                                <div class="mt-6" aria-hidden="true">
+                                    <div class="bg-gray-200 rounded-full overflow-hidden">
+                                        <div class="h-2 bg-indigo-600 rounded-full"
+                                            [style]="{'width': (getOrderStatusIndex(order.orderStatus) + 1) / 4 * 100 + '%'}">
+                                        </div>
+                                    </div>
+                                    <div class="hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6">
+                                        <div [ngClass]="{'text-indigo-600':isMoreThanOrEqualTo(getOrderStatusIndex(order.orderStatus),0)}"
+                                            class="text-left pl-5">Order placed</div>
+                                        <div [ngClass]="{'text-indigo-600':isMoreThanOrEqualTo(getOrderStatusIndex(order.orderStatus),1)}"
+                                            class="text-center">Processing</div>
+                                        <div [ngClass]="{'text-indigo-600':isMoreThanOrEqualTo(getOrderStatusIndex(order.orderStatus),2)}"
+                                            class="text-center ">Shipped</div>
+                                        <div [ngClass]="{'text-indigo-600':isMoreThanOrEqualTo(getOrderStatusIndex(order.orderStatus),3)}"
+                                            class="text-right pr-5">
+                                            {{isMoreThanOrEqualTo(getOrderStatusIndex(order.orderStatus),3) ?
+                                            getOrderStatusEnum(order.orderStatus) : 'Delivered'}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Products -->
                             <h4 class="sr-only">Items</h4>
                             <ul role="list" class="divide-y divide-gray-200">
@@ -98,15 +125,15 @@
                                     <div class="flex items-center sm:items-start">
                                         <div
                                             class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden sm:w-40 sm:h-40">
-                                            <img [src]="item.product.imageUrl"
-                                                alt="Moss green canvas compact backpack with double top zipper, zipper front pouch, and matching carry handle and backpack straps."
+                                            <img [src]="item.product.imageUrl" [alt]="item.product.description"
                                                 class="w-full h-full object-center object-cover">
                                         </div>
                                         <div class="flex-1 ml-6 text-sm">
                                             <div class="font-medium text-gray-900 sm:flex sm:justify-between">
                                                 <h5>{{item.product.name}}</h5>
                                                 <p class="mt-2 sm:mt-0">Quantity: {{item.quantity}}</p>
-                                                <p class="mt-2 sm:mt-0">Price per: {{item.product.price | currency: ' '}} лв.</p>
+                                                <p class="mt-2 sm:mt-0">Price per: {{item.product.price | currency: '
+                                                    '}} лв.</p>
                                             </div>
                                             <p class="hidden text-gray-500 sm:block sm:mt-2">
                                                 {{item.product.description}}</p>
@@ -116,16 +143,16 @@
                                     <div class="mt-6 sm:flex sm:justify-between">
                                         <div class="flex items-center">
                                             <!-- Heroicon name: solid/check-circle -->
-                                            <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <svg [ngClass]="{'text-green-500':item.status == 'ORDER_PLACED' || item.status == 'PENDING' || item.status == 'IN_STOCK' || item.status == 'OUT_FOR_DELIVERY' || item.status == 'DELIVERED',
+                                            'text-red-400':item.status == 'CANCELED' || item.status == 'REFUNDED' || item.status == 'EXCHANGED' || item.status == 'RETURNED'}"
+                                                class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor" aria-hidden="true">
                                                 <path fill-rule="evenodd"
                                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                                     clip-rule="evenodd" />
                                             </svg>
-                                            <p class="ml-2 text-sm font-medium text-gray-500">Product status: In stock as of 
-                                                <time [dateTime]="order.orderDate">
-                                                    {{order.orderDate | date: 'MMM dd, yyyy'}}
-                                                </time>
+                                            <p class="ml-2 text-sm font-medium text-gray-500">
+                                                {{getOrderItemStatus(item.status, item.lastModifiedDate)}}
                                             </p>
                                         </div>
 
@@ -144,12 +171,8 @@
                                         </div>
                                     </div>
                                 </li>
-
-                                <!-- More products... -->
                             </ul>
                         </div>
-
-                        <!-- More orders... -->
                     </div>
                 </div>
             </div>
@@ -158,9 +181,10 @@
                 <div class="max-w-7xl mx-auto text-center pt-20">
                     <div class="text-4xl mb-2">Изглезда, че нямате направени поръчки.</div>
                     <button routerLink="/home"
-                      class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към началната
-                      страница</button>
-                  </div>
+                        class="mt-4 mb-8 w-80 mx-auto uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към
+                        началната
+                        страница</button>
+                </div>
             </ng-template>
         </div>
     </div>

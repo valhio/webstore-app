@@ -34,6 +34,9 @@ export class OrderComponent implements OnInit {
     const lastUpdatedOn = new Date(date).toLocaleDateString('bg-BG');
     let response = null;
     switch (status) {
+      case 'ORDER_PLACED':
+        response = 'Order placed';
+        break
       case 'PENDING':
         response = 'Checking product availability';
         break
