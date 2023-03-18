@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, switchMap, Observable } from 'rxjs';
+import { map, switchMap, Observable, of } from 'rxjs';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { StoreService } from '../../../../services/store.service';
 import { ApiResponse } from '../../../../interface/api-response';
@@ -26,7 +26,7 @@ export class OrdersComponent implements OnInit {
     let dialogRef = this.dialog.open(InvoiceComponent, {
       maxHeight: '90vh',
     });
-    dialogRef.componentInstance.order = order;
+    dialogRef.componentInstance.order$ = of(order);
   }
 
   getOrderStatus(status: string, date: string) {

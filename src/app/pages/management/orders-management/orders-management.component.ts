@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../../services/store.service';
 import { ManagementService } from '../../../services/management.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { InvoiceDialogComponent } from '../../home/components/orders/invoice-dialog/invoice-dialog.component';
 import { OrderStatus } from '../../../enum/order-status.enum';
 import { OrderItemStatus } from '../../../enum/order-item-status.enum ';
+import { InvoiceComponent } from '../../home/components/invoice/invoice.component';
 
 @Component({
   selector: 'app-orders-management',
@@ -22,10 +22,10 @@ export class OrdersManagementComponent implements OnInit {
   }
 
   openInvoice(order: any) {
-    this.dialog.open(InvoiceDialogComponent, {
-      data: order,
+    let dialogRef = this.dialog.open(InvoiceComponent, {
       maxHeight: '90vh',
     });
+    dialogRef.componentInstance.order$ = of(order);
   }
 
   getOrderStatus(status: "PENDING" | "OUT_FOR_DELIVERY" | "DELIVERED" | "CANCELED" | "REFUNDED" | "RETURNED"): string {

@@ -1,11 +1,10 @@
-<section class="py-20 bg-black">
-    <div class="max-w-5xl mx-auto py-16 bg-white">
+<ng-container *ngIf="order$ | async as order">
+    <section class="max-w-6xl mx-auto py-16 bg-white border">
         <article class="overflow-hidden">
             <div class="bg-[white] rounded-b-md">
                 <div class="p-9">
                     <div class="space-y-6 text-slate-700">
-                        <img class="object-cover h-12"
-                            src="favicon.png" />
+                        <img class="object-cover h-12" src="favicon.png" />
 
                         <p class="text-xl font-extrabold tracking-tight uppercase font-body">
                             KBDA.eu
@@ -103,7 +102,8 @@
                                         class="pt-6 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
                                         Subtotal
                                     </th>
-                                    <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
+                                    <td
+                                        class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
                                         {{order.productsTotal | currency: ' '}} лв.
                                     </td>
                                 </tr>
@@ -116,7 +116,8 @@
                                         class="pt-6 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
                                         Discount
                                     </th>
-                                    <td class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
+                                    <td
+                                        class="pt-6 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
                                         {{order.discount || 0 | currency: ' '}} лв.
                                     </td>
                                 </tr>
@@ -129,7 +130,8 @@
                                         class="pt-4 pl-4 pr-3 text-sm font-light text-left text-slate-500 sm:hidden">
                                         Delivery fee
                                     </th>
-                                    <td class="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
+                                    <td
+                                        class="pt-4 pl-3 pr-4 text-sm text-right text-slate-500 whitespace-nowrap sm:pr-6 md:pr-0">
                                         {{order.deliveryFee | currency: ' '}} лв.
                                     </td>
                                 </tr>
@@ -171,5 +173,5 @@
                 </div>
             </div>
         </article>
-    </div>
-</section>
+    </section>
+</ng-container>
