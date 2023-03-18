@@ -4,9 +4,9 @@ import { AuthenticationService } from '../../../../services/authentication.servi
 import { StoreService } from '../../../../services/store.service';
 import { ApiResponse } from '../../../../interface/api-response';
 import { MatDialog } from '@angular/material/dialog';
-import { InvoiceDialogComponent } from './invoice-dialog/invoice-dialog.component';
 import { OrderStatus } from 'src/app/enum/order-status.enum';
 import { OrderItemStatus } from 'src/app/enum/order-item-status.enum ';
+import { InvoiceComponent } from '../invoice/invoice.component';
 
 @Component({
   selector: 'app-orders',
@@ -23,10 +23,10 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void { }
 
   openInvoice(order: any) {
-    this.dialog.open(InvoiceDialogComponent, {
-      data: order,
+    let dialogRef = this.dialog.open(InvoiceComponent, {
       maxHeight: '90vh',
     });
+    dialogRef.componentInstance.order = order;
   }
 
   getOrderStatus(status: string, date: string) {
