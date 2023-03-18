@@ -12,12 +12,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
-
-enum PaymentMethods {
-  STRIPE = 'stripe',
-  PAYPAL = 'paypal',
-  CASH = 'cash',
-}
+import { PaymentMethod } from '../../../enum/payment-method.enum';
 
 @Component({
   selector: 'app-checkout-body',
@@ -27,11 +22,12 @@ enum PaymentMethods {
 export class CheckoutBodyComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
-  payment = PaymentMethods;
+  public paymentMethod: typeof PaymentMethod = PaymentMethod;
   orderForm: FormGroup;
   cart: Cart = { items: [] };
   dataSource: CartItem[] = [];
   deliveryFee: number = 7;
+PaymentMethod: any;
 
   constructor(
     private cartService: CartService,
@@ -41,16 +37,16 @@ export class CheckoutBodyComponent implements OnInit, OnDestroy {
   ) {
     this.orderForm = this.fb.group({
       userId: [''],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      firstName: ['Valentin', [Validators.required]],
+      lastName: ['Gerasimov', [Validators.required]],
+      email: ['booyaa323@gmail.com', [Validators.required]],
+      phone: ['0876994321', [Validators.required]],
+      address: ['jk. Druzhba 1, blok 48, vhod A', [Validators.required]],
+      city: ['Sofia', [Validators.required]],
+      zipCode: ['1000', [Validators.required]],
       notes: [''],
       orderItems: [''],
-      paymentMethod: [this.payment.CASH],
+      paymentMethod: [PaymentMethod.CASH_PAYMENT],
       productsTotal: [0, [Validators.required]],
       deliveryFee: [this.deliveryFee, [Validators.required]],
       totalAmount: [

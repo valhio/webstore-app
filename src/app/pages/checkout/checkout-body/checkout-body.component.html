@@ -70,7 +70,7 @@
             <span class="ml-3 text-lg font-medium">Начин на плащане</span>
             <div class="relative">
                 <input class="peer hidden" id="radio_payment_on_delivery" formControlName="paymentMethod"
-                    [value]="payment.CASH" type="radio" name="paymentMethod" checked />
+                    [value]="paymentMethod.CASH_PAYMENT" type="radio" name="paymentMethod" checked />
                 <span
                     class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                 <label
@@ -87,7 +87,7 @@
             </div>
 
             <div class="relative">
-                <input class="peer hidden" id="radio_card_payment" formControlName="paymentMethod" [value]="payment.STRIPE"
+                <input class="peer hidden" id="radio_card_payment" formControlName="paymentMethod" [value]="paymentMethod.CARD_PAYMENT"
                     type="radio" name="paymentMethod" />
                 <span
                     class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8  bg-white"></span>
@@ -118,7 +118,7 @@
 
             <div class="relative">
                 <input class="peer hidden" id="radio_paypal_payment" (click)="notImplementedYet()"
-                    formControlName="paymentMethod" [value]="payment.PAYPAL" type="radio" name="paymentMethod" />
+                    formControlName="paymentMethod" [value]="paymentMethod.PAYPAL_PAYMENT" type="radio" name="paymentMethod" />
                 <span
                     class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8  bg-white"></span>
                 <label
@@ -259,13 +259,13 @@
 
         <!-- Action Button Start -->
         <ng-container [ngSwitch]="orderForm.get('paymentMethod')!.value">
-            <button *ngSwitchCase="payment.STRIPE" (click)="onCheckout()"
+            <button *ngSwitchCase="paymentMethod.CARD_PAYMENT" (click)="onCheckout()"
                 class="mt-2 mb-8 w-full uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Към Плащане
             </button>
-            <button *ngSwitchCase="payment.CASH" (click)="onPlaceOrder()"
+            <button *ngSwitchCase="paymentMethod.CASH_PAYMENT" (click)="onPlaceOrder()"
                 class="mt-2 mb-8 w-full uppercase rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Поръчай
             </button>
-            <button *ngSwitchCase="payment.PAYPAL" disabled
+            <button *ngSwitchCase="paymentMethod.PAYPAL_PAYMENT" disabled
                 class="mt-2 mb-8 w-full uppercase rounded-md bg-gray-300 px-6 py-3 font-medium text-white">Към Плащане
             </button>
         </ng-container>
