@@ -51,6 +51,7 @@ import { OrdersManagementComponent } from './pages/management/orders-management/
 import { OrderComponent } from './pages/order/order.component';
 import { EditOrderDialogComponent } from './pages/order/edit-order-dialog/edit-order-dialog.component';
 import { InvoiceComponent } from './pages/home/components/invoice/invoice.component';
+import { ProductComponent } from './pages/home/components/product/product.component';
 
 
 
@@ -76,7 +77,8 @@ import { InvoiceComponent } from './pages/home/components/invoice/invoice.compon
     OrdersManagementComponent,
     OrderComponent,
     EditOrderDialogComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
