@@ -1,6 +1,6 @@
 <ng-container *ngIf="order$ | async as order">
     <main class="max-w-2xl p-2 border rounded-lg border-gray-100 sm:mx-auto sm:m-8 sm:p-4 lg:max-w-7xl lg:p-4">
-        <div class="border rounded-lg">
+        <div class="border rounded-lg divide-y">
             <div class="p-4 space-y-2 text-center sm:flex sm:items-baseline sm:justify-between sm:space-y-0">
                 <div class="flex sm:items-baseline sm:space-x-4">
                     <h1 class="text-2xl mx-auto font-extrabold tracking-tight text-gray-900 sm:text-3xl">Order
@@ -42,6 +42,32 @@
                     </div>
                 </div>
             </div>
+
+            <div *ngIf="hasAuthority('UPDATE')"
+                class="grid grid-cols-1 p-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-gray-200 sm:p-3 lg:px-48">
+                <div class="text-sm">
+                    <p class="block text-center text-gray-700">Set order status
+                    </p>
+                    <p class="block text-center text-gray-700">Currently set as:
+                        <span class="font-medium text-base">{{order.orderStatus}}</span>
+                    </p>
+                </div>
+                <div class="mt-1 sm:mt-0 sm:col-span-1">
+                    <select (change)="onOrderStatusChanged($event)"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option *ngFor="let enum of orderStatus | keyvalue: removeEnumAutoSorting"
+                            [selected]="enum.key == order.orderStatus" [value]="enum.key">{{enum.value}}</option>
+                    </select>
+                </div>
+                <div
+                    class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                    <button type="button"
+                        class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
+                    <button type="submit" (click)="onSaveOrderStatus()"
+                        [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderStatus == order.orderStatus || selectedOrderStatus == undefined}"
+                        class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                </div>
+            </div>
         </div>
 
         <!-- Products -->
@@ -50,7 +76,8 @@
 
             <div class="space-y-8">
 
-                <div *ngFor="let item of order.orderItems" class="bg-white border border-gray-200 shadow-sm rounded-lg">
+                <div *ngFor="let item of order.orderItems"
+                    class="bg-white border border-gray-200 shadow-sm rounded-lg divide-y">
                     <div class="py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8">
                         <div class="sm:flex lg:col-span-7">
                             <div
@@ -127,6 +154,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <div *ngIf="hasAuthority('UPDATE')"
+                        class="grid grid-cols-1 p-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-gray-200 sm:p-3 lg:px-48">
+                        <div class="text-sm">
+                            <p class="block text-center text-gray-700">Set order item status
+                            </p>
+                            <p class="block text-center text-gray-700">Currently set as:
+                                <span class="font-medium text-base">{{item.status}}</span>
+                            </p>
+                        </div>
+                        <div class="mt-1 sm:mt-0 sm:col-span-1">
+                            <select (change)="onOrderItemStatusChanged($event, item.id)"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option *ngFor="let enum of orderItemStatus | keyvalue: removeEnumAutoSorting"
+                                    [selected]="enum.key == item.status" [value]="enum.key">{{enum.value}}</option>
+                            </select>
+                        </div>
+                        <div
+                            class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                            <button type="button"
+                                class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
+                            <button type="submit" (click)="onSaveOrderItemStatus(item.id)"
+                                [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderItemStatus == item.status || selectedOrderItemId != item.id || selectedOrderItemStatus == undefined}"
+                                class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

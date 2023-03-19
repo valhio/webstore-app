@@ -38,7 +38,11 @@ export class StoreService {
     return this.http.get<any>(`http://localhost:8080/api/v1/products?keyword=${keyword}&page=${page}&size=${size}&sort=${sort}`);
   }
 
-  findProductById(id: number): Observable<ApiResponse<any>> {
+  // findProductById(id: number): Observable<ApiResponse<any>> {
+  //   return this.http.get<ApiResponse<any>>(`${STORE_BASE_URL}/products/${id}`);
+  // }
+
+  findProductById(id: number): Observable<any> {
     return this.http.get<ApiResponse<any>>(`${STORE_BASE_URL}/products/${id}`);
   }
 
@@ -56,5 +60,13 @@ export class StoreService {
 
   getProductByProductId(productId: string) {
     return this.http.get<any>(`${STORE_BASE_URL}/products/${productId}`);
+  }
+
+  updateOrderStatus(orderId: string, status: string): Observable<any>{    
+    return this.http.put<any>(`${STORE_BASE_URL}/orders/${orderId}/status/${status}`, {});
+  }
+
+  updateOrderItemStatus(orderId: string, orderItemId: string, status: string): Observable<any> {
+    return this.http.put<any>(`${STORE_BASE_URL}/orders/${orderId}/orderItem/${orderItemId}/status/${status}`, {});
   }
 }

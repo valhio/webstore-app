@@ -4,6 +4,7 @@ import { StoreService } from '../../services/store.service';
 import { OrderItemStatus } from '../../enum/order-item-status.enum ';
 import { PaymentMethod } from 'src/app/enum/payment-method.enum';
 import { OrderStatus } from 'src/app/enum/order-status.enum';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-order',
@@ -12,12 +13,16 @@ import { OrderStatus } from 'src/app/enum/order-status.enum';
 })
 export class OrderComponent implements OnInit {
 
+  selectedOrderStatus?: string;
+  selectedOrderItemStatus?: string;
+  selectedOrderItemId?: string;
   public paymentMethod: typeof PaymentMethod = PaymentMethod;
   public orderItemStatus: typeof OrderItemStatus = OrderItemStatus;
+  public orderStatus: typeof OrderStatus = OrderStatus;
   orderId: string = this.route.snapshot.params['id'];
   order$ = this.storeService.getOrderByOrderId(this.orderId);
 
-  constructor(private route: ActivatedRoute, private storeService: StoreService) { }
+  constructor(private route: ActivatedRoute, private storeService: StoreService, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -116,5 +121,31 @@ export class OrderComponent implements OnInit {
 
   getOrderStatusEnum(status: 'ORDER_PLACED' | 'PENDING' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'CANCELED' | 'REFUNDED' | 'RETURNED'): string {
     return OrderStatus[status];
+  }
+
+  onOrderStatusChanged($event: any) {
+    this.selectedOrderStatus = $event.target.value;
+  }
+
+  onSaveOrderStatus() {
+    this.order$ = this.storeService.updateOrderStatus(this.orderId, this.selectedOrderStatus!);
+  }
+
+  onOrderItemStatusChanged($event: any, orderItemId: string) {
+    this.selectedOrderItemStatus = $event.target.value;
+    this.selectedOrderItemId = orderItemId
+  }
+
+  onSaveOrderItemStatus(orderItemId: string) {
+    this.order$ = this.storeService.updateOrderItemStatus(this.orderId, orderItemId, this.selectedOrderItemStatus!);
+  }
+
+  hasAuthority(authority: string) {
+    return this.authService.getAuthorities().includes(authority);
+  }
+
+  // When iterating over an enum, the result is sorted alphabetically by enum key. This is a workaround, so it returns the enum the way it is defined in the enum file.
+  removeEnumAutoSorting() {
+    return 0
   }
 }

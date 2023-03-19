@@ -31,8 +31,8 @@ export class CartService implements OnInit, OnDestroy {
         this.subscriptions.push(
           storeService.findProductById(item.id).subscribe((res) => {
             let newCart = this.cart.getValue();
-            res.data.product.quantity = item.quantity; // Set the quantity of the cart product to the quantity of the localStorage's product quantity
-            newCart.items.push(res.data.product); // Push the item to the cart
+            res.quantity = item.quantity; // Set the quantity of the cart product to the quantity of the localStorage's product quantity
+            newCart.items.push(res); // Push the item to the cart
             this.cart.next(newCart)
           })
         );
