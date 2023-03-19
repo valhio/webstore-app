@@ -15,6 +15,7 @@ import { OrdersComponent } from './pages/home/components/orders/orders.component
 import { OrdersManagementComponent } from './pages/management/orders-management/orders-management.component';
 import { OrderComponent } from './pages/order/order.component';
 import { InvoiceComponent } from './pages/home/components/invoice/invoice.component';
+import { ProductComponent } from './pages/home/components/product/product.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent, canActivate: [AuthenticationGuard] },
   { path: 'orders/:id', component: OrderComponent, canActivate: [AuthenticationGuard] },
   { path: 'orders/:id/invoice', component: InvoiceComponent, canActivate: [AuthenticationGuard] },
+  { path: 'products/:id', component: ProductComponent },
   { path: 'management/orders', component: OrdersManagementComponent, canActivate: [AuthenticationGuard, RoleGuard], data: { expectedRoles: ['ROLE_SUPER_ADMIN', 'ROLE_MANAGER'], } },
   { path: 'payment/success', component: SuccessComponent },
   { path: 'payment/status', component: PaymentStatusComponent },
