@@ -1,12 +1,12 @@
 <div *ngIf="(product && (innerWidth>670 || innerWidth<=560) && columnsCountMode!=1) || (product && innerWidth<=560 && columnsCountMode==1)"
-    class="max-w-xs mx-auto sm:mx-2 rounded-lg shadow-lg h-full text-center">
-    <img class="w-full h-56 object-cover mx-auto" [src]="product.imageUrl" alt="product" />
+    class="max-w-xs mx-auto sm:mx-2 rounded-lg shadow-lg h-full text-center transition ease-in-out hover:cursor-pointer hover:-translate-y-1 hover:scale-105 duration-300">
+    <img class="w-full h-56 object-cover mx-auto rounded-t-lg" [src]="product.imageUrl" alt="product" />
     <div class="px-6 py-4">
-        <p class="font-bold text-lg text-gray-900" [textContent]="product.name">TITLE</p>
+        <p class="font-bold text-lg text-gray-900 hover:underline" [textContent]="product.name">TITLE</p>
         <p class="font-medium text-sm text-gray-600 truncate" [textContent]="product.description">DESCRIPTION</p>
         <div class="flex justify-between items-center text-gray-800">
-            <span class="text-xl font-medium">{{product.price | currency:' '}} лв.</span>
-            <button (click)="onAddToCart()">
+            <span class="text-xl font-medium ">{{product.price | currency:' '}} лв.</span>
+            <button (click)="onAddToCart()" class="hover:text-gray-600 transition duration-200">
                 <mat-icon class=" custom-icon-size">shopping_cart</mat-icon>
             </button>
         </div>
