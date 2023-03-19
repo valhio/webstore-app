@@ -14,6 +14,7 @@ const STORE_BASE_URL = 'http://localhost:8080/api/v1';
   providedIn: 'root',
 })
 export class StoreService {
+
   constructor(private http: HttpClient) {}
 
   // getAllProducts(
@@ -51,5 +52,9 @@ export class StoreService {
 
   getOrderByOrderId(orderId: string): Observable<any> {
     return this.http.get<any>(`${STORE_BASE_URL}/orders/${orderId}`);
+  }
+
+  getProductByProductId(productId: string) {
+    return this.http.get<any>(`${STORE_BASE_URL}/products/${productId}`);
   }
 }
