@@ -42,7 +42,7 @@ export class OrderComponent implements OnInit {
         response = 'Checking product availability';
         break
       case 'IN_STOCK':
-        response = 'Preparing to ship';
+        response = 'Item in stock';
         break
       case 'OUT_FOR_DELIVERY':
         response = 'Out for delivery';
