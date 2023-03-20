@@ -33,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
     //   return httpHandler.handle(request);
 
       // The token is added to the Authorization header only if the user is logged in and the request is sent to the API URL.
-    if (this.authenticationService.isUserLoggedIn() && request.url.startsWith(this.authenticationService._host)) {
+    if (this.authenticationService.isAuthenticated() && request.url.startsWith(this.authenticationService._host)) {
       const token: string = this.authenticationService.getTokenValue()
       if (token.length > 0) {
         request = request.clone({

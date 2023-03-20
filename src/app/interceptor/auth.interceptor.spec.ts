@@ -8,7 +8,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { Observable, of } from 'rxjs';
 
 
-fdescribe('AuthInterceptor', () => {
+describe('AuthInterceptor', () => {
   let authService: AuthenticationService;
   let httpMock: HttpTestingController;
   let interceptor: AuthInterceptor;
@@ -31,7 +31,7 @@ fdescribe('AuthInterceptor', () => {
   it('should add Authorization header with token if user is logged in and request URL matches API URL', () => {
     const token = 'test-token';
     const mockUrl = `${ authService._host }/api/test`;
-    spyOn(authService, 'isUserLoggedIn').and.returnValue(true);
+    spyOn(authService, 'isAuthenticated').and.returnValue(true);
     spyOn(authService, 'getTokenValue').and.returnValue(token);
 
     const req = new HttpRequest('GET', mockUrl);
@@ -51,7 +51,7 @@ fdescribe('AuthInterceptor', () => {
 
   it('should not add Authorization header if user is not logged in', () => {
     const mockUrl = `${ authService._host }/api/test`;
-    spyOn(authService, 'isUserLoggedIn').and.returnValue(false);
+    spyOn(authService, 'isAuthenticated').and.returnValue(false);
 
     const req = new HttpRequest('GET', mockUrl);
     const next: HttpHandler = {
@@ -69,7 +69,7 @@ fdescribe('AuthInterceptor', () => {
 
   it('should not add Authorization header if request URL does not match API URL', () => {
     const otherUrl = 'https://some-other-url.com/api/test';
-    spyOn(authService, 'isUserLoggedIn').and.returnValue(true);
+    spyOn(authService, 'isAuthenticated').and.returnValue(true);
 
     const req = new HttpRequest('GET', otherUrl);
     const next: HttpHandler = {
@@ -88,7 +88,7 @@ fdescribe('AuthInterceptor', () => {
   it('should not add Authorization header if user is logged in and request URL matches API URL but token is empty', () => {
     const mockToken = "";
     const mockUrl = `${ authService._host }/api/test`;
-    spyOn(authService, 'isUserLoggedIn').and.returnValue(true);
+    spyOn(authService, 'isAuthenticated').and.returnValue(true);
     spyOn(authService, 'getTokenValue').and.returnValue(mockToken);
 
     const req = new HttpRequest('GET', mockUrl);

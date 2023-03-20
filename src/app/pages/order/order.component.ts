@@ -141,7 +141,7 @@ export class OrderComponent implements OnInit {
   }
 
   hasAuthority(authority: string) {
-    return this.authService.getAuthorities().includes(authority);
+    return this.authService.getUserAuthorities().includes(authority);
   }
 
   // When iterating over an enum, the result is sorted alphabetically by enum key. This is a workaround, so it returns the enum the way it is defined in the enum file.

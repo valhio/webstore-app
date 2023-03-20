@@ -11,13 +11,13 @@ export class AuthenticationGuard implements CanActivate {
   canActivate(
     route?: ActivatedRouteSnapshot,
     state?: RouterStateSnapshot): boolean{
-    return this.isUserLoggedIn();
+    return this.isUserAuthenticated();
   }
 
   constructor(private authenticationService: AuthenticationService, private router: Router, private notificationService: SnackbarService ) { }
 
-  isUserLoggedIn() {
-    if (this.authenticationService.isUserLoggedIn()) return true;
+  isUserAuthenticated() {
+    if (this.authenticationService.isAuthenticated()) return true;
     this.router.navigate(['/login']);
     this.notificationService.openSnackBar('You need to login to access this page!', 5000, 'fill', 'error')
     return false;
