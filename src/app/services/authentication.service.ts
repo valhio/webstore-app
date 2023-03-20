@@ -49,7 +49,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   getTokenValue(): string {
-    return this.tokenSubject.value;
+    return this.tokenSubject.value || '';
   }
 
   login(user: LoginUser): Observable<HttpResponse<User>> {
@@ -122,7 +122,7 @@ export class AuthenticationService implements OnDestroy {
     const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);
 
     if (!decodedToken){
-      this.logout();
+      // this.logout();
       this._isAuthenticated = false;
       return this._isAuthenticated;
     } 
@@ -142,7 +142,7 @@ export class AuthenticationService implements OnDestroy {
       return this._isAuthenticated;
     }
 
-    this.logout();
+    // this.logout();
     this._isAuthenticated = false;
     return this._isAuthenticated;
   }
