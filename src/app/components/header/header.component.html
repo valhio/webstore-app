@@ -57,27 +57,28 @@
           <mat-icon>perm_identity</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu" class="menu-without-scroll">
-            <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li>
-                <a routerLink="/orders" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Orders</a>
-              </li>
-              <li>
-                <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-              </li>
-              <li>
-                <a routerLink="/login"
-                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-              </li>
-            </ul>
+          <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            <li class="w-6/12">
+              <a routerLink="/orders"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Orders</a>
+            </li>
+            <li class="w-6/12">
+              <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+            </li>
+            <li class="w-6/12">
+              <a routerLink="/login"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+            </li>
+          </ul>
         </mat-menu>
       </div>
     </ng-container>
 
     <a data-test="logout-btn" *ngIf="isAuthenticated()" (click)="onLogout()" routerLink="/login"
-      class="mx-2 p-2 font-medium hover:text-white text-gray-300 md:dark:hover:text-white md:text-lg">
+      class="font-medium my-auto hover:text-white text-gray-300 md:dark:hover:text-white md:text-lg md:p-2">
       Logout</a>
     <a data-test="logout-btn" *ngIf="!isAuthenticated()" routerLink="/login"
-      class="mx-2 p-2 font-medium hover:text-white text-gray-300 md:dark:hover:text-white md:text-lg">
+      class="font-medium my-auto hover:text-white text-gray-300 md:dark:hover:text-white md:text-lg md:p-2">
       Login</a>
   </div>
 
