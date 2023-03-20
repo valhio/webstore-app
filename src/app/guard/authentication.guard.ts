@@ -9,8 +9,8 @@ import { SnackbarService } from '../services/snackbar.service';
 })
 export class AuthenticationGuard implements CanActivate {
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean{
+    route?: ActivatedRouteSnapshot,
+    state?: RouterStateSnapshot): boolean{
     return this.isUserLoggedIn();
   }
 

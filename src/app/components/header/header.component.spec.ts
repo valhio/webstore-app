@@ -7,7 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 
 import { HeaderComponent } from './header.component';
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let cartService: CartService
