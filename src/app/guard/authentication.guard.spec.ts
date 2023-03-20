@@ -30,14 +30,14 @@ describe('AuthenticationGuard', () => {
 
   it('should allow access if user is logged in', () => {
     spyOn(authenticationService, 'isUserLoggedIn').and.returnValue(true);
-    expect(guard.canActivate()).toBe(true);
+    expect(guard.canActivate({} as any, {} as any)).toBe(true);
     expect(authenticationService.isUserLoggedIn).toHaveBeenCalled();
   })
 
   it('should not allow access if user is not logged in', () => {
     spyOn(authenticationService, 'isUserLoggedIn').and.returnValue(false);
     spyOn(router, 'navigate');
-    expect(guard.canActivate()).toBe(false);
+    expect(guard.canActivate({} as any, {} as any)).toBe(false);
     expect(authenticationService.isUserLoggedIn).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });

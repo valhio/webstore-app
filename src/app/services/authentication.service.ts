@@ -102,15 +102,15 @@ export class AuthenticationService implements OnDestroy {
   }
 
   getUserRole(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).role;
+    return this.jwtHelper.decodeToken(this.tokenSubject.value).role || '';
   }
 
   getAuthorities(): string[] {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).authorities;
+    return this.jwtHelper.decodeToken(this.tokenSubject.value).authorities || [];
   }
 
   getLoggedInUsername(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).sub;
+    return this.jwtHelper.decodeToken(this.tokenSubject.value).sub || '';
   }
 
   isAuthenticated(): boolean {
@@ -120,6 +120,13 @@ export class AuthenticationService implements OnDestroy {
 
   isUserLoggedIn(): boolean {
     const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);
+
+    if (!decodedToken){
+      this.logout();
+      this._isAuthenticated = false;
+      return this._isAuthenticated;
+    } 
+    
     /*If the token is not expired, 
     the username in the token is the same as the username in the user object, 
     the role in the token is the same as the role in the user object, 
