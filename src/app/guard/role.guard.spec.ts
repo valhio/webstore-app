@@ -6,7 +6,7 @@ import { RoleGuard } from './role.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
-fdescribe('RoleGuard', () => {
+describe('RoleGuard', () => {
   let guard: RoleGuard;
   let authenticationService: AuthenticationService;
   let router: Router;

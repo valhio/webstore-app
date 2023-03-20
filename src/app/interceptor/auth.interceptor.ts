@@ -23,14 +23,14 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     httpHandler: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/login`))
-      return httpHandler.handle(request);
-    if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/register`))
-      return httpHandler.handle(request);
-    if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/reset-password`))
-      return httpHandler.handle(request);
-    if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/orders/new`))
-      return httpHandler.handle(request);
+    // if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/login`))
+    //   return httpHandler.handle(request);
+    // if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/register`))
+    //   return httpHandler.handle(request);
+    // if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/user/reset-password`))
+    //   return httpHandler.handle(request);
+    // if (request.url.startsWith(`${ this.authenticationService._host }/api/v1/orders/new`))
+    //   return httpHandler.handle(request);
 
       // The token is added to the Authorization header only if the user is logged in and the request is sent to the API URL.
     if (this.authenticationService.isUserLoggedIn() && request.url.startsWith(this.authenticationService._host)) {
@@ -41,13 +41,14 @@ export class AuthInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${ token }`,
           },
         });
-      } else {
-        request = request.clone({
-          setHeaders: {
-            Authorization: '',
-          },
-        });
-      }
+      } 
+      // else {
+      //   request = request.clone({
+      //     setHeaders: {
+      //       Authorization: '',
+      //     },
+      //   });
+      // }
     }
 
     return httpHandler.handle(request);
