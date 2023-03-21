@@ -15,7 +15,8 @@ export class RegisterUser {
     isNotLocked: boolean = false;
     acceptedTerms: boolean = false;
 
-    constructor(init?: Partial<RegisterUser>) {
+    // This is a constructor that takes an object and assigns it to the properties of the class
+    constructor(init?: Partial<RegisterUser>) { // Partial<T> : makes all properties of T optional
         Object.assign(this, init);
     }
 

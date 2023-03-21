@@ -67,7 +67,7 @@ export class AuthenticationService {
     localStorage.removeItem('user');
     this.setUser(new User({}));
     this.setToken('');
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
   getUserRole(): string {
@@ -76,10 +76,6 @@ export class AuthenticationService {
 
   getUserAuthorities(): string[] {
     return this.jwtHelper.decodeToken(this.tokenSubject.value).authorities || [];
-  }
-
-  getUserUsername(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).sub || '';
   }
 
   isAuthenticated(): boolean {
@@ -94,14 +90,17 @@ export class AuthenticationService {
     then the user is authenticated. 
     */
     if (decodedToken
-      && !this.jwtHelper.isTokenExpired(this.tokenSubject.value)
+      && !this.isTokenExpired()
       && this.userSubject.value.email === decodedToken.email
       && this.userSubject.value.role === decodedToken.role
-      && this.userSubject.value.email === decodedToken.email
     ) {
       return true;
     }
 
     return false;
+  }
+
+  isTokenExpired(): boolean {
+    return this.jwtHelper.isTokenExpired(this.tokenSubject.value);
   }
 }
