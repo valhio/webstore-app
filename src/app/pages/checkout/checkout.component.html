@@ -1,4 +1,4 @@
-<ng-container *ngIf="dataSource.length >0; else emptyCart">
+<ng-container *ngIf="dataSource$ | async; else emptyCart">
   <div class="max-w-7xl mx-auto">
     <app-checkout-header></app-checkout-header>
     <app-checkout-body></app-checkout-body>
