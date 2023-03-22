@@ -6,7 +6,14 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --watch=false --browsers=ChromeHeadless",
+    "build:ci": "ng build --prod --configuration production",
+    "e2e": "ng e2e",
+    "deploy": "firebase deploy",
+    "deploy:ci": "firebase deploy --only hosting",
+    "deploy:ci:preview": "firebase deploy --only hosting:preview",
+    "deploy:ci:production": "firebase deploy --only hosting:production"
   },
   "private": true,
   "dependencies": {
