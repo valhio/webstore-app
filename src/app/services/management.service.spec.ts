@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ManagementService } from './management.service';
 
-fdescribe('ManagementService', () => {
+describe('ManagementService', () => {
   let service: ManagementService;
   let httpMock: HttpTestingController;
 
@@ -39,8 +39,7 @@ fdescribe('ManagementService', () => {
       expect(orders).toEqual(orders);
       expect(orders[0].id).toBe(order1.id);
       expect(orders[1].id).toBe(order2.id);
-    }
-    );
+    });
 
     const req = httpMock.expectOne(STORE_BASE_URL + '/orders/management');
     expect(req.request.method).toBe('GET');
