@@ -5,7 +5,7 @@ import { CheckoutComponent } from './checkout.component';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 import { of, Observable } from 'rxjs';
 
-fdescribe('CheckoutComponent', () => {
+describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
   let cartService: CartService;

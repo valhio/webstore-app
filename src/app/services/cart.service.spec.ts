@@ -71,7 +71,7 @@ describe('CartService', () => {
     });
   });
 
-  fdescribe('getCart()', () => {
+  describe('getCart()', () => {
     it('should return the cart', () => {
       const item = { id: 1, name: 'item1' } as CartItem;
       const expectedCart: Cart = { items: [item] };
