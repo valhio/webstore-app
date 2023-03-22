@@ -1,3 +1,5 @@
+[![Webstore Lint, Test & Build - CI](https://github.com/valhio/webstore/actions/workflows/node.js.yml/badge.svg)](https://github.com/valhio/webstore/actions/workflows/node.js.yml)
+
 # Store
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
