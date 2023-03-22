@@ -120,17 +120,30 @@ export class CartService implements OnInit, OnDestroy {
 
   placeOrder(order: any): void {
     this.subscriptions.push(
-      this.storeService.placeOrder(order).subscribe((res) => {
-        this._snackBar.open('Order placed successfully.', 'Close', {
-          duration: 3000,
-          panelClass: ['custom-snack-bar'],
-        });
-        this.router.navigate(['/payment/status'], {
-          queryParams: { action: 'success' },
-        });
-        this.clearCart();
-        localStorage.removeItem('cart');
-      })
+      this.storeService.placeOrder(order).subscribe(
+        {
+          next: (res) => {
+            this._snackBar.open('Order placed successfully.', 'Close', {
+              duration: 3000,
+              panelClass: ['custom-snack-bar'],
+            });
+            this.router.navigate(['/payment/status'], {
+              queryParams: { action: 'success' },
+            });
+            this.clearCart();
+            localStorage.removeItem('cart');
+          },
+          error: (err) => {
+            this._snackBar.open('Failed to place order.', 'Close', {
+              duration: 3000,
+              panelClass: ['custom-snack-bar'],
+            });
+            this.router.navigate(['/payment/status'], {
+              queryParams: { action: 'cancel' },
+            });
+          }
+        }
+      )
     );
   }
 
