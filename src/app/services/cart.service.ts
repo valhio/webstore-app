@@ -1,5 +1,5 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { Cart, CartItem } from '../models/cart.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../environments/environment';
@@ -12,7 +12,7 @@ declare var Stripe: (arg0: string) => any;
 @Injectable({
   providedIn: 'root',
 })
-export class CartService implements OnInit, OnDestroy {
+export class CartService implements OnDestroy {
   cart = new BehaviorSubject<Cart>({ items: [] });
   storeService: StoreService;
   private subscriptions: Subscription[] = [];
@@ -45,7 +45,9 @@ export class CartService implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  ngOnInit(): void { }
+  getCart(): Observable<Cart> {
+    return this.cart.asObservable();
+  }
 
   addToCart(item: CartItem): void {
     const cart = this.cart.getValue();

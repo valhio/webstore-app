@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent {
-  dataSource$: Observable<Cart> = this.cartService.cart;
+  dataSource$?: Observable<Cart> = this.cartService.getCart();
 
   constructor(private cartService: CartService) {}
 }
