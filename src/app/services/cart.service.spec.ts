@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
-import { CartItem } from '../models/cart.model';
+import { of, throwError, Observable } from 'rxjs';
+import { Cart, CartItem } from '../models/cart.model';
 
 import { CartService } from './cart.service';
 import { StoreService } from './store.service';
@@ -68,6 +68,23 @@ describe('CartService', () => {
       // Expect all subscriptions to have been unsubscribed
       expect(spySub1).toHaveBeenCalledTimes(1);
       expect(spySub2).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  fdescribe('getCart()', () => {
+    it('should return the cart', () => {
+      const item = { id: 1, name: 'item1' } as CartItem;
+      const expectedCart: Cart = { items: [item] };
+
+      service.cart.next(expectedCart);
+
+      expect(service.getCart()).toBeInstanceOf(Observable);
+      service.getCart().subscribe(cart => {
+        expect(cart).toEqual(expectedCart);
+        expect(cart.items).toContain(item);
+        expect(cart.items[0]).toEqual(item);
+        expect(cart.items[0].id).toEqual(item.id);
+      })
     });
   });
 
