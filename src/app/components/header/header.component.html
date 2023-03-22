@@ -7,7 +7,7 @@
         shopping_cart</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="menu-without-scroll">
-      <ng-container *ngIf="getItemsQuantity()!=0; else emptyCart">
+      <ng-container *ngIf="getItemsQuantity()!==0; else emptyCart">
         <div class="p-3 divide-y divide-solid overflow-visible">
           <!-- Cart Header Start -->
           <div class="pb-3 flex justify-between text-sm">

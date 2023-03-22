@@ -5,11 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './edit-order-dialog.component.html',
   styleUrls: ['./edit-order-dialog.component.scss']
 })
-export class EditOrderDialogComponent implements OnInit {
+export class EditOrderDialogComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

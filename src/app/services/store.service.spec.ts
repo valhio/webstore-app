@@ -5,7 +5,7 @@ import { ManagementService } from './management.service';
 import { StoreService } from './store.service';
 import { ApiResponse } from '../interface/api-response';
 
-fdescribe('StoreService', () => {
+describe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
