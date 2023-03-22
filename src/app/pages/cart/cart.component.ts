@@ -13,14 +13,7 @@ export class CartComponent implements OnInit {
   cart: Cart = {items: []};
 
   dataSource: CartItem[] = [];
-  displayedColumns: string[] = [
-    'product',
-    'name',
-    'price',
-    'quantity',
-    'total',
-    'actions',
-  ];
+
 
   constructor(private cartService: CartService, private http: HttpClient) {}
 
@@ -51,7 +44,4 @@ export class CartComponent implements OnInit {
     this.cartService.removeQuantity(item);
   }
 
-  onCheckout(): void {
-    this.cartService.checkout();
-  }
 }
