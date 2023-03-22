@@ -1,4 +1,4 @@
-[![Lint, Test & Build - CI](https://github.com/valhio/webstore/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/valhio/webstore/actions/workflows/node.js.yml)
+[![Webstore Lint, Test & Build - CI](https://github.com/valhio/webstore/actions/workflows/node.js.yml/badge.svg)](https://github.com/valhio/webstore/actions/workflows/node.js.yml)
 
 # Store
 
