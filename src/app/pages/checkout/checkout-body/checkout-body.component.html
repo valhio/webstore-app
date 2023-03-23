@@ -1,9 +1,10 @@
+<ng-container *ngIf="cart$ | async as cart">
 <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32">
     <div class="px-4">
         <!-- Cart Content Start -->
         <div class="space-y-3 rounded-lg border px-2 py-4 sm:px-6">
             <div class="max-h-48 min-w-fit overflow-y-auto">
-                <div *ngFor="let product of dataSource" class="flex rounded-lg bg-white sm:flex-row">
+                <div *ngFor="let product of cart.items" class="flex rounded-lg bg-white sm:flex-row">
                     <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" [src]="product.imageUrl"
                         alt="product image">
                     <div class="flex w-full flex-col px-4 py-4">
@@ -242,7 +243,7 @@
             <div class="mt-6 border-t border-b py-2">
                 <div class="flex items-center justify-between">
                     <p class="text-sm font-medium text-gray-900">Общо</p>
-                    <p class="font-medium text-gray-900">{{getTotal(dataSource) | currency: ' '}} лв.</p>
+                    <p class="font-medium text-gray-900">{{getTotal(cart.items) | currency: ' '}} лв.</p>
                 </div>
                 <div class="flex items-center justify-between">
                     <p class="text-sm font-medium text-gray-900">Доставка</p>
@@ -251,7 +252,7 @@
             </div>
             <div class="mt-3 flex items-center justify-between">
                 <p class="text-sm font-medium text-gray-900">Дължима сума</p>
-                <p class="text-2xl font-medium text-gray-900">{{getTotal(dataSource) + deliveryFee | currency:' '}} лв.
+                <p class="text-2xl font-medium text-gray-900">{{getTotal(cart.items) + deliveryFee | currency:' '}} лв.
                 </p>
             </div>
         </form>
@@ -275,3 +276,4 @@
         </pre>
     </div>
 </div>
+</ng-container>
