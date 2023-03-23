@@ -7,5 +7,5 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./checkout-header.component.scss'],
 })
 export class CheckoutHeaderComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 }
