@@ -6,10 +6,6 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './checkout-header.component.html',
   styleUrls: ['./checkout-header.component.scss'],
 })
-export class CheckoutHeaderComponent implements OnInit {
-
+export class CheckoutHeaderComponent {
   constructor(private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-  }
 }
