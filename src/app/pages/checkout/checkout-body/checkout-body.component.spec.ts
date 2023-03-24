@@ -8,7 +8,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Cart, CartItem } from 'src/app/models/cart.model';
 
-fdescribe('CheckoutBodyComponent', () => {
+describe('CheckoutBodyComponent', () => {
   let component: CheckoutBodyComponent;
   let fixture: ComponentFixture<CheckoutBodyComponent>;
   let cartService: jasmine.SpyObj<CartService>;
