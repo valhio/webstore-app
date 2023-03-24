@@ -13,14 +13,12 @@ import { InvoiceComponent } from '../invoice/invoice.component';
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent {
 
   user$ = this.authenticationService.getUser();
   orders$ = this.user$.pipe(switchMap(user => this.storeService.getOrdersForUser(user.userId)));
 
   constructor(private authenticationService: AuthenticationService, private storeService: StoreService, private dialog: MatDialog) { }
-
-  ngOnInit(): void { }
 
   openInvoice(order: any) {
     let dialogRef = this.dialog.open(InvoiceComponent, {
