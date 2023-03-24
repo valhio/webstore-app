@@ -8,7 +8,7 @@ import { catchError, Observable, of } from 'rxjs';
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss']
 })
-export class InvoiceComponent implements OnInit {
+export class InvoiceComponent {
 
   orderId: string = this.route.snapshot.params['id'];
   order$: Observable<any> = this.storeService.getOrderByOrderId(this.orderId).pipe(
@@ -20,9 +20,4 @@ export class InvoiceComponent implements OnInit {
   );
 
   constructor(private route: ActivatedRoute, private storeService: StoreService, private router: Router) { }
-
-  ngOnInit(): void {
-
-  }
-
 }
