@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('InvoiceComponent', () => {
+describe('InvoiceComponent', () => {
   let component: InvoiceComponent;
   let fixture: ComponentFixture<InvoiceComponent>;
   let storeService: StoreService;
