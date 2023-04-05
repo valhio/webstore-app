@@ -49,4 +49,6 @@ fdescribe('OrdersComponent', () => {
       expect(user).toEqual(mockUser);
     });
   });
+
+  // TODO: Finish with tests
 });
