@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { Subscription, map, tap } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { PaymentMethod } from '../../../enum/payment-method.enum';
+import { log } from 'console';
 
 @Component({
   selector: 'app-checkout-body',
@@ -29,9 +30,10 @@ export class CheckoutBodyComponent implements OnDestroy {
 
   cart$ = this.cartService.getCart().pipe(
     tap((cart) => {
+      const total = this.getTotal(cart.items);
       this.orderForm.patchValue({
-        productsTotal: this.getTotal(cart.items),
-        totalAmount: this.orderForm.get('productsTotal')?.value + this.deliveryFee,
+        productsTotal: total,
+        totalAmount: total + this.deliveryFee,
         orderItems: cart.items.map((item) => ({
           productId: item.id, productName: item.name, quantity: item.quantity, pricePerItem: item.price,
         })),
@@ -84,6 +86,7 @@ export class CheckoutBodyComponent implements OnDestroy {
         next: (user) => {
           this.orderForm.patchValue({
             userId: user.userId || null,
+            totalAmount: this.orderForm.get('productsTotal')?.value + this.deliveryFee,
           });
           this.cartService.placeOrder(this.orderForm.value);
         },
