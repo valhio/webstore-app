@@ -74,4 +74,8 @@ export class StoreService {
     return this.http.get<any>(`${ STORE_BASE_URL }/user/${ userId }`);
   }
 
+  updateUserFirstName(userId: string, firstName: string) {
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/first-name`, firstName);
+  }
+
 }
