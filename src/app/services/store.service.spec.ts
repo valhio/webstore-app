@@ -178,6 +178,22 @@ fdescribe('StoreService', () => {
     req.flush(user);
   });
 
+  describe('updateUserFirstName', () => {
+    it('should send a PUT request with the correct URL and body', () => {
+      const userId = '1';
+      const firstName = 'Foo';
+
+      service.updateUserFirstName(userId, firstName).subscribe(
+        (res) => {
+          expect(res).toEqual(firstName);
+        },
+      );
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/first-name`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toBe(firstName);
+    });
+  });
 
 
 });
