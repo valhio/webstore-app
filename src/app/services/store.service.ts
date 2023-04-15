@@ -70,4 +70,8 @@ export class StoreService {
     return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderId }/orderItem/${ orderItemId }/status/${ status }`, {});
   }
 
+  getUserByUserId(userId: string) {
+    return this.http.get<any>(`${ STORE_BASE_URL }/user/${ userId }`);
+  }
+
 }
