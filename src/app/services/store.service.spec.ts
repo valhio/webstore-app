@@ -208,5 +208,19 @@ fdescribe('StoreService', () => {
     });
   });
 
+  describe('updateUserEmail', () => {
+    it('should send a PUT request with the correct URL and params', () => {
+      const email = "foo@bar"
+      const newEmail = "bar@foo"
+
+      service.updateUserEmail(email, newEmail).subscribe();
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/update-email?email=${ email }&newEmail=${ newEmail }`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.params.get('email')).toBe(email);
+      expect(req.request.params.get('newEmail')).toBe(newEmail);
+    });
+  });
+
 
 });
