@@ -43,7 +43,7 @@ export class AccountComponent {
   }
 
   onUpdatePhoneNumber(phone: string) {
-    this.user$ = this.storeService.updateUserPhone(this.authService.getUserUserId(), phone);
+    this.user$ = this.storeService.updateUserPhoneNumber(this.authService.getUserUserId(), phone);
   }
 
   onUpdateAddress(address: string) {
