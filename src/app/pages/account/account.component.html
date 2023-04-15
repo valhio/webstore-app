@@ -130,8 +130,8 @@
                                             <button type="submit"
                                                 (click)="firstNameEditMode = !firstNameEditMode; !firstNameEditMode ? onUpdateFirstName(firstName.value) : null"
                                                 [textContent]="firstNameEditMode ? 'Запази' : 'Редактирай'"
-                                                [ngClass]="firstNameEditMode ? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                [ngClass]="firstNameEditMode ? 'bg-teal-700 hover:bg-teal-600' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             </button>
                                         </div>
                                     </div>
@@ -146,8 +146,8 @@
                                             <button type="submit"
                                                 (click)="lastNameEditMode= !lastNameEditMode; !lastNameEditMode? onUpdateLastName(lastName.value) : null"
                                                 [textContent]="lastNameEditMode? 'Запази' : 'Редактирай'"
-                                                [ngClass]="lastNameEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                [ngClass]="lastNameEditMode? 'bg-teal-700 hover:bg-teal-600' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             </button>
                                         </div>
                                     </div>
@@ -163,8 +163,8 @@
                                             <button type="submit"
                                                 (click)="phoneNumberEditMode= !phoneNumberEditMode; !phoneNumberEditMode? onUpdatePhoneNumber(phoneNumber.value) : null"
                                                 [textContent]="phoneNumberEditMode? 'Запази' : 'Редактирай'"
-                                                [ngClass]="phoneNumberEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                [ngClass]="phoneNumberEditMode? 'bg-teal-700 hover:bg-teal-600' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             </button>
                                         </div>
                                     </div>
@@ -184,8 +184,8 @@
                                             <button type="submit"
                                                 (click)="emailEditMode= !emailEditMode; !emailEditMode? onUpdateEmail(email.value) : null"
                                                 [textContent]="emailEditMode? 'Запази' : 'Редактирай'"
-                                                [ngClass]="emailEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                [ngClass]="emailEditMode? 'bg-teal-700 hover:bg-teal-600' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             </button>
                                         </div>
                                     </div>
@@ -201,8 +201,8 @@
                                             <button type="submit"
                                                 (click)="addressEditMode= !addressEditMode; !addressEditMode? onUpdateAddress(address.value) : null"
                                                 [textContent]="addressEditMode? 'Запази' : 'Редактирай'"
-                                                [ngClass]="addressEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                [ngClass]="addressEditMode? 'bg-teal-700 hover:bg-teal-600' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             </button>
                                         </div>
                                     </div>
@@ -214,7 +214,7 @@
                                             <input type="text" name="password" id="password" value="********" disabled
                                                 class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                                             <button type="submit"
-                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                                 Редактирай
                                             </button>
                                         </div>
@@ -345,7 +345,7 @@
                                         Cancel
                                     </button>
                                     <button type="submit"
-                                        class="ml-5 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                        class="ml-5 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                         Save
                                     </button>
                                 </div>
