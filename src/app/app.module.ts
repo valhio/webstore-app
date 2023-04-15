@@ -52,6 +52,7 @@ import { OrderComponent } from './pages/order/order.component';
 import { EditOrderDialogComponent } from './pages/order/edit-order-dialog/edit-order-dialog.component';
 import { InvoiceComponent } from './pages/home/components/invoice/invoice.component';
 import { ProductComponent } from './pages/home/components/product/product.component';
+import { AccountComponent } from './pages/account/account.component';
 
 
 
@@ -78,7 +79,8 @@ import { ProductComponent } from './pages/home/components/product/product.compon
     OrderComponent,
     EditOrderDialogComponent,
     InvoiceComponent,
-    ProductComponent
+    ProductComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
