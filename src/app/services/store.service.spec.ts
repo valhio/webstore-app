@@ -4,8 +4,9 @@ import { ManagementService } from './management.service';
 
 import { StoreService } from './store.service';
 import { ApiResponse } from '../interface/api-response';
+import { User } from '../models/user';
 
-describe('StoreService', () => {
+fdescribe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
@@ -160,4 +161,23 @@ describe('StoreService', () => {
     expect(req.request.url).toBe(STORE_BASE_URL + '/orders/' + order.id + '/orderItem/' + orderItem.id + '/status/' + expectedOrderItem.status);
     req.flush(expectedOrderItem);
   });
+
+  it('should fetch user by userId', () => {
+    let user = {
+      userId: '1',
+    } as User;
+
+    service.getUserByUserId(user.userId).subscribe((res) => {
+      expect(res).toEqual(user);
+      expect(res.userId).toBe(user.userId);
+    });
+
+    const req = httpMock.expectOne(STORE_BASE_URL + '/user/1');
+    expect(req.request.method).toBe('GET');
+    expect(req.request.url).toBe(STORE_BASE_URL + '/user/1');
+    req.flush(user);
+  });
+
+
+
 });
