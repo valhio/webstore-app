@@ -82,6 +82,10 @@ export class AuthenticationService {
     return this.jwtHelper.decodeToken(this.tokenSubject.value).userId || '';
   }
 
+  getUserEmail(): string {
+    return this.jwtHelper.decodeToken(this.tokenSubject.value).email || '';
+  }
+
   isAuthenticated(): boolean {
     const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);
 
