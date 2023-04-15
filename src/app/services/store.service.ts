@@ -91,4 +91,8 @@ export class StoreService {
     });
   }
 
+  updateUserPhoneNumber(userId: string, phone: string) {
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/phone-number`, phone);
+  }
+
 }
