@@ -95,4 +95,7 @@ export class StoreService {
     return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/phone-number`, phone);
   }
 
+  updateUserAddress(userId: string, address: string) {
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/address`, address);
+  }
 }
