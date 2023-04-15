@@ -222,5 +222,18 @@ fdescribe('StoreService', () => {
     });
   });
 
+  describe('updateUserPhone', () => {
+    it('should send a PUT request with the correct URL and body', () => {
+      const userId = '1';
+      const phone = '1234567890';
+
+      service.updateUserPhoneNumber(userId, phone).subscribe();
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/phone-number`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toBe(phone);
+    });
+  });
+
 
 });
