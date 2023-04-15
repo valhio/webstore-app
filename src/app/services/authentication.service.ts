@@ -78,6 +78,10 @@ export class AuthenticationService {
     return this.jwtHelper.decodeToken(this.tokenSubject.value).authorities || [];
   }
 
+  getUserUserId(): string {
+    return this.jwtHelper.decodeToken(this.tokenSubject.value).userId || '';
+  }
+
   isAuthenticated(): boolean {
     const decodedToken = this.jwtHelper.decodeToken(this.tokenSubject.value);
 
