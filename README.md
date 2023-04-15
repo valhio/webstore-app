@@ -1,4 +1,4 @@
-[![Webstore Lint, Test & Build - CI](https://github.com/valhio/webstore/actions/workflows/node.js.yml/badge.svg)](https://github.com/valhio/webstore/actions/workflows/node.js.yml)
+[![Lint, Test & Build - CI](https://github.com/valhio/webstore-with-api/actions/workflows/node.js.yml/badge.svg)](https://github.com/valhio/webstore-with-api/actions/workflows/node.js.yml)
 
 # E-commerce Frontend
 
