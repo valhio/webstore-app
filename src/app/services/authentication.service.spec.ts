@@ -10,13 +10,13 @@ import { HttpResponse } from '@angular/common/http';
 import { RegisterUser } from '../models/registerUser';
 import { Router } from '@angular/router';
 
-describe('AuthenticationService', () => {
+fdescribe('AuthenticationService', () => {
   let service: AuthenticationService;
   let httpMock: HttpTestingController;
   let router: Router;
   let jwtHelper: JwtHelperService;
 
-  const mockUser = new User({ id: 1, email: 'testemail', password: 'testpassword', role: 'testrole', authorities: ['testauthority1', 'testauthority2'] });
+  const mockUser = new User({ id: 1, userId:'123', email: 'testemail', password: 'testpassword', role: 'testrole', authorities: ['testauthority1', 'testauthority2'] });
   const mockToken = 'mockToken';
 
   beforeEach(() => {
@@ -237,4 +237,20 @@ describe('AuthenticationService', () => {
       expect(service.isTokenExpired).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('getUserUserId', () => {
+    it('should return the user ID from the decoded token', () => {
+      spyOn(jwtHelper, 'decodeToken').and.returnValue(mockUser);
+      // const jwtHelper = TestBed.inject(JwtHelperService);
+      const result = service.getUserUserId();
+      expect(result).toEqual(mockUser.userId);
+    });
+
+    it('should return an empty string if the decoded token does not have a user ID', () => {
+      spyOn(jwtHelper, 'decodeToken').and.returnValue({});
+      const result = service.getUserUserId();
+      expect(result).toEqual('');
+    });
+  });
+
 });
