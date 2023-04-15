@@ -16,6 +16,7 @@ import { OrdersManagementComponent } from './pages/management/orders-management/
 import { OrderComponent } from './pages/order/order.component';
 import { InvoiceComponent } from './pages/home/components/invoice/invoice.component';
 import { ProductComponent } from './pages/home/components/product/product.component';
+import { AccountComponent } from './pages/account/account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'payment/status', component: PaymentStatusComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'user/myaccount', component: AccountComponent },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
