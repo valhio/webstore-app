@@ -78,4 +78,8 @@ export class StoreService {
     return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/first-name`, firstName);
   }
 
+  updateUserLastName(userId: string, lastName: string) {
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/last-name`, lastName);
+  }
+
 }
