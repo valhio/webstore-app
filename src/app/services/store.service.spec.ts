@@ -235,5 +235,17 @@ fdescribe('StoreService', () => {
     });
   });
 
+  describe('updateUserAddress', () => {
+    it('should send a PUT request with the correct URL and body', () => {
+      const userId = '1';
+      const address = '123 Foo St';
 
+      service.updateUserAddress(userId, address).subscribe();
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/address`);
+      expect(req.request.method).toBe('PUT');
+      expect(req.request.body).toBe(address);
+    });
+  });
+  
 });
