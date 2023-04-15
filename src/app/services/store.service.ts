@@ -82,4 +82,13 @@ export class StoreService {
     return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/last-name`, lastName);
   }
 
+  updateUserEmail(email: string, newEmail: string) {
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/update-email`, {}, {
+      params: {
+        email,
+        newEmail
+      }
+    });
+  }
+
 }
