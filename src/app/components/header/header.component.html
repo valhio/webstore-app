@@ -1,6 +1,6 @@
 <mat-toolbar class="sticky top-0 z-50 h-14 bg-neutral-900 text-white flex justify-between">
   <!-- <a routerLink="home" class="text-2xl uppercase font-medium">Con-crete-store</a> -->
-  <a routerLink="home" class="ml-2 text-3xl uppercase font-medium">KBDA</a>
+  <a routerLink="home" class="ml-2 p-1 px-2 border-2 rounded-md text-3xl uppercase font-medium">KBDA</a>
   <div class="flex">
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon [matBadge]="getItemsQuantity()" [matBadgeHidden]="getItemsQuantity()===0" matBadgeColor="warn">
@@ -57,15 +57,16 @@
           <mat-icon>perm_identity</mat-icon>
         </button>
         <mat-menu #profileMenu="matMenu" class="menu-without-scroll">
-          <ul class="py-2 text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-            <li class="w-6/12">
+          <ul class="text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            <li>
               <a routerLink="/orders"
                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Orders</a>
             </li>
-            <li class="w-6/12">
-              <a class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+            <li>
+              <a routerLink="/user/myaccount" 
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
             </li>
-            <li class="w-6/12">
+            <li>
               <a routerLink="/login"
                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
             </li>
