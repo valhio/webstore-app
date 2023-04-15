@@ -1,0 +1,359 @@
+<ng-container *ngIf="(user$ | async).data.user as user">
+    <div>
+        <div class="relative pb-32 overflow-hidden">
+            <header class="relative py-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl font-bold text-gray-700">
+                        Settings
+                    </h1>
+                </div>
+            </header>
+        </div>
+
+        <!-- <pre>
+            {{ user | json }}
+        </pre> -->
+
+        <main class="relative -mt-32">
+            <div class="max-w-screen-xl mx-auto pb-6 px-4 sm:px-6 lg:pb-16 lg:px-8">
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <div class="divide-y divide-gray-200 lg:grid lg:grid-cols-12 lg:divide-y-0 lg:divide-x">
+                        <aside class="py-6 lg:col-span-3">
+                            <nav class="space-y-1">
+                                <a href="#"
+                                    class="bg-teal-50 border-teal-500 text-teal-700 hover:bg-teal-50 hover:text-teal-700 group border-l-4 px-3 py-2 flex items-center text-sm font-medium"
+                                    aria-current="page">
+                                    <svg class="text-teal-500 group-hover:text-teal-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Profile
+                                    </span>
+                                </a>
+
+                                <a href="#"
+                                    class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
+                                    <!-- Heroicon name: outline/cog -->
+                                    <svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Account
+                                    </span>
+                                </a>
+
+                                <a href="#"
+                                    class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
+                                    <!-- Heroicon name: outline/key -->
+                                    <svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Password
+                                    </span>
+                                </a>
+
+                                <a href="#"
+                                    class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
+                                    <!-- Heroicon name: outline/bell -->
+                                    <svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Notifications
+                                    </span>
+                                </a>
+
+                                <a href="#"
+                                    class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
+                                    <!-- Heroicon name: outline/credit-card -->
+                                    <svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Billing
+                                    </span>
+                                </a>
+
+                                <a href="#"
+                                    class="border-transparent text-gray-900 hover:bg-gray-50 hover:text-gray-900 group border-l-4 px-3 py-2 flex items-center text-sm font-medium">
+                                    <!-- Heroicon name: outline/view-grid-add -->
+                                    <svg class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                                    </svg>
+                                    <span class="truncate">
+                                        Integrations
+                                    </span>
+                                </a>
+                            </nav>
+                        </aside>
+
+                        <form class="divide-y divide-gray-200 lg:col-span-9" action="#" method="POST">
+                            <!-- Profile section -->
+                            <div class="py-6 px-4 sm:px-14 lg:pb-8">
+                                <div>
+                                    <h2 class="text-lg leading-6 font-medium text-gray-900">Profile</h2>
+                                    <p class="mt-1 text-sm text-gray-500">
+                                        This information will be displayed publicly so be careful what you share.
+                                    </p>
+                                </div>
+
+                                <div class="mt-6 grid grid-cols-12 gap-6">
+                                    <div class="col-span-12">
+                                        <label for="first-name" class="block text-sm font-medium text-gray-700">
+                                            First name</label>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="first-name" id="first-name"
+                                                autocomplete="given-name" #firstName [value]="user.firstName"
+                                                [disabled]="!firstNameEditMode"
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                (click)="firstNameEditMode = !firstNameEditMode; !firstNameEditMode ? onUpdateFirstName(firstName.value) : null"
+                                                [textContent]="firstNameEditMode ? 'Запази' : 'Редактирай'"
+                                                [ngClass]="firstNameEditMode ? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label for="last-name" class="block text-sm font-medium text-gray-700">
+                                            Last name</label>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="last-name" id="last-name" #lastName
+                                                [value]="user.lastName" [disabled]="!lastNameEditMode"
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                (click)="lastNameEditMode= !lastNameEditMode; !lastNameEditMode? onUpdateLastName(lastName.value) : null"
+                                                [textContent]="lastNameEditMode? 'Запази' : 'Редактирай'"
+                                                [ngClass]="lastNameEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label for="phone" class="block text-sm font-medium text-gray-700">
+                                            Phone</label>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="phone" id="phone" #phoneNumber
+                                                [value]="user.phone || 'Phone number has not been set'"
+                                                [disabled]="!phoneNumberEditMode"
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                (click)="phoneNumberEditMode= !phoneNumberEditMode; !phoneNumberEditMode? onUpdatePhoneNumber(phoneNumber.value) : null"
+                                                [textContent]="phoneNumberEditMode? 'Запази' : 'Редактирай'"
+                                                [ngClass]="phoneNumberEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label for="email" class="block text-sm font-medium text-gray-700">
+                                            Email</label>
+                                        <p class="text-xs italic">*Changing your email address will affect your login
+                                            credentials. <br>Please note that if you change your email address, you will
+                                            be logged out of the system and will need to log in again using your new
+                                            email address.*</p>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="email" id="email" #email
+                                                [value]="user.email || 'Email number has not been set'"
+                                                [disabled]="!emailEditMode"
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                (click)="emailEditMode= !emailEditMode; !emailEditMode? onUpdateEmail(email.value) : null"
+                                                [textContent]="emailEditMode? 'Запази' : 'Редактирай'"
+                                                [ngClass]="emailEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label for="address" class="block text-sm font-medium text-gray-700">
+                                            Default Address</label>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="address" id="address" #address
+                                                [value]="user.address || 'Email number has not been set'"
+                                                [disabled]="!addressEditMode"
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                (click)="addressEditMode= !addressEditMode; !addressEditMode? onUpdateAddress(address.value) : null"
+                                                [textContent]="addressEditMode? 'Запази' : 'Редактирай'"
+                                                [ngClass]="addressEditMode? 'bg-sky-800 hover:bg-sky-700' : 'bg-slate-800 hover:bg-slate-700'"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <label for="password" class="block text-sm font-medium text-gray-700">
+                                            Password</label>
+                                        <div class="block sm:flex gap-4 space-y-2 sm:space-y-0">
+                                            <input type="text" name="password" id="password" value="********" disabled
+                                                class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                                            <button type="submit"
+                                                class="align-bottom w-full sm:w-44 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                Редактирай
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Privacy section -->
+                            <div class="pt-6 divide-y divide-gray-200">
+                                <div class="px-4 sm:px-6">
+                                    <div>
+                                        <h2 class="text-lg leading-6 font-medium text-gray-900">Privacy</h2>
+                                        <p class="mt-1 text-sm text-gray-500">
+                                            Manage your privacy settings. Learn more about how we handle your data in
+                                            our <a href="#" class="font-medium text-gray-900 underline">Privacy
+                                                Policy</a>.
+                                        </p>
+                                    </div>
+                                    <ul role="list" class="mt-2 divide-y divide-gray-200">
+                                        <li class="py-4 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900"
+                                                    id="privacy-option-1-label">
+                                                    Marketing communications
+                                                </p>
+                                                <p class="text-sm text-gray-500" id="privacy-option-1-description">
+                                                    Receive marketing emails, newsletters, and promotional offers.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-transparent dark:peer-focus:ring-transparent peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
+                                                </div>
+                                                <span
+                                                    class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+                                            </label>
+                                        </li>
+                                        <li class="py-4 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900"
+                                                    id="privacy-option-2-label">
+                                                    Personal information sharing
+                                                </p>
+                                                <p class="text-sm text-gray-500" id="privacy-option-2-description">
+                                                    Share personal information with third-party partners, such as
+                                                    advertisers or other companies that use the data for marketing
+                                                    purposes.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-transparent dark:peer-focus:ring-transparent peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
+                                                </div>
+                                                <span
+                                                    class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+                                            </label>
+                                        </li>
+                                        <li class="py-4 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900"
+                                                    id="privacy-option-3-label">
+                                                    User-generated content sharing
+                                                </p>
+                                                <p class="text-sm text-gray-500" id="privacy-option-3-description">
+                                                    Post reviews and comments publicly or privately.
+                                                    <span class="font-medium text-gray-900 ">
+                                                        Currently set to {{!userGeneratedContentSharing.value ? 'Public' :
+                                                        'Private'}}.</span>
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer" checked
+                                                    #userGeneratedContentSharing>
+                                                <div
+                                                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-transparent dark:peer-focus:ring-transparent peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
+                                                </div>
+                                                <span
+                                                    class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+                                            </label>
+                                        </li>
+                                        <li class="py-4 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900"
+                                                    id="privacy-option-4-label">
+                                                    Location data
+                                                </p>
+                                                <p class="text-sm text-gray-500" id="privacy-option-4-description">
+                                                    Share location data with the app or third-party partners. This data
+                                                    is used to provide you with personalized content and advertising.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer">
+                                                <div
+                                                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-transparent dark:peer-focus:ring-transparent peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
+                                                </div>
+                                                <span
+                                                    class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+                                            </label>
+                                        </li>
+                                        <li class="py-4 flex items-center justify-between">
+                                            <div class="flex flex-col">
+                                                <p class="text-sm font-medium text-gray-900"
+                                                    id="privacy-option-5-label">
+                                                    Cookies and tracking
+                                                </p>
+                                                <p class="text-sm text-gray-500" id="privacy-option-5-description">
+                                                    Allow the app to use cookies and other tracking technologies to be
+                                                    used for advertising and analytics.
+                                                </p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" value="" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-transparent dark:peer-focus:ring-transparent peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600">
+                                                </div>
+                                                <span
+                                                    class="hidden ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mt-4 py-4 px-4 flex justify-end sm:px-6">
+                                    <button type="button"
+                                        class="bg-white border border-gray-300 rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                        Cancel
+                                    </button>
+                                    <button type="submit"
+                                        class="ml-5 bg-slate-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</ng-container>
