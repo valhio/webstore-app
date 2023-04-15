@@ -253,4 +253,17 @@ fdescribe('AuthenticationService', () => {
     });
   });
 
+  describe('getUserEmail', () => {
+    it('should return the email from the decoded token', () => {
+      spyOn(jwtHelper, 'decodeToken').and.returnValue(mockUser);
+      const result = service.getUserEmail();
+      expect(result).toEqual(mockUser.email);
+    });
+
+    it('should return an empty string if the decoded token does not have an email', () => {
+      spyOn(jwtHelper, 'decodeToken').and.returnValue({});
+      const result = service.getUserEmail();
+      expect(result).toEqual('');
+    });
+  });
 });
