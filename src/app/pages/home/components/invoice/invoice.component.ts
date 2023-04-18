@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { StoreService } from 'src/app/services/store.service';
-import { catchError, Observable, of } from 'rxjs';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {StoreService} from 'src/app/services/store.service';
+import {catchError, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-invoice',
@@ -10,8 +10,8 @@ import { catchError, Observable, of } from 'rxjs';
 })
 export class InvoiceComponent {
 
-  orderId: string = this.route.snapshot.params['id'];
-  order$: Observable<any> = this.storeService.getOrderByOrderId(this.orderId).pipe(
+  orderNumber: string = this.route.snapshot.params['orderNumber'];
+  order$: Observable<any> = this.storeService.getOrderByOrderNumber(this.orderNumber).pipe(
     catchError(err => {
       // If the order is not found, redirect to home page
       this.router.navigate(['/']);
@@ -19,5 +19,6 @@ export class InvoiceComponent {
     })
   );
 
-  constructor(private route: ActivatedRoute, private storeService: StoreService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private storeService: StoreService, private router: Router) {
+  }
 }
