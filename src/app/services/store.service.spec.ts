@@ -6,7 +6,7 @@ import {StoreService} from './store.service';
 import {ApiResponse} from '../interface/api-response';
 import {User} from '../models/user';
 
-fdescribe('StoreService', () => {
+describe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
@@ -113,9 +113,9 @@ fdescribe('StoreService', () => {
       expect(res.id).toBe(order.id);
     });
 
-    const req = httpMock.expectOne(STORE_BASE_URL + '/orders/' + order.id);
+    const req = httpMock.expectOne(STORE_BASE_URL + '/orders/id/' + order.id);
     expect(req.request.method).toBe('GET');
-    expect(req.request.url).toBe(STORE_BASE_URL + '/orders/' + order.id);
+    expect(req.request.url).toBe(STORE_BASE_URL + '/orders/id/' + order.id);
     req.flush(order);
   });
 
@@ -242,9 +242,20 @@ fdescribe('StoreService', () => {
 
       service.updateUserAddress(userId, address).subscribe();
 
-      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/address`);
+      const req = httpMock.expectOne(`${STORE_BASE_URL}/user/${userId}/address`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toBe(address);
+    });
+  });
+
+  describe('getInvoiceByInvoiceNumber', () => {
+    it('should send a GET request with the correct URL and params', () => {
+      const invoiceNumber = '1234567890';
+
+      service.getInvoiceByInvoiceNumber(invoiceNumber).subscribe();
+
+      const req = httpMock.expectOne(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
+      expect(req.request.method).toBe('GET');
     });
   });
 
