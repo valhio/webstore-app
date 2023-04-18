@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StoreService } from '../../services/store.service';
-import { OrderItemStatus } from '../../enum/order-item-status.enum ';
-import { PaymentMethod } from 'src/app/enum/payment-method.enum';
-import { OrderStatus } from 'src/app/enum/order-status.enum';
-import { AuthenticationService } from '../../services/authentication.service';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {StoreService} from '../../services/store.service';
+import {OrderItemStatus} from '../../enum/order-item-status.enum ';
+import {PaymentMethod} from 'src/app/enum/payment-method.enum';
+import {OrderStatus} from 'src/app/enum/order-status.enum';
+import {AuthenticationService} from '../../services/authentication.service';
+import {catchError, of} from 'rxjs';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.scss']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent {
 
   selectedOrderStatus?: string;
   selectedOrderItemStatus?: string;
@@ -19,21 +20,17 @@ export class OrderComponent implements OnInit {
   public paymentMethod: typeof PaymentMethod = PaymentMethod;
   public orderItemStatus: typeof OrderItemStatus = OrderItemStatus;
   public orderStatus: typeof OrderStatus = OrderStatus;
-  orderId: string = this.route.snapshot.params['id'];
-  order$ = this.storeService.getOrderByOrderId(this.orderId);
 
-  constructor(private route: ActivatedRoute, private storeService: StoreService, private authService: AuthenticationService) { }
+  orderId: string = this.route.snapshot.params['orderNumber'];
+  order$ = this.storeService.getOrderByOrderNumber(this.orderId).pipe(
+    catchError(err => {
+      // If the order is not found, redirect to home page
+      this.router.navigate(['/']);
+      return of();
+    })
+  )
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      console.log(params['id']);
-    });
-
-    this.route.paramMap.subscribe(params => {
-      console.log(params.get('id'));
-    });
-
-    console.log(this.route.snapshot.params['id']);
+  constructor(private route: ActivatedRoute, private storeService: StoreService, private authService: AuthenticationService, private router: Router) {
   }
 
   getOrderItemStatus(status: string, date: string) {
