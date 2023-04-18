@@ -2,19 +2,22 @@
     <main class="max-w-2xl p-2 border rounded-lg border-gray-100 sm:mx-auto sm:m-8 sm:p-4 lg:max-w-7xl lg:p-4">
         <div class="border rounded-lg divide-y">
             <div class="p-4 space-y-2 text-center sm:flex sm:items-baseline sm:justify-between sm:space-y-0">
-                <div class="flex sm:items-baseline sm:space-x-4">
-                    <h1 class="text-2xl mx-auto font-extrabold tracking-tight text-gray-900 sm:text-3xl">Order
-                        #{{order.orderId}}
-                    </h1>
-                    <a [routerLink]="'/orders/'+order.id+'/invoice'"
-                        class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
-                        View invoice<span aria-hidden="true"> →</span></a>
-                </div>
-                <p class="text-sm text-gray-600">Order placed on <time [dateTime]="order.orderDate"
-                        class="font-medium text-gray-900">{{order.orderDate | date:'MMMM dd, yyyy'}}</time></p>
-                <a [routerLink]="'/orders/'+order.id+'/invoice'"
-                    class="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">
-                    View invoice<span aria-hidden="true"> →</span></a>
+              <div class="flex sm:items-baseline sm:space-x-4">
+                <h1 class="text-2xl mx-auto font-extrabold tracking-tight text-gray-900 sm:text-3xl">Order
+                  #{{order.orderId}}
+                </h1>
+                <a [routerLink]="'/orders/'+order.orderId+'/invoice/'+order.invoice.invoiceNumber"
+                   class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
+                  View invoice<span aria-hidden="true"> →</span></a>
+              </div>
+              <p class="text-sm text-gray-600">Order placed on
+                <time [dateTime]="order.orderDate"
+                      class="font-medium text-gray-900">{{order.orderDate | date:'MMMM dd, yyyy'}}
+                </time>
+              </p>
+              <a [routerLink]="'/orders/'+order.orderId+'/invoice/'+order.invoice.invoiceNumber"
+                 class="text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:hidden">
+                View invoice<span aria-hidden="true"> →</span></a>
             </div>
 
             <div class="border-t border-gray-200 py-6 px-4 sm:px-6 lg:p-8">
@@ -52,21 +55,27 @@
                         <span class="font-medium text-base">{{order.orderStatus}}</span>
                     </p>
                 </div>
-                <div class="mt-1 sm:mt-0 sm:col-span-1">
-                    <select (change)="onOrderStatusChanged($event)"
+              <div class="mt-1 sm:mt-0 sm:col-span-1">
+                <select (change)="onOrderStatusChanged($event)"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option *ngFor="let enum of orderStatus | keyvalue: removeEnumAutoSorting"
-                            [selected]="enum.key == order.orderStatus" [value]="enum.key">{{enum.value}}</option>
-                    </select>
-                </div>
-                <div
-                    class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4">
-                    <button type="button"
-                        class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
-                    <button type="submit" (click)="onSaveOrderStatus()"
-                        [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderStatus == order.orderStatus || selectedOrderStatus == undefined}"
-                        class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
-                </div>
+                  <option *ngFor="let enum of orderStatus | keyvalue: removeEnumAutoSorting"
+                          [selected]="enum.key === order.orderStatus" [value]="enum.key">{{enum.value}}
+                  </option>
+                </select>
+              </div>
+              <div
+                class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4">
+                <button
+                  class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  type="button">
+                  Cancel
+                </button>
+                <button (click)="onSaveOrderStatus()"
+                        [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderStatus === order.orderStatus || selectedOrderStatus === undefined}"
+                        class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  Save
+                </button>
+              </div>
             </div>
         </div>
 
@@ -162,21 +171,27 @@
                                 <span class="font-medium text-base">{{item.status}}</span>
                             </p>
                         </div>
-                        <div class="mt-1 sm:mt-0 sm:col-span-1">
-                            <select (change)="onOrderItemStatusChanged($event, item.id)"
+                      <div class="mt-1 sm:mt-0 sm:col-span-1">
+                        <select (change)="onOrderItemStatusChanged($event, item.id)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option *ngFor="let enum of orderItemStatus | keyvalue: removeEnumAutoSorting"
-                                    [selected]="enum.key == item.status" [value]="enum.key">{{enum.value}}</option>
-                            </select>
-                        </div>
-                        <div
-                            class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4">
-                            <button type="button"
-                                class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Cancel</button>
-                            <button type="submit" (click)="onSaveOrderItemStatus(item.id)"
-                                [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderItemStatus == item.status || selectedOrderItemId != item.id || selectedOrderItemStatus == undefined}"
-                                class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
-                        </div>
+                          <option *ngFor="let enum of orderItemStatus | keyvalue: removeEnumAutoSorting"
+                                  [selected]="enum.key === item.status" [value]="enum.key">{{enum.value}}
+                          </option>
+                        </select>
+                      </div>
+                      <div
+                        class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4">
+                        <button
+                          class="flex-1 flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                          type="button">
+                          Cancel
+                        </button>
+                        <button (click)="onSaveOrderItemStatus(item.id)"
+                                [ngClass]="{'bg-gray-100 text-gray-400 pointer-events-none': selectedOrderItemStatus === item.status || selectedOrderItemId !== item.id || selectedOrderItemStatus === undefined}"
+                                class="flex-1 flex justify-center ml-3 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Save
+                        </button>
+                      </div>
                     </div>
 
                 </div>
@@ -201,45 +216,45 @@
                     </div>
                     <div>
                         <dt class="font-medium text-gray-900">Payment information</dt>
-                        <div class="mt-3">
-                            <dd *ngIf="order.paymentMethod == paymentMethod.CARD_PAYMENT"
-                                class="-ml-4 -mt-4 flex flex-wrap">
-                                <div class="ml-4 mt-4 flex-shrink-0">
-                                    <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24"
-                                        xmlns="http://www.w3.org/2000/svg" class="h-6 w-auto">
-                                        <rect width="36" height="24" rx="4" fill="#224DBA"></rect>
-                                        <path
-                                            d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z"
-                                            fill="#fff"></path>
-                                    </svg>
-                                    <p class="sr-only">Visa</p>
-                                </div>
-                                <div class="ml-4 mt-4">
-                                    <p class="text-gray-900">
-                                        Ending with 4242
-                                    </p>
-                                    <p class="text-gray-600">
-                                        Expires 02 / 24
-                                    </p>
-                                </div>
-                            </dd>
-                            <dd *ngIf="order.paymentMethod == paymentMethod.CASH_PAYMENT"
-                                class="-ml-4 -mt-4 flex flex-wrap">
-                                <div class="ml-4 mt-4 flex-shrink-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                        class="bi bi-wallet2" viewBox="0 0 16 16">
-                                        <path
-                                            d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
-                                    </svg>
-                                    <p class="sr-only">Payment on Delivery</p>
-                                </div>
-                                <div class="ml-4 mt-4">
-                                    <p class="text-gray-900">
-                                        Payment on Delivery
-                                    </p>
-                                </div>
-                            </dd>
-                        </div>
+                      <div class="mt-3">
+                        <dd *ngIf="order.paymentMethod === paymentMethod.CARD_PAYMENT"
+                            class="-ml-4 -mt-4 flex flex-wrap">
+                          <div class="ml-4 mt-4 flex-shrink-0">
+                            <svg aria-hidden="true" class="h-6 w-auto" height="24" viewBox="0 0 36 24"
+                                 width="36" xmlns="http://www.w3.org/2000/svg">
+                              <rect fill="#224DBA" height="24" rx="4" width="36"></rect>
+                              <path
+                                d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z"
+                                fill="#fff"></path>
+                            </svg>
+                            <p class="sr-only">Visa</p>
+                          </div>
+                          <div class="ml-4 mt-4">
+                            <p class="text-gray-900">
+                              Ending with 4242
+                            </p>
+                            <p class="text-gray-600">
+                              Expires 02 / 24
+                            </p>
+                          </div>
+                        </dd>
+                        <dd *ngIf="order.paymentMethod === paymentMethod.CASH_PAYMENT"
+                            class="-ml-4 -mt-4 flex flex-wrap">
+                          <div class="ml-4 mt-4 flex-shrink-0">
+                            <svg class="bi bi-wallet2" fill="currentColor" height="24" viewBox="0 0 16 16"
+                                 width="24" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z"/>
+                            </svg>
+                            <p class="sr-only">Payment on Delivery</p>
+                          </div>
+                          <div class="ml-4 mt-4">
+                            <p class="text-gray-900">
+                              Payment on Delivery
+                            </p>
+                          </div>
+                        </dd>
+                      </div>
                     </div>
                 </dl>
 
