@@ -101,4 +101,8 @@ export class StoreService {
   updateUserAddress(userId: string, address: string) {
     return this.http.put<any>(`${STORE_BASE_URL}/user/${userId}/address`, address);
   }
+
+  getInvoiceByInvoiceNumber(invoiceNumber: string) {
+    return this.http.get<any>(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
+  }
 }
