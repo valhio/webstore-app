@@ -1,24 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { StoreService } from '../../../services/store.service';
-import { ManagementService } from '../../../services/management.service';
-import { Observable, of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { OrderStatus } from '../../../enum/order-status.enum';
-import { OrderItemStatus } from '../../../enum/order-item-status.enum ';
-import { InvoiceComponent } from '../../home/components/invoice/invoice.component';
+import {Component} from '@angular/core';
+import {ManagementService} from '../../../services/management.service';
+import {Observable, of} from 'rxjs';
+import {MatDialog} from '@angular/material/dialog';
+import {OrderStatus} from '../../../enum/order-status.enum';
+import {OrderItemStatus} from '../../../enum/order-item-status.enum ';
+import {InvoiceComponent} from '../../home/components/invoice/invoice.component';
 
 @Component({
   selector: 'app-orders-management',
   templateUrl: './orders-management.component.html',
   styleUrls: ['./orders-management.component.scss']
 })
-export class OrdersManagementComponent implements OnInit {
+export class OrdersManagementComponent {
 
   orders$: Observable<any[]> = this.managementService.getOrders();
 
-  constructor(private managementService: ManagementService, private dialog: MatDialog) { }
-
-  ngOnInit(): void {
+  constructor(private managementService: ManagementService, private dialog: MatDialog) {
   }
 
   openInvoice(order: any) {
