@@ -1,4 +1,4 @@
-<ng-container *ngIf="order$ | async as order">
+<ng-container *ngIf="(order$ | async) as order">
     <section class="max-w-6xl mx-auto py-16 bg-white border">
         <article class="overflow-hidden">
             <div class="bg-[white] rounded-b-md">
@@ -16,36 +16,36 @@
                         <div class="grid grid-cols-4 gap-12">
                             <div class="text-sm font-light text-slate-500">
                                 <p class="text-sm font-normal text-slate-700">
-                                    Invoice Detail:
+                                    Invoice Details:
                                 </p>
-                                <p>Unwrapped</p>
-                                <p>Fake Street 123</p>
-                                <p>San Javier</p>
-                                <p>CA 1234</p>
+                                <p>Invoice #: {{order.invoice.invoiceNumber}}</p>
+                                <p>Order #: {{order.orderId}}</p>
+                                <p>Client #: {{order.user.userId}}</p>
+                                <p>Order Date: {{order.orderDate | date: 'dd-MMM-yyyy HH:ss'}}</p>
                             </div>
                             <div class="text-sm font-light text-slate-500">
                                 <p class="text-sm font-normal text-slate-700">Billed To</p>
-                                <p>The Boring Company</p>
-                                <p>Tesla Street 007</p>
-                                <p>Frisco</p>
-                                <p>CA 0000</p>
+                                <p>{{order.firstName + ' ' + order.lastName}}</p>
+                                <p>{{order.email}}</p>
+                                <p>{{order.address}}</p>
+                                <p>{{order.phone}}</p>
                             </div>
                             <div class="text-sm font-light text-slate-500">
                                 <p class="text-sm font-normal text-slate-700">Invoice Number</p>
-                                <p>000000</p>
+                                <p>{{order.invoice.invoiceNumber}}</p>
 
                                 <p class="mt-2 text-sm font-normal text-slate-700">
                                     Date of Issue
                                 </p>
-                                <p>00.00.00</p>
+                                <p>{{order.orderDate | date: 'dd-MMM-yyyy'}}</p>
                             </div>
-                            <div class="text-sm font-light text-slate-500">
+                            <!-- <div class="text-sm font-light text-slate-500">
                                 <p class="text-sm font-normal text-slate-700">Terms</p>
                                 <p>0 Days</p>
 
                                 <p class="mt-2 text-sm font-normal text-slate-700">Due</p>
                                 <p>00.00.00</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
