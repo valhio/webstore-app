@@ -1,17 +1,17 @@
-import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { ManagementService } from './management.service';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {TestBed} from '@angular/core/testing';
+import {ManagementService} from './management.service';
 
-import { StoreService } from './store.service';
-import { ApiResponse } from '../interface/api-response';
-import { User } from '../models/user';
+import {StoreService} from './store.service';
+import {ApiResponse} from '../interface/api-response';
+import {User} from '../models/user';
 
 fdescribe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
-  const product1 = { id: '1', name: 'testname', price: 1.99 };
-  const product2 = { id: '2', name: 'testname2', price: 2.99 };
+  const product1 = {id: '1', name: 'testname', price: 1.99};
+  const product2 = {id: '2', name: 'testname2', price: 2.99};
   const products = [product1, product2];
 
   const STORE_BASE_URL = 'http://localhost:8080/api/v1';
@@ -108,7 +108,7 @@ fdescribe('StoreService', () => {
   it('should get order by order id', () => {
     const order = { id: "1", name: 'testname', total: 1.99 };
 
-    service.getOrderByOrderId(order.id).subscribe((res) => {
+    service.getOrderById(order.id).subscribe((res) => {
       expect(res).toEqual(order);
       expect(res.id).toBe(order.id);
     });
@@ -247,5 +247,5 @@ fdescribe('StoreService', () => {
       expect(req.request.body).toBe(address);
     });
   });
-  
+
 });
