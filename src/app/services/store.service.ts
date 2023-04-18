@@ -54,8 +54,12 @@ export class StoreService {
     return this.http.get<any[]>(`${ STORE_BASE_URL }/orders/user/${ userId }`);
   }
 
-  getOrderByOrderId(orderId: string): Observable<any> {
-    return this.http.get<any>(`${ STORE_BASE_URL }/orders/${ orderId }`);
+  getOrderById(orderId: string): Observable<any> {
+    return this.http.get<any>(`${STORE_BASE_URL}/orders/id/${orderId}`);
+  }
+
+  getOrderByOrderNumber(orderNumber: string): Observable<any> {
+    return this.http.get<any>(`${STORE_BASE_URL}/orders/${orderNumber}`);
   }
 
   getProductByProductId(productId: string) {
