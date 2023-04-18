@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Product } from '../models/product.model';
-import { map } from 'rxjs/operators'
-import { ApiResponse } from '../interface/api-response';
-import { Page } from '../interface/page';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Product} from '../models/product.model';
+import {ApiResponse} from '../interface/api-response';
+import {Page} from '../interface/page';
 
 
 // const STORE_BASE_URL = 'https://fakestoreapi.com';
@@ -47,11 +46,11 @@ export class StoreService {
   }
 
   placeOrder(order: any): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${ STORE_BASE_URL }/orders/new`, order);
+    return this.http.post<ApiResponse<any>>(`${STORE_BASE_URL}/orders/new`, order);
   }
 
   getOrdersForUser(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${ STORE_BASE_URL }/orders/user/${ userId }`);
+    return this.http.get<any[]>(`${STORE_BASE_URL}/orders/user/${userId}`);
   }
 
   getOrderById(orderId: string): Observable<any> {
@@ -63,11 +62,11 @@ export class StoreService {
   }
 
   getProductByProductId(productId: string) {
-    return this.http.get<any>(`${ STORE_BASE_URL }/products/${ productId }`);
+    return this.http.get<any>(`${STORE_BASE_URL}/products/${productId}`);
   }
 
   updateOrderStatus(orderId: string, status: string): Observable<any> {
-    return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderId }/status/${ status }`, {});
+    return this.http.put<any>(`${STORE_BASE_URL}/orders/${orderId}/status/${status}`, {});
   }
 
   updateOrderItemStatus(orderId: string, orderItemId: string, status: string): Observable<any> {
@@ -96,10 +95,10 @@ export class StoreService {
   }
 
   updateUserPhoneNumber(userId: string, phone: string) {
-    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/phone-number`, phone);
+    return this.http.put<any>(`${STORE_BASE_URL}/user/${userId}/phone-number`, phone);
   }
 
   updateUserAddress(userId: string, address: string) {
-    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/address`, address);
+    return this.http.put<any>(`${STORE_BASE_URL}/user/${userId}/address`, address);
   }
 }
