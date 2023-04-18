@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InvoiceComponent } from './invoice.component';
-import { StoreService } from '../../../../services/store.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
-import { RouterTestingModule } from '@angular/router/testing';
+import {InvoiceComponent} from './invoice.component';
+import {StoreService} from '../../../../services/store.service';
+import {ActivatedRoute} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('InvoiceComponent', () => {
   let component: InvoiceComponent;
@@ -54,12 +54,12 @@ describe('InvoiceComponent', () => {
   });
 
   it('should get order id from route params', () => {
-    expect(component.orderId).toEqual('123');
+    expect(component.orderNumber).toEqual('123');
   });
 
   it('should fetch order data on component initialization', () => {
-    spyOn(storeService, 'getOrderByOrderId').and.returnValue(of(mockOrder));
-    component.order$ = storeService.getOrderByOrderId('123');
+    spyOn(storeService, 'getOrderByOrderNumber').and.returnValue(of(mockOrder));
+    component.order$ = storeService.getOrderById('123');
 
     expect(component.order$).toBeTruthy();
     expect(component.order$).toBeInstanceOf(Observable);
