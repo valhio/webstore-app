@@ -105,4 +105,20 @@ export class StoreService {
   getInvoiceByInvoiceNumber(invoiceNumber: string) {
     return this.http.get<any>(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
   }
+
+  addToWishlist(productId: number, userId: string): Observable<any> {
+    return this.http.post<any>(`${STORE_BASE_URL}/wishlist/add/${productId}/${userId}`, {});
+  }
+
+  getProductWishlistStatus(productId: string, userId: string): Observable<any> {
+    return this.http.get<any>(`${STORE_BASE_URL}/wishlist/status/${productId}/${userId}`);
+  }
+
+  removeFromWishlist(productId: number, userId: string): Observable<any> {
+    return this.http.delete<any>(`${STORE_BASE_URL}/wishlist/remove/${productId}/${userId}`);
+  }
+
+  getWishlistedProducts(userId: string) {
+    return this.http.get<any>(`${STORE_BASE_URL}/wishlist/all/${userId}`);
+  }
 }
