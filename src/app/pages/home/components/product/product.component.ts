@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route } from '@angular/router';
-import { Product } from 'src/app/models/product.model';
-import { StoreService } from 'src/app/services/store.service';
-import { CartService } from '../../../../services/cart.service';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Product} from 'src/app/models/product.model';
+import {StoreService} from 'src/app/services/store.service';
+import {CartService} from '../../../../services/cart.service';
+import {AuthenticationService} from 'src/app/services/authentication.service';
+import {Observable, shareReplay, tap} from 'rxjs';
 
 
 @Component({
@@ -10,7 +12,7 @@ import { CartService } from '../../../../services/cart.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent {
 
   readonly DEFAULT_FEATURES = "A resin wrist rest is a type of ergonomic accessory for computer users that provides support and comfort to the wrists while typing or using a mouse. Resin wrist rests are made from a durable and smooth material that can be molded into various shapes and sizes to fit different keyboard and mouse configurations. The main features of a resin wrist rest include its ergonomic design, which helps to prevent repetitive strain injuries and carpal tunnel syndrome by promoting a neutral wrist position. Resin wrist rests are also non-slip, ensuring that they stay in place during use, and they are easy to clean and maintain. Additionally, resin wrist rests can be customized with various colors and designs to match a user's aesthetic preferences."
   readonly DEFAULT_CARE = "Caring for a resin wrist rest is relatively simple and straightforward. First and foremost, it is essential to keep the wrist rest clean by wiping it down regularly with a soft cloth or towel. Avoid using harsh chemicals or abrasive cleaners, as these can damage the surface of the resin. For more stubborn stains or dirt buildup, a mild soap solution can be used. When not in use, it is best to store the wrist rest in a clean and dry location, away from direct sunlight or heat sources. Avoid exposing the wrist rest to extreme temperatures, as this can cause warping or discoloration."
@@ -22,10 +24,15 @@ export class ProductComponent implements OnInit {
   imageOnDisplayUrl?: string = undefined;
   panelOpenState = false;
 
+  isWishlisted: boolean = false;
+  isProductWishlisted$: Observable<any> = this.storeService.getProductWishlistStatus(this.productId, this.authService.getUserUserId()).pipe(
+    shareReplay(1), // shareReplay(1) is used to cache the value of the observable so that it is not re-evaluated every time the component is re-rendered
+    tap((isProductWishlisted) => {
+      this.isWishlisted = isProductWishlisted ? true : false;
+    })
+  )
 
-  constructor(private route: ActivatedRoute, private storeService: StoreService, private cartService: CartService) { }
-
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, private storeService: StoreService, private cartService: CartService, private authService: AuthenticationService) {
   }
 
   displayImage(imageUrl: string) {
@@ -42,6 +49,18 @@ export class ProductComponent implements OnInit {
       category: product.category,
       quantity: 1,
     });
+  }
+
+  onAddToWishlist(product: Product): void {
+    this.isProductWishlisted$ = this.storeService.addToWishlist(product.id, this.authService.getUserUserId()).pipe(
+      shareReplay(1)
+    )
+  }
+
+  onRemoveFromWishlist(product: Product): void {
+    this.isProductWishlisted$ = this.storeService.removeFromWishlist(product.id, this.authService.getUserUserId()).pipe(
+      shareReplay(1)
+    )
   }
 
 }
