@@ -17,6 +17,7 @@ import {OrderComponent} from './pages/order/order.component';
 import {InvoiceComponent} from './pages/home/components/invoice/invoice.component';
 import {ProductComponent} from './pages/home/components/product/product.component';
 import {AccountComponent} from './pages/account/account.component';
+import {WishlistComponent} from './pages/wishlist/wishlist.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'user/myaccount', component: AccountComponent},
+  {path: 'wishlist', component: WishlistComponent},
   {path: '**', pathMatch: 'full', component: PageNotFoundComponent},
 ];
 
