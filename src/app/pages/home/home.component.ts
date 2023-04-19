@@ -1,18 +1,12 @@
-import {
-  Component,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  Pipe,
-} from '@angular/core';
-import { BehaviorSubject, debounce, elementAt, Subscription } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
-import { CartService } from 'src/app/services/cart.service';
-import { StoreService } from '../../services/store.service';
-import { Page } from '../../interface/page';
-import { ApiResponse } from '../../interface/api-response';
+import {Component, HostListener, OnInit,} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Product} from 'src/app/models/product.model';
+import {CartService} from 'src/app/services/cart.service';
+import {StoreService} from '../../services/store.service';
+import {ApiResponse} from '../../interface/api-response';
 
-const ROWS_HEIGHT: { [id: number]: number } = { 1: 300, 3: 550, 4: 420 };
+const ROWS_HEIGHT: { [id: number]: number } = {1: 300, 3: 550, 4: 420};
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -22,7 +16,7 @@ export class HomeComponent implements OnInit {
   columnsCount = 1;
   rowHeight = ROWS_HEIGHT[this.columnsCount];
   currentCategory: string | undefined;
-  sort = 'name-asc';
+  sort = 'id-asc';
   size = 12;
   page = 0;
   productsData: Product[] = [];
