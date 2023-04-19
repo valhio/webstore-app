@@ -54,9 +54,11 @@ The E-commerce frontend includes the following features:
 - Product search and filtering
 - Product details
 - Shopping cart management
+- Account data management
+- Add to wishlist feature
 - Checkout process
-- Order management
 - Payment system using Stripe
+- Client's order management
 - Admin dashboard and management (only accessible by authenticated users with admin privileges)
 
 ## Technologies
