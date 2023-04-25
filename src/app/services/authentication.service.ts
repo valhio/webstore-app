@@ -1,13 +1,12 @@
-import { HttpClient, HttpHeaders, HttpResponse, } from '@angular/common/http';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, tap, Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { LoginUser } from '../models/loginUser';
-import { RegisterUser } from '../models/registerUser';
-import { User } from '../models/user';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpResponse,} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {environment} from 'src/environments/environment';
+import {LoginUser} from '../models/loginUser';
+import {RegisterUser} from '../models/registerUser';
+import {User} from '../models/user';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 
 @Injectable({
@@ -71,19 +70,19 @@ export class AuthenticationService {
   }
 
   getUserRole(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).role || '';
+    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.role || '';
   }
 
   getUserAuthorities(): string[] {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).authorities || [];
+    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.authorities || [];
   }
 
   getUserUserId(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).userId || '';
+    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.userId || '';
   }
 
   getUserEmail(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value).email || '';
+    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.email || '';
   }
 
   isAuthenticated(): boolean {
@@ -91,11 +90,11 @@ export class AuthenticationService {
 
     /*
     If the token exists,
-    is not expired, 
-    the username in the token is the same as the username in the user object, 
-    the role in the token is the same as the role in the user object, 
-    and the email in the token is the same as the email in the user object, 
-    then the user is authenticated. 
+    is not expired,
+    the username in the token is the same as the username in the user object,
+    the role in the token is the same as the role in the user object,
+    and the email in the token is the same as the email in the user object,
+    then the user is authenticated.
     */
     if (decodedToken
       && !this.isTokenExpired()
