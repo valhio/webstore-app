@@ -121,4 +121,12 @@ export class StoreService {
   getWishlistedProducts(userId: string) {
     return this.http.get<any>(`${STORE_BASE_URL}/wishlist/all/${userId}`);
   }
+
+  getProductReviewsForProduct(productId: string) {
+    return this.http.get<any>(`${STORE_BASE_URL}/product-review/all`, {params: {productId}});
+  }
+
+  addProductReview(productId: string, userId: String, rating: number, title: String, reviewText: string,): Observable<any> {
+    return this.http.post<any>(`${STORE_BASE_URL}/product-review/add`, {productId, userId, rating, title, reviewText});
+  }
 }
