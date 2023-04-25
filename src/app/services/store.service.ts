@@ -121,4 +121,9 @@ export class StoreService {
   getWishlistedProducts(userId: string) {
     return this.http.get<any>(`${STORE_BASE_URL}/wishlist/all/${userId}`);
   }
+
+  getProductReviewsForProduct(productId: string) {
+    return this.http.get<any>(`${STORE_BASE_URL}/product-review/all`, {params: {productId}});
+  }
+
 }
