@@ -1,9 +1,9 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Product} from '../models/product.model';
-import {ApiResponse} from '../interface/api-response';
-import {Page} from '../interface/page';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Product } from '../models/product.model';
+import { ApiResponse } from '../interface/api-response';
+import { Page } from '../interface/page';
 
 
 // const STORE_BASE_URL = 'https://fakestoreapi.com';
@@ -46,27 +46,27 @@ export class StoreService {
   }
 
   placeOrder(order: any): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${STORE_BASE_URL}/orders/new`, order);
+    return this.http.post<ApiResponse<any>>(`${ STORE_BASE_URL }/orders/new`, order);
   }
 
   getOrdersForUser(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${STORE_BASE_URL}/orders/user/${userId}`);
+    return this.http.get<any[]>(`${ STORE_BASE_URL }/orders/user/${ userId }`);
   }
 
   getOrderById(orderId: string): Observable<any> {
-    return this.http.get<any>(`${STORE_BASE_URL}/orders/id/${orderId}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/orders/id/${ orderId }`);
   }
 
   getOrderByOrderNumber(orderNumber: string): Observable<any> {
-    return this.http.get<any>(`${STORE_BASE_URL}/orders/${orderNumber}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/orders/${ orderNumber }`);
   }
 
   getProductByProductId(productId: string) {
-    return this.http.get<any>(`${STORE_BASE_URL}/products/${productId}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/products/${ productId }`);
   }
 
   updateOrderStatus(orderId: string, status: string): Observable<any> {
-    return this.http.put<any>(`${STORE_BASE_URL}/orders/${orderId}/status/${status}`, {});
+    return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderId }/status/${ status }`, {});
   }
 
   updateOrderItemStatus(orderId: string, orderItemId: string, status: string): Observable<any> {
@@ -95,38 +95,43 @@ export class StoreService {
   }
 
   updateUserPhoneNumber(userId: string, phone: string) {
-    return this.http.put<any>(`${STORE_BASE_URL}/user/${userId}/phone-number`, phone);
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/phone-number`, phone);
   }
 
   updateUserAddress(userId: string, address: string) {
-    return this.http.put<any>(`${STORE_BASE_URL}/user/${userId}/address`, address);
+    return this.http.put<any>(`${ STORE_BASE_URL }/user/${ userId }/address`, address);
   }
 
   getInvoiceByInvoiceNumber(invoiceNumber: string) {
-    return this.http.get<any>(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/invoice/${ invoiceNumber }`);
   }
 
   addToWishlist(productId: number, userId: string): Observable<any> {
-    return this.http.post<any>(`${STORE_BASE_URL}/wishlist/add/${productId}/${userId}`, {});
+    return this.http.post<any>(`${ STORE_BASE_URL }/wishlist/add/${ productId }/${ userId }`, {});
   }
 
   getProductWishlistStatus(productId: string, userId: string): Observable<any> {
-    return this.http.get<any>(`${STORE_BASE_URL}/wishlist/status/${productId}/${userId}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/wishlist/status/${ productId }/${ userId }`);
   }
 
   removeFromWishlist(productId: number, userId: string): Observable<any> {
-    return this.http.delete<any>(`${STORE_BASE_URL}/wishlist/remove/${productId}/${userId}`);
+    return this.http.delete<any>(`${ STORE_BASE_URL }/wishlist/remove/${ productId }/${ userId }`);
   }
 
   getWishlistedProducts(userId: string) {
-    return this.http.get<any>(`${STORE_BASE_URL}/wishlist/all/${userId}`);
+    return this.http.get<any>(`${ STORE_BASE_URL }/wishlist/all/${ userId }`);
   }
 
   getProductReviewsForProduct(productId: string) {
-    return this.http.get<any>(`${STORE_BASE_URL}/product-review/all`, {params: {productId}});
+    return this.http.get<any>(`${ STORE_BASE_URL }/product-review/all`, { params: { productId } });
   }
 
   addProductReview(productId: string, userId: String, rating: number, title: String, reviewText: string,): Observable<any> {
-    return this.http.post<any>(`${STORE_BASE_URL}/product-review/add`, {productId, userId, rating, title, reviewText});
+    return this.http.post<any>(`${ STORE_BASE_URL }/product-review/add`, { productId, userId, rating, title, reviewText });
   }
+
+  likeReview(reviewId: number): Observable<any> {
+    return this.http.post<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`, {});
+  }
+
 }
