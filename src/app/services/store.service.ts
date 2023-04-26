@@ -134,4 +134,7 @@ export class StoreService {
     return this.http.post<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`, {});
   }
 
+  unlikeReview(reviewId: number): Observable<any> {
+    return this.http.delete<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/remove`);
+  }
 }
