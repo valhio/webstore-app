@@ -4,7 +4,7 @@ import { Product } from 'src/app/models/product.model';
 import { StoreService } from 'src/app/services/store.service';
 import { CartService } from '../../../../services/cart.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, switchMap, tap, map } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -39,6 +39,10 @@ export class ProductComponent {
     rating: new FormControl(0, Validators.required),
     title: new FormControl('', Validators.required),
     review: new FormControl('', Validators.required),
+  })
+
+  commentForm = new FormGroup({
+    comment: new FormControl('', Validators.required),
   })
 
   constructor(private route: ActivatedRoute, private router: Router, private storeService: StoreService, private cartService: CartService, private authService: AuthenticationService) {
