@@ -274,7 +274,7 @@ fdescribe('StoreService', () => {
   it('should get product wishlist status', () => {
     const productId = '123';
     const userId = '456';
- 
+
     service.getProductWishlistStatus(productId, userId).subscribe(response => {
       expect(response).toBeTruthy();
       expect(response.status).toBe(200);
@@ -282,7 +282,7 @@ fdescribe('StoreService', () => {
       expect(response.userId).toBe(userId);
     });
 
-    const req = httpMock.expectOne(`${STORE_BASE_URL}/wishlist/status/${productId}/${userId}`);
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/status/${ productId }/${ userId }`);
     expect(req.request.method).toBe('GET');
 
     req.flush({
@@ -303,7 +303,7 @@ fdescribe('StoreService', () => {
       expect(response.userId).toBe(userId);
     });
 
-    const req = httpMock.expectOne(`${STORE_BASE_URL}/wishlist/remove/${productId}/${userId}`);
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/remove/${ productId }/${ userId }`);
     expect(req.request.method).toBe('DELETE');
 
     req.flush({
@@ -325,7 +325,7 @@ fdescribe('StoreService', () => {
       expect(response.products[1].productId).toBe(456);
     });
 
-    const req = httpMock.expectOne(`${STORE_BASE_URL}/wishlist/all/${userId}`);
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/all/${ userId }`);
     expect(req.request.method).toBe('GET');
 
     req.flush({
@@ -354,7 +354,7 @@ fdescribe('StoreService', () => {
       expect(response.reviews[1].productId).toBe(456);
     });
 
-    const req = httpMock.expectOne(`${STORE_BASE_URL}/product-review/all?productId=${productId}`);
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/product-review/all?productId=${ productId }`);
     expect(req.request.method).toBe('GET');
 
     req.flush({
@@ -388,9 +388,9 @@ fdescribe('StoreService', () => {
       expect(response.reviewText).toBe(reviewText);
     });
 
-    const req = httpMock.expectOne(`${STORE_BASE_URL}/product-review/add`);
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/product-review/add`);
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({productId, userId, rating, title, reviewText});
+    expect(req.request.body).toEqual({ productId, userId, rating, title, reviewText });
 
     req.flush({
       status: 200,
@@ -401,4 +401,26 @@ fdescribe('StoreService', () => {
       reviewText: reviewText
     });
   });
+
+  describe('likeReview()', () => {
+    it('should send a POST request with the correct URL', () => {
+      const reviewId = 123;
+      const userId = '456';
+
+      service.likeReview(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.userId).toBe(userId);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`);
+      expect(req.request.method).toBe('POST');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        userId: userId
+      });
+    });
+  })
 });
