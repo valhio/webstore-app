@@ -142,4 +142,7 @@ export class StoreService {
     return this.http.get<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/has-liked`, {});
   }
 
+  getReviewLikes(reviewId: number) {
+    return this.http.get<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/all`, {});
+  }
 }
