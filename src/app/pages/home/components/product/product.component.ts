@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Product} from 'src/app/models/product.model';
-import {StoreService} from 'src/app/services/store.service';
-import {CartService} from '../../../../services/cart.service';
-import {AuthenticationService} from 'src/app/services/authentication.service';
-import {BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, tap} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from 'src/app/models/product.model';
+import { StoreService } from 'src/app/services/store.service';
+import { CartService } from '../../../../services/cart.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, switchMap, tap, map } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -39,6 +39,10 @@ export class ProductComponent {
     rating: new FormControl(0, Validators.required),
     title: new FormControl('', Validators.required),
     review: new FormControl('', Validators.required),
+  })
+
+  commentForm = new FormGroup({
+    comment: new FormControl('', Validators.required),
   })
 
   constructor(private route: ActivatedRoute, private router: Router, private storeService: StoreService, private cartService: CartService, private authService: AuthenticationService) {
@@ -99,7 +103,7 @@ export class ProductComponent {
   }
 
   submitReview(): void {
-    if (this.reviewForm.get('rating')?.value == 0) this.reviewForm.get('rating')?.setErrors({required: true}); // If the user has not selected a rating (rating equals 0), set the rating form control to invalid
+    if (this.reviewForm.get('rating')?.value == 0) this.reviewForm.get('rating')?.setErrors({ required: true }); // If the user has not selected a rating (rating equals 0), set the rating form control to invalid
 
     if (this.reviewForm.valid) {
       this.subscriptions.push(
@@ -111,6 +115,23 @@ export class ProductComponent {
               this.productSubject.value.productReviews = [productReview, ...this.productSubject.value.productReviews];
             })
           ).subscribe()
+      )
+    }
+  }
+
+  submitComment(productReviewId: string): void {
+    if (this.commentForm.valid) {
+      this.subscriptions.push(
+        this.storeService.addCommentToReview(productReviewId, this.commentForm.value['comment']!).subscribe((comment) => {
+          this.commentForm.reset();
+
+          // Find the review to which the comment was added and add the comment to the review's comments array, so that the comment is displayed in the UI
+          this.productSubject.value.productReviews.forEach((productReview: any) => {
+            if (productReview.id == productReviewId) {
+              productReview.comments.push(comment);
+            }
+          })
+        })
       )
     }
   }
@@ -185,9 +206,45 @@ export class ProductComponent {
     return Math.round(res) || 0; // Rounds the result to integer (e.g. 3.33333333333333 -> 3)
   }
 
-  toggleReviewForm(status: boolean): void {
+  toggleReviewForm(): void {
     if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
-    this.isReviewFormVisible = status;
+    this.isReviewFormVisible = !this.isReviewFormVisible;
   }
+
+  toggleCommentForm(productReview: any): void {
+    if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
+    this.commentForm.reset();
+    productReview.isCommentFormVisible = !productReview.isCommentFormVisible;
+  }
+
+  toggleCommentsForReview(productReview: any): void {
+    productReview.areCommentsVisible = !productReview.areCommentsVisible;
+  }
+
+  onLikeReview(reviewId: number): void {
+    const isLiked$ = this.storeService.hasUserLikedReview(reviewId); // Check if the user has liked the review
+    const likeAction$ = isLiked$.pipe(
+      switchMap(hasUserLikedReview => {
+        // If the user has liked the review, unlike it, otherwise like it
+        const likeAction = hasUserLikedReview ? this.storeService.unlikeReview(reviewId) : this.storeService.likeReview(reviewId);
+        return likeAction.pipe( // Return the review likes observable
+          switchMap(() => this.storeService.getReviewLikes(reviewId))
+        );
+      })
+    );
+    this.subscriptions.push(
+      likeAction$.subscribe(reviewLikes => {
+        const productReview = this.productSubject.value.productReviews.find((pr: any) => pr.id === reviewId);
+        if (productReview) {
+          productReview.likes = reviewLikes;
+        }
+      })
+    );
+  }
+
+  hasUserLikedReview(review: any) {
+    return review.likes.find((like: any) => like.user.userId == this.authService.getUserUserId()) != undefined;
+  }
+
 }
 

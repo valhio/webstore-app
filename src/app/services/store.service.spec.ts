@@ -1,17 +1,17 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {ManagementService} from './management.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { ManagementService } from './management.service';
 
-import {StoreService} from './store.service';
-import {ApiResponse} from '../interface/api-response';
-import {User} from '../models/user';
+import { StoreService } from './store.service';
+import { ApiResponse } from '../interface/api-response';
+import { User } from '../models/user';
 
 describe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
-  const product1 = {id: '1', name: 'testname', price: 1.99};
-  const product2 = {id: '2', name: 'testname2', price: 2.99};
+  const product1 = { id: '1', name: 'testname', price: 1.99 };
+  const product2 = { id: '2', name: 'testname2', price: 2.99 };
   const products = [product1, product2];
 
   const STORE_BASE_URL = 'http://localhost:8080/api/v1';
@@ -242,7 +242,7 @@ describe('StoreService', () => {
 
       service.updateUserAddress(userId, address).subscribe();
 
-      const req = httpMock.expectOne(`${STORE_BASE_URL}/user/${userId}/address`);
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/address`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toBe(address);
     });
@@ -254,9 +254,237 @@ describe('StoreService', () => {
 
       service.getInvoiceByInvoiceNumber(invoiceNumber).subscribe();
 
-      const req = httpMock.expectOne(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/invoice/${ invoiceNumber }`);
       expect(req.request.method).toBe('GET');
     });
   });
 
+  describe('addToWishlist', () => {
+    it('should send a POST request with the correct URL and body', () => {
+      const userId = '1';
+      const productId = 123;
+
+      service.addToWishlist(productId, userId).subscribe();
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/add/${ productId }/${ userId }`);
+      expect(req.request.method).toBe('POST');
+    });
+  })
+
+  it('should get product wishlist status', () => {
+    const productId = '123';
+    const userId = '456';
+
+    service.getProductWishlistStatus(productId, userId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.userId).toBe(userId);
+    });
+
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/status/${ productId }/${ userId }`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      userId: userId
+    });
+  });
+
+  it('removeFromWishlist', () => {
+    const productId = 123;
+    const userId = '456';
+
+    service.removeFromWishlist(productId, userId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.userId).toBe(userId);
+    });
+
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/remove/${ productId }/${ userId }`);
+    expect(req.request.method).toBe('DELETE');
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      userId: userId
+    });
+  });
+
+  it('getWishlistedProducts', () => {
+    const userId = '456';
+
+    service.getWishlistedProducts(userId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.userId).toBe(userId);
+      expect(response.products.length).toBe(2);
+      expect(response.products[0].productId).toBe(123);
+      expect(response.products[1].productId).toBe(456);
+    });
+
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/all/${ userId }`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      userId: userId,
+      products: [
+        {
+          productId: 123,
+        },
+        {
+          productId: 456,
+        }
+      ]
+    });
+  });
+
+  it('getProductReviewsForProduct() should get', () => {
+    const productId = '123';
+
+    service.getProductReviewsForProduct(productId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.reviews.length).toBe(2);
+      expect(response.reviews[0].productId).toBe(123);
+      expect(response.reviews[1].productId).toBe(456);
+    });
+
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/product-review/all?productId=${ productId }`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      reviews: [
+        {
+          productId: 123,
+        },
+        {
+          productId: 456,
+        }
+      ]
+    });
+  });
+
+  it('addProductReview() should add with POST', () => {
+    const productId = '123';
+    const userId = '456';
+    const rating = 5;
+    const title = 'Test Review';
+    const reviewText = 'This is a test review.';
+
+    service.addProductReview(productId, userId, rating, title, reviewText).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.userId).toBe(userId);
+      expect(response.rating).toBe(rating);
+      expect(response.title).toBe(title);
+      expect(response.reviewText).toBe(reviewText);
+    });
+
+    const req = httpMock.expectOne(`${ STORE_BASE_URL }/product-review/add`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ productId, userId, rating, title, reviewText });
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      userId: userId,
+      rating: rating,
+      title: title,
+      reviewText: reviewText
+    });
+  });
+
+  describe('likeReview()', () => {
+    it('should send a POST request with the correct URL', () => {
+      const reviewId = 123;
+      const userId = '456';
+
+      service.likeReview(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.userId).toBe(userId);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`);
+      expect(req.request.method).toBe('POST');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        userId: userId
+      });
+    });
+  })
+
+  describe('unlikeReview()', () => {
+    it('should send a DELETE request with the correct URL', () => {
+      const reviewId = 123;
+      const userId = '456';
+
+      service.unlikeReview(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.userId).toBe(userId);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/remove`);
+      expect(req.request.method).toBe('DELETE');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        userId: userId
+      });
+    });
+  });
+
+  describe('hasUserLikedReview()', () => {
+    it('should send a GET request with the correct URL', () => {
+      const reviewId = 123;
+
+      service.hasUserLikedReview(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.hasUserLiked).toBe(true);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/has-liked`);
+      expect(req.request.method).toBe('GET');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        hasUserLiked: true
+      });
+    });
+  });
+
+  describe('getReviewLikes()', () => {
+    it('should send a GET request with the correct URL', () => {
+      const reviewId = 123;
+
+      service.getReviewLikes(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.likes).toBe(5);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/all`);
+      expect(req.request.method).toBe('GET');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        likes: 5
+      });
+    });
+  });
 });
