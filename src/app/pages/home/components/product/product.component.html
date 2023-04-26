@@ -299,10 +299,10 @@
         <h3 class="sr-only">Recent reviews</h3>
 
         <div class="flow-root">
-          <div class="-my-12 divide-y divide-gray-200">
+          <div class="-my-12 divide-y divide-gray-300">
             <ng-container *ngIf="product.productReviews as reviews">
               <ng-container *ngIf="reviews.length>0; else noReviews">
-                <div *ngFor="let review of reviews" class="pt-12 pb-6">
+                <div *ngFor="let review of reviews" class="pt-8 pb-6">
                   <div>
                     <div class="flex items-center">
                       <div>
@@ -413,8 +413,8 @@
                   <!-- Review Comments Section -->
                   <ng-container *ngIf="review.comments.length >0">
                     <section class="mt-4 ml-10 divide-y border-t border-b">
-                      <div *ngFor="let comment of review.comments" class="mb-4 pl-6">
-                        <div class="flex items-center pt-4 space-x-2">
+                      <div *ngFor="let comment of review.comments" class="py-4 pl-6">
+                        <div class="flex items-center space-x-2">
                           <h4 class="font-bold text-gray-900">{{comment.user.firstName +' '+ comment.user.lastName}}
                           </h4>
                           <div class="text-xs font-light italic text-gray-600">
