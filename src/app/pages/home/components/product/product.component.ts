@@ -217,6 +217,10 @@ export class ProductComponent {
     productReview.isCommentFormVisible = !productReview.isCommentFormVisible;
   }
 
+  toggleCommentsForReview(productReview: any): void {
+    productReview.areCommentsVisible = !productReview.areCommentsVisible;
+  }
+
   onLikeReview(reviewId: number): void {
     const isLiked$ = this.storeService.hasUserLikedReview(reviewId); // Check if the user has liked the review
     const likeAction$ = isLiked$.pipe(

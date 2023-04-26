@@ -343,9 +343,9 @@
                   </div>
 
                   <!-- Like Review Button / Leave a Comment Button -->
-                  <div class="mt-2 sm:flex sm:justify-end">
+                  <div class="mt-4 sm:flex sm:justify-between">
                     <div
-                      class="flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                      class="flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:border-none sm:pt-0">
                       <button (click)="onLikeReview(review.id)"
                         class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-500"
                         type="button">
@@ -371,6 +371,11 @@
                         </button>
                       </div>
                     </div>
+                    <ng-container *ngIf="review.comments.length>0">
+                      <button class="text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline"
+                        (click)="toggleCommentsForReview(review)">
+                        Show comments ({{review.comments.length}})</button>
+                    </ng-container>
                   </div>
 
                   <!-- Comment Section -->
@@ -409,7 +414,7 @@
                   </ng-container>
 
                   <!-- Review Comments Section -->
-                  <ng-container *ngIf="review.comments.length >0">
+                  <ng-container *ngIf="review.comments.length >0 && review.areCommentsVisible">
                     <section class="mt-4 ml-10 divide-y border-t border-b">
                       <div *ngFor="let comment of review.comments" class="py-4 pl-6">
                         <div class="flex items-center space-x-2">
