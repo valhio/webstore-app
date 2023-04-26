@@ -313,4 +313,32 @@ fdescribe('StoreService', () => {
     });
   });
 
+  it('getWishlistedProducts', () => {
+    const userId = '456';
+
+    service.getWishlistedProducts(userId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.userId).toBe(userId);
+      expect(response.products.length).toBe(2);
+      expect(response.products[0].productId).toBe(123);
+      expect(response.products[1].productId).toBe(456);
+    });
+
+    const req = httpMock.expectOne(`${STORE_BASE_URL}/wishlist/all/${userId}`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      userId: userId,
+      products: [
+        {
+          productId: 123,
+        },
+        {
+          productId: 456,
+        }
+      ]
+    });
+  });
 });
