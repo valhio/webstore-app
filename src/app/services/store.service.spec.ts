@@ -341,4 +341,33 @@ fdescribe('StoreService', () => {
       ]
     });
   });
+
+  it('getProductReviewsForProduct() should get', () => {
+    const productId = '123';
+
+    service.getProductReviewsForProduct(productId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.reviews.length).toBe(2);
+      expect(response.reviews[0].productId).toBe(123);
+      expect(response.reviews[1].productId).toBe(456);
+    });
+
+    const req = httpMock.expectOne(`${STORE_BASE_URL}/product-review/all?productId=${productId}`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      reviews: [
+        {
+          productId: 123,
+        },
+        {
+          productId: 456,
+        }
+      ]
+    });
+  });
 });
