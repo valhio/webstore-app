@@ -364,7 +364,7 @@
                         {{review.likes.length}}
                       </button>
                       <div class="flex-1 pl-4 flex justify-center">
-                        <button (click)="toggleCommentForm(review)"
+                        <button (click)="toggleCommentForm(review); !review.areCommentsVisible ? toggleCommentsForReview(review) :''"
                           class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-500"
                           type="button">
                           Leave a comment
@@ -374,7 +374,7 @@
                     <ng-container *ngIf="review.comments.length>0">
                       <button class="text-sm font-medium text-indigo-600 hover:text-indigo-700 hover:underline"
                         (click)="toggleCommentsForReview(review)">
-                        Show comments ({{review.comments.length}})</button>
+                        <span>{{review.areCommentsVisible ? 'Hide' : "Show"}}</span> comments ({{review.comments.length}})</button>
                     </ng-container>
                   </div>
 
@@ -415,10 +415,10 @@
 
                   <!-- Review Comments Section -->
                   <ng-container *ngIf="review.comments.length >0 && review.areCommentsVisible">
-                    <section class="mt-4 ml-10 divide-y border-t border-b">
+                    <section class="mt-4 ml-6 divide-y border-t border-b">
                       <div *ngFor="let comment of review.comments" class="py-4 pl-6">
                         <div class="flex items-center space-x-2">
-                          <h4 class="font-bold text-gray-900">{{comment.user.firstName +' '+ comment.user.lastName}}
+                          <h4 class="font-medium text-gray-700">{{comment.user.firstName +' '+ comment.user.lastName}}
                           </h4>
                           <div class="text-xs font-light italic text-gray-600">
                             <p>
