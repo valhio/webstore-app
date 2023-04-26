@@ -105,10 +105,19 @@ fdescribe('ProductComponent', () => {
     it('should return true if the user has liked a review', () => {
       const review = { likes: [{ user: { userId: 123 } }] };
       spyOn(authService, 'getUserUserId').and.returnValue('123');
-  
+
       const result = component.hasUserLikedReview(review);
-  
+
       expect(result).toBeTrue();
+    });
+
+    it('should return false if the user has not liked a review', () => {
+      const review = { likes: [{ user: { userId: 123 } }] };
+      spyOn(authService, 'getUserUserId').and.returnValue('456');
+
+      const result = component.hasUserLikedReview(review);
+
+      expect(result).toBeFalse();
     });
   });
 });
