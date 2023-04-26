@@ -423,4 +423,26 @@ fdescribe('StoreService', () => {
       });
     });
   })
+
+  describe('unlikeReview()', () => {
+    it('should send a DELETE request with the correct URL', () => {
+      const reviewId = 123;
+      const userId = '456';
+
+      service.unlikeReview(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.userId).toBe(userId);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/remove`);
+      expect(req.request.method).toBe('DELETE');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        userId: userId
+      });
+    });
+  });
 });
