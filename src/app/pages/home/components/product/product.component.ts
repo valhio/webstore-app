@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Product} from 'src/app/models/product.model';
-import {StoreService} from 'src/app/services/store.service';
-import {CartService} from '../../../../services/cart.service';
-import {AuthenticationService} from 'src/app/services/authentication.service';
-import {BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, tap} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from 'src/app/models/product.model';
+import { StoreService } from 'src/app/services/store.service';
+import { CartService } from '../../../../services/cart.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, switchMap, tap } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -99,7 +99,7 @@ export class ProductComponent {
   }
 
   submitReview(): void {
-    if (this.reviewForm.get('rating')?.value == 0) this.reviewForm.get('rating')?.setErrors({required: true}); // If the user has not selected a rating (rating equals 0), set the rating form control to invalid
+    if (this.reviewForm.get('rating')?.value == 0) this.reviewForm.get('rating')?.setErrors({ required: true }); // If the user has not selected a rating (rating equals 0), set the rating form control to invalid
 
     if (this.reviewForm.valid) {
       this.subscriptions.push(
@@ -185,9 +185,31 @@ export class ProductComponent {
     return Math.round(res) || 0; // Rounds the result to integer (e.g. 3.33333333333333 -> 3)
   }
 
-  toggleReviewForm(status: boolean): void {
+  toggleReviewForm(): void {
     if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
-    this.isReviewFormVisible = status;
+    this.isReviewFormVisible = !this.isReviewFormVisible;
   }
+
+  onLikeReview(reviewId: number): void {
+    const isLiked$ = this.storeService.hasUserLikedReview(reviewId); // Check if the user has liked the review
+    const likeAction$ = isLiked$.pipe(
+      switchMap(hasUserLikedReview => {
+        // If the user has liked the review, unlike it, otherwise like it
+        const likeAction = hasUserLikedReview ? this.storeService.unlikeReview(reviewId) : this.storeService.likeReview(reviewId);
+        return likeAction.pipe( // Return the review likes observable
+          switchMap(() => this.storeService.getReviewLikes(reviewId))
+        );
+      })
+    );
+    this.subscriptions.push(
+      likeAction$.subscribe(reviewLikes => {
+        const productReview = this.productSubject.value.productReviews.find((pr: any) => pr.id === reviewId);
+        if (productReview) {
+          productReview.likes = reviewLikes;
+        }
+      })
+    );
+  }
+
 }
 
