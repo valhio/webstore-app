@@ -100,4 +100,15 @@ fdescribe('ProductComponent', () => {
       expect(component.productSubject.value.productReviews[0].likes).toEqual(expectedProductReview.likes);
     });
   });
+
+  describe('hasUserLikedReview()', () => {
+    it('should return true if the user has liked a review', () => {
+      const review = { likes: [{ user: { userId: 123 } }] };
+      spyOn(authService, 'getUserUserId').and.returnValue('123');
+  
+      const result = component.hasUserLikedReview(review);
+  
+      expect(result).toBeTrue();
+    });
+  });
 });
