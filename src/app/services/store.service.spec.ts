@@ -370,4 +370,35 @@ fdescribe('StoreService', () => {
       ]
     });
   });
+
+  it('addProductReview() should add with POST', () => {
+    const productId = '123';
+    const userId = '456';
+    const rating = 5;
+    const title = 'Test Review';
+    const reviewText = 'This is a test review.';
+
+    service.addProductReview(productId, userId, rating, title, reviewText).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.userId).toBe(userId);
+      expect(response.rating).toBe(rating);
+      expect(response.title).toBe(title);
+      expect(response.reviewText).toBe(reviewText);
+    });
+
+    const req = httpMock.expectOne(`${STORE_BASE_URL}/product-review/add`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({productId, userId, rating, title, reviewText});
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      userId: userId,
+      rating: rating,
+      title: title,
+      reviewText: reviewText
+    });
+  });
 });
