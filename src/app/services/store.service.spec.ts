@@ -466,4 +466,25 @@ fdescribe('StoreService', () => {
       });
     });
   });
+
+  describe('getReviewLikes()', () => {
+    it('should send a GET request with the correct URL', () => {
+      const reviewId = 123;
+
+      service.getReviewLikes(reviewId).subscribe(response => {
+        expect(response).toBeTruthy();
+        expect(response.status).toBe(200);
+        expect(response.reviewId).toBe(reviewId);
+        expect(response.likes).toBe(5);
+      });
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/all`);
+      expect(req.request.method).toBe('GET');
+      req.flush({
+        status: 200,
+        reviewId: reviewId,
+        likes: 5
+      });
+    });
+  });
 });
