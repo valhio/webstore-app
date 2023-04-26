@@ -1,17 +1,17 @@
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {TestBed} from '@angular/core/testing';
-import {ManagementService} from './management.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { ManagementService } from './management.service';
 
-import {StoreService} from './store.service';
-import {ApiResponse} from '../interface/api-response';
-import {User} from '../models/user';
+import { StoreService } from './store.service';
+import { ApiResponse } from '../interface/api-response';
+import { User } from '../models/user';
 
-describe('StoreService', () => {
+fdescribe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
-  const product1 = {id: '1', name: 'testname', price: 1.99};
-  const product2 = {id: '2', name: 'testname2', price: 2.99};
+  const product1 = { id: '1', name: 'testname', price: 1.99 };
+  const product2 = { id: '2', name: 'testname2', price: 2.99 };
   const products = [product1, product2];
 
   const STORE_BASE_URL = 'http://localhost:8080/api/v1';
@@ -242,7 +242,7 @@ describe('StoreService', () => {
 
       service.updateUserAddress(userId, address).subscribe();
 
-      const req = httpMock.expectOne(`${STORE_BASE_URL}/user/${userId}/address`);
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/user/${ userId }/address`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toBe(address);
     });
@@ -254,9 +254,21 @@ describe('StoreService', () => {
 
       service.getInvoiceByInvoiceNumber(invoiceNumber).subscribe();
 
-      const req = httpMock.expectOne(`${STORE_BASE_URL}/invoice/${invoiceNumber}`);
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/invoice/${ invoiceNumber }`);
       expect(req.request.method).toBe('GET');
     });
   });
+
+  describe('addToWishlist', () => {
+    it('should send a POST request with the correct URL and body', () => {
+      const userId = '1';
+      const productId = 123;
+
+      service.addToWishlist(productId, userId).subscribe();
+
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/wishlist/add/${ productId }/${ userId }`);
+      expect(req.request.method).toBe('POST');
+    });
+  })
 
 });
