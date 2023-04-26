@@ -124,7 +124,7 @@ export class ProductComponent {
       this.subscriptions.push(
         this.storeService.addCommentToReview(productReviewId, this.commentForm.value['comment']!).subscribe((comment) => {
           this.commentForm.reset();
-          
+
           // Find the review to which the comment was added and add the comment to the review's comments array, so that the comment is displayed in the UI
           this.productSubject.value.productReviews.forEach((productReview: any) => {
             if (productReview.id == productReviewId) {
@@ -209,6 +209,12 @@ export class ProductComponent {
   toggleReviewForm(): void {
     if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
     this.isReviewFormVisible = !this.isReviewFormVisible;
+  }
+
+  toggleCommentForm(productReviewId: string): void {
+    if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
+    this.commentForm.reset();
+    document.getElementById(productReviewId)?.classList.toggle("hidden");
   }
 
   onLikeReview(reviewId: number): void {
