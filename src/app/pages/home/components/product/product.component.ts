@@ -211,5 +211,9 @@ export class ProductComponent {
     );
   }
 
+  hasUserLikedReview(review: any) {
+    return review.likes.find((like: any) => like.user.userId == this.authService.getUserUserId()) != undefined;
+  }
+
 }
 
