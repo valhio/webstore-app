@@ -6,7 +6,7 @@ import { StoreService } from './store.service';
 import { ApiResponse } from '../interface/api-response';
 import { User } from '../models/user';
 
-fdescribe('StoreService', () => {
+describe('StoreService', () => {
   let service: StoreService;
   let httpMock: HttpTestingController;
 
