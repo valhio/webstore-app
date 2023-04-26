@@ -137,4 +137,9 @@ export class StoreService {
   unlikeReview(reviewId: number): Observable<any> {
     return this.http.delete<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/remove`);
   }
+
+  hasUserLikedReview(reviewId: number) {
+    return this.http.get<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/has-liked`, {});
+  }
+
 }
