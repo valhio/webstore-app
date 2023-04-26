@@ -46,4 +46,57 @@ fdescribe('ProductComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onLikeReview()', () => {
+    it('should like a review and update its likes', () => {
+      const reviewId = 1;
+      const userLiked = false;
+      const reviewLikes = [1];
+      const productReview = { id: reviewId, likes: [] as number[] };
+      const expectedProductReview = { id: reviewId, likes: reviewLikes };
+
+      spyOn(authService, 'getUserUserId').and.returnValue('123');
+      spyOn(storeService, 'hasUserLikedReview').and.returnValue(of(userLiked));
+      spyOn(storeService, 'likeReview').and.returnValue(of({}));
+      spyOn(storeService, 'getReviewLikes').and.returnValue(of(reviewLikes));
+
+      component.productSubject.next({ productReviews: [productReview] });
+      component.onLikeReview(reviewId);
+
+      expect(storeService.hasUserLikedReview).toHaveBeenCalledWith(reviewId);
+      expect(storeService.likeReview).toHaveBeenCalledWith(reviewId);
+      expect(storeService.getReviewLikes).toHaveBeenCalledWith(reviewId);
+      expect(component.subscriptions.length).toBe(1);
+      component.subscriptions[0].unsubscribe();
+      expect(component.subscriptions[0].closed).toBeTrue();
+      expect(productReview).toEqual(expectedProductReview);
+      expect(component.productSubject.value.productReviews[0]).toEqual(expectedProductReview);
+      expect(component.productSubject.value.productReviews[0].likes).toEqual(expectedProductReview.likes);
+    });
+
+    // it('should unlike a review and update its likes', () => {
+    //   const reviewId = 1;
+    //   const userLiked = true;
+    //   const reviewLikes = [1, 2, 3];
+    //   const productReview = { id: reviewId, likes: [] };
+    //   const expectedProductReview = { id: reviewId, likes: reviewLikes };
+
+    //   authService.getUserUserId.and.returnValue(123);
+    //   storeService.hasUserLikedReview.and.returnValue(of(userLiked));
+    //   storeService.unlikeReview.and.returnValue(of({}));
+    //   storeService.getReviewLikes.and.returnValue(of(reviewLikes));
+
+    //   component.onLikeReview(reviewId);
+
+    //   expect(storeService.hasUserLikedReview).toHaveBeenCalledWith(reviewId);
+    //   expect(storeService.unlikeReview).toHaveBeenCalledWith(reviewId);
+    //   expect(storeService.getReviewLikes).toHaveBeenCalledWith(reviewId);
+    //   expect(productReview.likes).toEqual([]);
+    //   expect(component.subscriptions.length).toBe(1);
+    //   expect(component.subscriptions[0].closed).toBeFalse();
+    //   component.subscriptions[0].unsubscribe();
+    //   expect(component.subscriptions[0].closed).toBeTrue();
+    //   expect(expectedProductReview.likes).toEqual(reviewLikes);
+    // });
+  });
 });
