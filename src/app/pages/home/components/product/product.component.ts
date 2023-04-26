@@ -211,10 +211,10 @@ export class ProductComponent {
     this.isReviewFormVisible = !this.isReviewFormVisible;
   }
 
-  toggleCommentForm(productReviewId: string): void {
+  toggleCommentForm(productReview: any): void {
     if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
     this.commentForm.reset();
-    document.getElementById(productReviewId)?.classList.toggle("hidden");
+    productReview.isCommentFormVisible = !productReview.isCommentFormVisible;
   }
 
   onLikeReview(reviewId: number): void {
