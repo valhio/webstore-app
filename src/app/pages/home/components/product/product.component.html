@@ -302,42 +302,42 @@
           <div class="-my-12 divide-y divide-gray-200">
             <ng-container *ngIf="product.productReviews as reviews">
               <ng-container *ngIf="reviews.length>0; else noReviews">
-                <div *ngFor="let item of reviews" class="pt-12 pb-6">
+                <div *ngFor="let review of reviews" class="pt-12 pb-6">
                   <div>
                     <div class="flex items-center">
                       <div>
-                        <h4 class="font-bold text-gray-900">{{item.user.firstName +' '+ item.user.lastName}}</h4>
+                        <h4 class="font-bold text-gray-900">{{review.user.firstName +' '+ review.user.lastName}}</h4>
                         <div class="mt-1 flex items-center">
                           <!--Heroicon name: solid/star Active: "text-yellow-400", Default: "text-gray-300"-->
-                          <svg *ngFor="let item of [].constructor(item.rating); let i = index" aria-hidden="true"
+                          <svg *ngFor="let item of [].constructor(review.rating); let i = index" aria-hidden="true"
                             class="text-yellow-400 h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                               d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
-                          <svg *ngFor="let item of [].constructor(5-item.rating); let i = index" aria-hidden="true"
+                          <svg *ngFor="let item of [].constructor(5-review.rating); let i = index" aria-hidden="true"
                             class="text-gray-300 h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
                               d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                           </svg>
                         </div>
-                        <p class="sr-only">{{item.rating}} out of 5 stars</p>
+                        <p class="sr-only">{{review.rating}} out of 5 stars</p>
                         <div class="mt-2 text-xs font-light italic text-gray-600">
                           <p>
-                            Reviewed on {{item.reviewDate | date: 'mediumDate'}}
+                            Reviewed on {{review.reviewDate | date: 'mediumDate'}}
                           </p>
                         </div>
                       </div>
                     </div>
                     <div class="mt-4 space-y-2 text-sm font-light italic text-gray-600">
                       <p>
-                        {{item.title}}
+                        {{review.title}}
                       </p>
                     </div>
                     <div class="mt-2 space-y-6 text-base text-gray-600">
                       <p>
-                        {{item.reviewText}}
+                        {{review.reviewText}}
                       </p>
                     </div>
                   </div>
@@ -346,11 +346,11 @@
                   <div class="mt-2 sm:flex sm:justify-end">
                     <div
                       class="flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
-                      <button (click)="onLikeReview(item.id)"
+                      <button (click)="onLikeReview(review.id)"
                         class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-500"
                         type="button">
                         <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1 text-[#626890]"
-                          [style.fill]="hasUserLikedReview(item) ? '#9ac8f9' : 'white' " focusable="false"
+                          [style.fill]="hasUserLikedReview(review) ? '#9ac8f9' : 'white' " focusable="false"
                           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -361,7 +361,7 @@
                             </path>
                           </g>
                         </svg>
-                        {{item.likes.length}}
+                        {{review.likes.length}}
                       </button>
                       <div class="flex-1 pl-4 flex justify-center">
                         <button
@@ -373,10 +373,44 @@
                     </div>
                   </div>
 
+                  <!-- Comment Section -->
+                  <ng-container *ngIf="true">
+                    <div class="md:flex justify-center my-5 mx-auto">
+                      <div class="mt-5 md:mt-0 w-full">
+                        <form (ngSubmit)="submitComment(review.id)" [formGroup]="commentForm">
+                          <div class="shadow sm:rounded-md sm:overflow-hidden">
+                            <div class="px-4 py-5 bg-white space-y-6 sm:p-4">
+                              <div>
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="comment">
+                                  Your Comment
+                                </label>
+                                <textarea
+                                  class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  formControlName="comment" id="comment" placeholder="Write your thoughts here..."
+                                  rows="4"></textarea>
+                              </div>
+                            </div>
+                            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 space-x-2">
+                              <button (click)="toggleReviewForm()"
+                                class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-900 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200">
+                                Cancel
+                              </button>
+                              <button
+                                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                type="submit">
+                                Comment
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </ng-container>
+
                   <!-- Review Comments Section -->
-                  <ng-container *ngIf="item.comments.length >0">
+                  <ng-container *ngIf="review.comments.length >0">
                     <section class="mt-4 ml-10 divide-y border-t border-b">
-                      <div *ngFor="let comment of item.comments" class="mb-4 pl-6">
+                      <div *ngFor="let comment of review.comments" class="mb-4 pl-6">
                         <div class="flex items-center pt-4 space-x-2">
                           <h4 class="font-bold text-gray-900">{{comment.user.firstName +' '+ comment.user.lastName}}
                           </h4>
@@ -394,7 +428,7 @@
                       </div>
                     </section>
                   </ng-container>
-                  
+
                 </div>
               </ng-container>
               <ng-template #noReviews>
