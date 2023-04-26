@@ -271,4 +271,27 @@ fdescribe('StoreService', () => {
     });
   })
 
+  it('should get product wishlist status', () => {
+    const productId = '123';
+    const userId = '456';
+ 
+    service.getProductWishlistStatus(productId, userId).subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.productId).toBe(productId);
+      expect(response.userId).toBe(userId);
+    });
+
+    const req = httpMock.expectOne(`${STORE_BASE_URL}/wishlist/status/${productId}/${userId}`);
+    expect(req.request.method).toBe('GET');
+
+    req.flush({
+      status: 200,
+      productId: productId,
+      userId: userId
+    });
+  });
+
+  
+
 });
