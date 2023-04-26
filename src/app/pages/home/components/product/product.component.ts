@@ -119,6 +119,23 @@ export class ProductComponent {
     }
   }
 
+  submitComment(productReviewId: string): void {
+    if (this.commentForm.valid) {
+      this.subscriptions.push(
+        this.storeService.addCommentToReview(productReviewId, this.commentForm.value['comment']!).subscribe((comment) => {
+          this.commentForm.reset();
+          
+          // Find the review to which the comment was added and add the comment to the review's comments array, so that the comment is displayed in the UI
+          this.productSubject.value.productReviews.forEach((productReview: any) => {
+            if (productReview.id == productReviewId) {
+              productReview.comments.push(comment);
+            }
+          })
+        })
+      )
+    }
+  }
+
   selectRatingStars(rating: number): void {
     let ratingStars = document.getElementById("rating-stars");
     let childCount = ratingStars?.childNodes?.length;
