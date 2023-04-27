@@ -46,7 +46,10 @@
             <p class="text-3xl text-gray-900">{{product.price | currency:' '}} лв.</p>
           </div>
 
-          <app-product-rating [productReviews]="product.productReviews || []"></app-product-rating>
+          <div class="flex mt-3">
+            <app-product-rating [productReviews]="product.productReviews || []" [starsColor]="'text-indigo-500'" class="my-auto"></app-product-rating>
+            <p class="text-base text-gray-600 px-2">({{product.productReviews.length}})</p>
+          </div>
 
           <div class="mt-6">
             <h3 class="sr-only">Description</h3>
