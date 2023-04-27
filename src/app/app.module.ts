@@ -52,6 +52,10 @@ import {InvoiceComponent} from './pages/home/components/invoice/invoice.componen
 import {ProductComponent} from './pages/home/components/product/product.component';
 import {AccountComponent} from './pages/account/account.component';
 import {WishlistComponent} from './pages/wishlist/wishlist.component';
+import { ProductReviewComponent } from './pages/home/components/product/product-review/product-review.component';
+import { LeaveReviewComponent } from './pages/home/components/product/product-review/leave-review/leave-review.component';
+import { ListReviewsComponent } from './pages/home/components/product/product-review/list-reviews/list-reviews.component';
+import { ProductRatingComponent } from './pages/home/components/product/product-rating/product-rating.component';
 
 
 @NgModule({
@@ -79,7 +83,11 @@ import {WishlistComponent} from './pages/wishlist/wishlist.component';
     InvoiceComponent,
     ProductComponent,
     AccountComponent,
-    WishlistComponent
+    WishlistComponent,
+    ProductReviewComponent,
+    LeaveReviewComponent,
+    ListReviewsComponent,
+    ProductRatingComponent
   ],
   imports: [
     BrowserModule,
