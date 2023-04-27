@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 
-fdescribe('OrdersComponent', () => {
+describe('OrdersComponent', () => {
   let component: OrdersComponent;
   let fixture: ComponentFixture<OrdersComponent>;
   let authService: AuthenticationService;

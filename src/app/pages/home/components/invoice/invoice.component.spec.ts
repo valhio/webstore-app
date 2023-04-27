@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { log } from 'console';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-fdescribe('InvoiceComponent', () => {
+describe('InvoiceComponent', () => {
   let component: InvoiceComponent;
   let fixture: ComponentFixture<InvoiceComponent>;
   let activatedRoute: ActivatedRoute;
