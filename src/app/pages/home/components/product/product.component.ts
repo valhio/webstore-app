@@ -71,7 +71,11 @@ export class ProductComponent {
     this.isProductWishlisted$ = this.storeService.removeFromWishlist(product.id, this.authService.getUserUserId()).pipe(
       shareReplay(1)
     )
-  }   
+  }
+
+  onProductReviewsCollectionChanged(productReviews: any[]): void {
+    this.productSubject.value.productReviews = productReviews;
+  }    
 
 }
 
