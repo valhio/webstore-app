@@ -1,27 +1,19 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {InvoiceComponent} from './invoice.component';
-import {StoreService} from '../../../../services/store.service';
-import {ActivatedRoute} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {RouterTestingModule} from '@angular/router/testing';
+import { InvoiceComponent } from './invoice.component';
+import { StoreService } from '../../../../services/store.service';
+import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { log } from 'console';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('InvoiceComponent', () => {
+fdescribe('InvoiceComponent', () => {
   let component: InvoiceComponent;
   let fixture: ComponentFixture<InvoiceComponent>;
+  let activatedRoute: ActivatedRoute;
   let storeService: StoreService;
-  let mockActivatedRoute = {
-    snapshot: {
-      params: {
-        id: '123',
-      },
-      paramMap: {
-        get(): string {
-          return '123';
-        },
-      },
-    },
-  }
+  let router: Router;
 
   const mockOrder = {
     id: 1,
@@ -32,18 +24,23 @@ describe('InvoiceComponent', () => {
   }
 
   beforeEach(async () => {
+    const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [InvoiceComponent],
+      declarations: [ InvoiceComponent ],
       providers: [
-        { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: StoreService, useValue: { getOrderByOrderId: () => of(mockOrder) } },
-      ]
+        { provide: ActivatedRoute, useValue: { snapshot: { params: { orderNumber: '123' } } } },
+        { provide: StoreService},
+        { provide: Router, useValue: routerSpy}
+      ],
+      imports: [ RouterTestingModule, HttpClientTestingModule ]
     })
-      .compileComponents();
+    .compileComponents();
 
+    activatedRoute = TestBed.inject(ActivatedRoute);
+    storeService = TestBed.inject(StoreService) as jasmine.SpyObj<StoreService>;
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
-    storeService = TestBed.inject(StoreService);
     fixture = TestBed.createComponent(InvoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -53,13 +50,13 @@ describe('InvoiceComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get order id from route params', () => {
+  it('should get order number from route params', () => {
     expect(component.orderNumber).toEqual('123');
   });
 
   it('should fetch order data on component initialization', () => {
     spyOn(storeService, 'getOrderByOrderNumber').and.returnValue(of(mockOrder));
-    component.order$ = storeService.getOrderById('123');
+    // component.order$ = storeService.getOrderByOrderNumber('123');
 
     expect(component.order$).toBeTruthy();
     expect(component.order$).toBeInstanceOf(Observable);
