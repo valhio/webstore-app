@@ -53,6 +53,7 @@ The E-commerce frontend includes the following features:
 - User registration and login using JWT tokens
 - Product search and filtering
 - Product details
+- Product reviews & rating features
 - Shopping cart management
 - Account data management
 - Add to wishlist feature
