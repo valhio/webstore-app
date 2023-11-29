@@ -1,0 +1,10 @@
+<section aria-labelledby="reviews-heading" class="bg-white">
+    <div class="max-w-2xl mx-auto py-24 px-4 sm:px-6 lg:max-w-7xl lg:py-32 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-12">
+
+        <app-leave-review [productId]="productId" [productReviews]="productReviews"
+            (newProductReview)="onNewProductReviewSubmitted($event)" class="lg:col-span-5"></app-leave-review>
+
+        <app-list-reviews [productReviews]="productReviews"
+            class="mt-16 lg:mt-0 lg:col-start-6 lg:col-span-7"></app-list-reviews>
+    </div>
+</section>

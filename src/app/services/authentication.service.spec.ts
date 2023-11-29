@@ -10,7 +10,7 @@ import { HttpResponse } from '@angular/common/http';
 import { RegisterUser } from '../models/registerUser';
 import { Router } from '@angular/router';
 
-fdescribe('AuthenticationService', () => {
+describe('AuthenticationService', () => {
   let service: AuthenticationService;
   let httpMock: HttpTestingController;
   let router: Router;

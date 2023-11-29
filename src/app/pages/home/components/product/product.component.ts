@@ -1,11 +1,11 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Product} from 'src/app/models/product.model';
-import {StoreService} from 'src/app/services/store.service';
-import {CartService} from '../../../../services/cart.service';
-import {AuthenticationService} from 'src/app/services/authentication.service';
-import {BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, tap} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from 'src/app/models/product.model';
+import { StoreService } from 'src/app/services/store.service';
+import { CartService } from '../../../../services/cart.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { BehaviorSubject, catchError, Observable, of, shareReplay, Subscription, switchMap, tap, map } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -34,12 +34,6 @@ export class ProductComponent {
 
   productSubject = new BehaviorSubject<any>({} as any);
   product$: Observable<any> = this.productSubject.asObservable();
-
-  reviewForm = new FormGroup({
-    rating: new FormControl(0, Validators.required),
-    title: new FormControl('', Validators.required),
-    review: new FormControl('', Validators.required),
-  })
 
   constructor(private route: ActivatedRoute, private router: Router, private storeService: StoreService, private cartService: CartService, private authService: AuthenticationService) {
     this.product$ = this.storeService.getProductByProductId(this.productId).pipe(
@@ -79,115 +73,9 @@ export class ProductComponent {
     )
   }
 
-  onStarsHover(stars: number, $event: any): void {
-    for (let index = 0; index < stars; index++) {
-      $event.target.parentElement.childNodes[index].classList.add("star-hover");
-    }
-  }
+  onProductReviewsCollectionChanged(productReviews: any[]): void {
+    this.productSubject.value.productReviews = productReviews;
+  }    
 
-  onStarsLeave(stars: number, $event: any): void {
-    for (let index = 0; index < stars; index++) {
-      $event.target.parentElement.childNodes[index].classList.remove("star-hover");
-    }
-  }
-
-  onRatingSelect(rating: number): void {
-    this.reviewForm.patchValue({
-      rating: rating
-    })
-    this.selectRatingStars(rating)
-  }
-
-  submitReview(): void {
-    if (this.reviewForm.get('rating')?.value == 0) this.reviewForm.get('rating')?.setErrors({required: true}); // If the user has not selected a rating (rating equals 0), set the rating form control to invalid
-
-    if (this.reviewForm.valid) {
-      this.subscriptions.push(
-        this.storeService.addProductReview(this.productId, this.authService.getUserUserId(), this.reviewForm.value['rating']!, this.reviewForm.value['title']!, this.reviewForm.value['review']!)
-          .pipe(
-            tap((productReview) => {
-              this.reviewForm.reset();
-              this.selectRatingStars(0)
-              this.productSubject.value.productReviews = [productReview, ...this.productSubject.value.productReviews];
-            })
-          ).subscribe()
-      )
-    }
-  }
-
-  selectRatingStars(rating: number): void {
-    let ratingStars = document.getElementById("rating-stars");
-    let childCount = ratingStars?.childNodes?.length;
-
-    for (let i = 0; i < childCount!; i++) {
-      if (i < rating) {
-        ratingStars?.children[i]?.classList.add("star-selected");
-      } else {
-        ratingStars?.children[i]?.classList.remove("star-selected");
-      }
-    }
-  }
-
-  getPercentageOfNStarReviews(n: number): number {
-    if (this.productSubject.value.productReviews.length == 0) return 0; // If there are no reviews, return 0 to avoid NaN because of division by 0
-    let result = 0;
-    switch (n) {
-      case 5:
-        result = (this.getAllFiveStarReviews().length / this.productSubject.value.productReviews.length) * 100;
-        break;
-      case 4:
-        result = (this.getAllFourStarReviews().length / this.productSubject.value.productReviews.length) * 100;
-        break;
-      case 3:
-        result = (this.getAllThreeStarReviews().length / this.productSubject.value.productReviews.length) * 100;
-        break;
-      case 2:
-        result = (this.getAllTwoStarReviews().length / this.productSubject.value.productReviews.length) * 100;
-        break;
-      case 1:
-        result = (this.getAllOneStarReviews().length / this.productSubject.value.productReviews.length) * 100;
-        break;
-      default:
-        break;
-    }
-    return Math.round(result * 100) / 100; // Rounds the result to 2 decimal places (e.g. 33.33333333333333 -> 33.33
-  }
-
-  getAllFiveStarReviews(): any[] {
-    return this.productSubject.value.productReviews.filter((productReview: any) => productReview.rating == 5);
-  }
-
-  getAllFourStarReviews(): any[] {
-    return this.productSubject.value.productReviews.filter((productReview: any) => productReview.rating == 4);
-  }
-
-  getAllThreeStarReviews(): any[] {
-    return this.productSubject.value.productReviews.filter((productReview: any) => productReview.rating == 3);
-  }
-
-  getAllTwoStarReviews(): any[] {
-    return this.productSubject.value.productReviews.filter((productReview: any) => productReview.rating == 2);
-  }
-
-  getAllOneStarReviews(): any[] {
-    return this.productSubject.value.productReviews.filter((productReview: any) => productReview.rating == 1);
-  }
-
-  getAverageRating(): number {
-    let totalRating = 0;
-
-    if (this.productSubject.value.productReviews.length == 0) return 0; // Returns 0 if there are no reviews (to avoid division by 0
-
-    this.productSubject.value.productReviews.forEach((productReview: any) => {
-      totalRating += productReview.rating;
-    })
-    const res = totalRating / this.productSubject.value.productReviews.length;
-    return Math.round(res) || 0; // Rounds the result to integer (e.g. 3.33333333333333 -> 3)
-  }
-
-  toggleReviewForm(status: boolean): void {
-    if (!this.authService.isAuthenticated()) this.router.navigate(['/login']);
-    this.isReviewFormVisible = status;
-  }
 }
 

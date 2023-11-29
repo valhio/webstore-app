@@ -48,17 +48,37 @@ To use the E-commerce frontend, open the URL `http://localhost:4200` in your bro
 ## Features
 
 The E-commerce frontend includes the following features:
+  ### Security
+  - **User Authentication and Authorization** - Ensures secure access to your website by verifying user identities and assigning specific roles and authorities, controlling what actions and data different users are permitted to access.
+  - **User Registration and Login with JWT Tokens** - Facilitates a secure and streamlined user onboarding process, allowing users to register and log in using JSON Web Tokens (JWT) for authentication, enhancing the overall security of user credentials.
+  - **Account Lockout** - This security measure is implemented to protect user accounts from unauthorized access attempts, such as brute-force attacks where an attacker systematically tries different combinations of usernames and passwords to gain access to an account. When a user exceeds a certain    number of login attempts, the account is temporarily locked or disabled, preventing further login attempts for a specific period. The lockout period gives the legitimate account owner time to notice and respond to the suspicious activity, such as resetting their password or contacting support.
 
-- User authentication and authorization with access levels in the form of Roles and Authorities
-- User registration and login using JWT tokens
-- Product search and filtering
-- Product details
-- Shopping cart management
-- Account data management
-- Add to wishlist feature
-- Checkout process
-- Payment system using Stripe
-- Orders management (currently only accessible by authenticated users with admin privileges)
+  ### Responsive Design
+  - **Optimized for All Devices** - Ensures a seamless and enjoyable user experience across various devices by implementing responsive design principles. The website dynamically adapts to different screen sizes, including desktops, tablets, and mobiles. This feature guarantees that users can effortlessly navigate and interact with the website, regardless of the device they choose, fostering accessibility and user satisfaction. Whether customers are shopping from a desktop computer or a mobile device, the website's content and functionality remain visually appealing and fully functional.
+
+  ### Product Management
+  - **Product Search and Filtering** - Enables users to quickly find desired products through a robust search functionality, coupled with filtering options, enhancing the user experience and helping customers locate specific items efficiently.
+  - **Product Details** - Provides comprehensive information about each product, aiding customers in making informed purchase decisions by offering details such as specifications, features, and pricing.
+  - **Product Reviews & Rating Features** - Encourage user engagement and trust by allowing customers to leave reviews and ratings for products, providing valuable insights to other potential buyers, and creating a sense of community around your products.
+
+  ### Shopping and Cart Management
+  - **Shopping Cart Management** - Allows users to add and manage selected items in their shopping cart, providing a seamless and user-friendly experience for customers to review and modify their chosen products before proceeding to checkout.
+  - **Add to Wishlist Feature** - Enhances the user experience by enabling customers to create wishlists, allowing them to save and track desired products for future reference or potential purchase.
+  - **Checkout Process** - Guides users through the final steps of the purchasing journey, collecting necessary information, and facilitating a smooth transition from product selection to payment completion.
+
+  ### Payment and Transactions:
+  - **Online Payment System Using Stripe** - Integrates a secure and widely used payment gateway, Stripe, to facilitate online transactions, ensuring a seamless and trustworthy payment process for customers.
+  - **Payment on Delivery (POD) Transaction** - Offers customers the flexibility to choose a "Payment on Delivery" method, allowing them to pay for their purchases with cash or an accepted payment method upon receiving the ordered items. This feature enhances customer trust and provides an     additional layer of convenience. The "Payment on Delivery" option is seamlessly integrated into the checkout process, giving customers a choice in how they settle their transactions.
+
+  ### User Account Management
+  - **User Account Data Management** - Empowers users to manage their account information, including personal details and preferences, providing a user-friendly interface for updating and customizing their profiles.
+
+  ### Admin Product Management
+  - **Product Creation and Administration** - Streamlines the process for administrators/managers to add new products to the webstore, providing a dedicated interface with fields for product details, images, pricing, and inventory management. This feature empowers administrators to efficiently update and modify product information, ensuring that the catalog is up-to-date and accurately reflects the available inventory. Admin users can also oversee the addition of new products, making it a pivotal tool for maintaining a dynamic and responsive online storefront.
+
+  ### Admin Order Management
+- **Efficient Order Oversight and Status Control** - Empowers administrators/managers with comprehensive tools to manage orders effectively. This feature allows them to review and modify order details, check product availability, and take actions based on the stock status. Admins can quickly identify products that are out of stock and cancel them if necessary. Additionally, they have the authority to set and update order statuses, ensuring accurate tracking and communication with customers. With predefined order statuses such as "ORDER PLACED", "PENDING", "OUT FOR DELIVERY", "DELIVERED", "CANCELED", "REFUNDED", and "RETURNED", this feature provides a centralized hub for overseeing the entire order lifecycle, optimizing efficiency and customer satisfaction.
+
 
 ## Technologies
 
@@ -68,9 +88,9 @@ The E-commerce frontend was built using the following technologies:
 - Typescript
 - Tailwind
 - SCSS
-- Firebase Hosting
-- Firebase Functions
-- Stripe
+- Google Cloud Firebase Hosting
+- Google Cloud Firebase Functions
+- Stripe Online Payment
 
 ## Contributing
 
