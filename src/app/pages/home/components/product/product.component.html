@@ -1,4 +1,12 @@
 <ng-container *ngIf="product$ | async as product">
+  <pre>
+    {{
+
+    product | json
+
+    
+    }}
+  </pre>
   <div class="bg-white">
     <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
       <div class="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
@@ -46,8 +54,9 @@
             <p class="text-3xl text-gray-900">{{product.price | currency:' '}} лв.</p>
           </div>
 
-          <div class="flex mt-3">
-            <app-product-rating [productReviews]="product.productReviews || []" [starsColor]="'text-indigo-500'" class="my-auto"></app-product-rating>
+          <div *ngIf="product.productReviews.length" class="flex mt-3">
+            <app-product-rating [productReviews]="product.productReviews || []" [starsColor]="'text-indigo-500'"
+              class="my-auto"></app-product-rating>
             <p class="text-base text-gray-600 px-2">({{product.productReviews.length}})</p>
           </div>
 
@@ -149,7 +158,8 @@
     </div>
   </div>
 
-  <app-product-review [productId]="this.productId" [productReviews]="product.productReviews || []" (newProductReview)="onProductReviewsCollectionChanged($event)"></app-product-review>
+  <app-product-review [productId]="this.productId" [productReviews]="product.productReviews || []"
+    (newProductReview)="onProductReviewsCollectionChanged($event)"></app-product-review>
 
 </ng-container>
 

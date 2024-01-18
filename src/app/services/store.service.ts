@@ -130,23 +130,11 @@ export class StoreService {
     return this.http.post<any>(`${ STORE_BASE_URL }/product-review/add`, { productId, userId, rating, title, reviewText });
   }
 
-  likeReview(reviewId: number): Observable<any> {
-    return this.http.post<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`, {});
-  }
-
-  unlikeReview(reviewId: number): Observable<any> {
-    return this.http.delete<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/remove`);
-  }
-
-  hasUserLikedReview(reviewId: number) {
-    return this.http.get<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/has-liked`, {});
-  }
-
-  getReviewLikes(reviewId: number) {
-    return this.http.get<any>(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/all`, {});
+  likeReview(reviewId: string): Observable<any> {
+    return this.http.post<any>(`${ STORE_BASE_URL }/product-review/${ reviewId }/like`, {});
   }
 
   addCommentToReview(reviewId: string, commentText: string): Observable<any> {
-    return this.http.post<any>(`${ STORE_BASE_URL }/review-comment/review/${reviewId}/add`, { reviewId, comment: commentText });
+    return this.http.post<any>(`${ STORE_BASE_URL }/review-comment/review/${ reviewId }/add`, { reviewId, comment: commentText });
   }
 }

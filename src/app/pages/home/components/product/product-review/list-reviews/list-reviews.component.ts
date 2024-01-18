@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
+import Review from 'src/app/models/review.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -32,29 +33,16 @@ export class ListReviewsComponent {
     productReview.areCommentsVisible = !productReview.areCommentsVisible;
   }
 
-  onLikeReview(reviewId: number): void {
-    const isLiked$ = this.storeService.hasUserLikedReview(reviewId); // Check if the user has liked the review
-    const likeAction$ = isLiked$.pipe(
-      switchMap(hasUserLikedReview => {
-        // If the user has liked the review, unlike it, otherwise like it
-        const likeAction = hasUserLikedReview ? this.storeService.unlikeReview(reviewId) : this.storeService.likeReview(reviewId);
-        return likeAction.pipe( // Return the review likes observable
-          switchMap(() => this.storeService.getReviewLikes(reviewId))
-        );
-      })
-    );
+  onLikeReview(review: Review) {
     this.subscriptions.push(
-      likeAction$.subscribe(reviewLikes => {
-        const productReview = this.productReviews.find((pr: any) => pr.id === reviewId);
-        if (productReview) {
-          productReview.likes = reviewLikes;
-        }
+      this.storeService.likeReview(review.id).subscribe((reviewLikes) => {
+        reviewLikes ? review.likes = reviewLikes : review.likes = [];
       })
-    );
+    )
   }
 
   hasUserLikedReview(review: any) {
-    return review.likes.find((like: any) => like.user.userId == this.authService.getUserUserId()) != undefined;
+    return review.likes && review.likes.find((like: any) => like.userId == this.authService.getUserUserId()) != undefined;
   }
 
   submitComment(productReviewId: string): void {

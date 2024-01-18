@@ -5,7 +5,7 @@
             <ng-container *ngIf="productReviews as reviews">
                 <ng-container *ngIf="reviews.length>0; else noReviews">
                     <div *ngFor="let review of reviews" class="pt-8 pb-6">
-                        
+
                         <!-- Review Section -->
                         <section>
                             <h4 class="font-bold text-gray-900">{{review.user.firstName +' '+
@@ -47,7 +47,7 @@
                         <section class="mt-4 sm:flex sm:justify-between">
                             <div
                                 class="flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:border-none sm:pt-0">
-                                <button (click)="onLikeReview(review.id)"
+                                <button (click)="onLikeReview(review)"
                                     class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center dark:focus:ring-gray-500"
                                     type="button">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1 text-[#626890]"
@@ -64,7 +64,7 @@
                                             </path>
                                         </g>
                                     </svg>
-                                    {{review.likes.length}}
+                                    {{review.likes && review.likes.length > 0 ? review.likes.length : ''}}
                                 </button>
                                 <div class="flex-1 pl-4 flex justify-center">
                                     <button

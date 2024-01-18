@@ -38,6 +38,9 @@ export class ProductComponent {
   constructor(private route: ActivatedRoute, private router: Router, private storeService: StoreService, private cartService: CartService, private authService: AuthenticationService) {
     this.product$ = this.storeService.getProductByProductId(this.productId).pipe(
       tap((product) => {
+        if (product.productReviews[0] === null) {
+          product.productReviews = [];
+        }
         this.productSubject.next(product);
         this.imageOnDisplayUrl = product.imageUrl;
       })
@@ -75,7 +78,7 @@ export class ProductComponent {
 
   onProductReviewsCollectionChanged(productReviews: any[]): void {
     this.productSubject.value.productReviews = productReviews;
-  }    
+  }
 
 }
 
