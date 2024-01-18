@@ -135,6 +135,6 @@ export class StoreService {
   }
 
   addCommentToReview(reviewId: string, commentText: string): Observable<any> {
-    return this.http.post<any>(`${ STORE_BASE_URL }/review-comment/review/${ reviewId }/add`, { reviewId, comment: commentText });
+    return this.http.post<any>(`${ STORE_BASE_URL }/product-review/${ reviewId }/comments`, { reviewId, comment: commentText });
   }
 }

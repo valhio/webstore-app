@@ -48,13 +48,15 @@ export class ListReviewsComponent {
   submitComment(productReviewId: string): void {
     if (this.commentForm.valid) {
       this.subscriptions.push(
-        this.storeService.addCommentToReview(productReviewId, this.commentForm.value['comment']!).subscribe((comment) => {
+        this.storeService.addCommentToReview(productReviewId, this.commentForm.value['comment']!).subscribe((productReviewResponse) => {
           this.commentForm.reset();
 
-          // Find the review to which the comment was added and add the comment to the review's comments array, so that the comment is displayed in the UI
-          this.productReviews.forEach((productReview: any) => {
-            if (productReview.id == productReviewId) {
-              productReview.comments.push(comment);
+          // Replace the product review with the updated product review from the response
+          this.productReviews.forEach((productReview: any, index: number) => {
+            if (productReview.id == productReviewResponse.id) {
+              this.productReviews[index] = productReviewResponse; // Replace the product review with the updated product review from the response
+              this.productReviews[index].isCommentFormVisible = false; // Hide the comment form
+              this.productReviews[index].areCommentsVisible = true; // Show the comments
             }
           })
         })
