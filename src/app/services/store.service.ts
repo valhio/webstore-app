@@ -69,8 +69,8 @@ export class StoreService {
     return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderId }/status/${ status }`, {});
   }
 
-  updateOrderItemStatus(orderId: string, orderItemId: string, status: string): Observable<any> {
-    return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderId }/orderItem/${ orderItemId }/status/${ status }`, {});
+  updateOrderItemStatus(orderNumber: string, orderItemId: string, status: string): Observable<any> {
+    return this.http.put<any>(`${ STORE_BASE_URL }/orders/${ orderNumber }/orderItem/${ orderItemId }/status/${ status }`, {});
   }
 
   getUserByUserId(userId: string) {
