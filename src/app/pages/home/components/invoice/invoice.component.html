@@ -14,27 +14,27 @@
                 <div class="p-9">
                     <div class="flex w-full">
                         <div class="grid grid-cols-3 gap-12">
-                            <div class="text-sm font-light text-slate-500">
-                                <p class="text-sm font-normal text-slate-700">
+                            <div class="text-sm font-normal text-slate-500 whitespace-normal">
+                                <p class="text-sm font-semibold text-slate-700">
                                     Invoice Details:
                                 </p>
-                                <p>Invoice #: {{order.invoice.invoiceNumber}}</p>
-                                <p>Order #: {{order.orderId}}</p>
-                                <p>Client #: {{order.user.userId}}</p>
-                                <p>Order Date: {{order.orderDate | date: 'dd-MMM-yyyy HH:ss'}}</p>
+                                <p><span class="text-slate-700 font-medium">Invoice: </span>{{order.invoice.invoiceNumber}}</p>
+                                <p><span class="text-slate-700 font-medium">Order: </span>{{order.orderNumber}}</p>
+                                <p><span class="text-slate-700 font-medium">Client: </span>{{order.user.id}}</p>
+                                <p><span class="text-slate-700 font-medium">Order Date: </span>{{order.orderDate | date: 'dd-MMM-yyyy HH:ss'}}</p>
                             </div>
-                            <div class="text-sm font-light text-slate-500">
-                                <p class="text-sm font-normal text-slate-700">Billed To</p>
+                            <div class="text-sm font-normal text-slate-500">
+                                <p class="text-sm font-semibold text-slate-700">Billed To</p>
                                 <p>{{order.firstName + ' ' + order.lastName}}</p>
                                 <p>{{order.email}}</p>
                                 <p>{{order.address}}</p>
                                 <p>{{order.phone}}</p>
                             </div>
-                            <div class="text-sm font-light text-slate-500">
-                                <p class="text-sm font-normal text-slate-700">Invoice Number</p>
+                            <div class="text-sm font-normal text-slate-500">
+                                <p class="text-sm font-semibold text-slate-700">Invoice Number</p>
                                 <p>{{order.invoice.invoiceNumber}}</p>
 
-                                <p class="mt-2 text-sm font-normal text-slate-700">
+                                <p class="mt-2 text-sm font-semibold text-slate-700">
                                     Date of Issue
                                 </p>
                                 <p>{{order.orderDate | date: 'dd-MMM-yyyy'}}</p>
