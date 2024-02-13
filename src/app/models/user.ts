@@ -1,5 +1,5 @@
 export class User {
-  userId: string = '';
+  id: string = '';
   username: string = '';
   email: string = '';
   firstName: string = '';
@@ -16,7 +16,7 @@ export class User {
   // isAuthenticated: boolean;
 
    constructor(user: any) {
-    this.userId = user.userId? user.userId : '';
+    this.id = user.id? user.id : '';
     this.username = user.username? user.username : '';
     this.email = user.email? user.email : '';
     this.firstName = user.firstName? user.firstName : '';

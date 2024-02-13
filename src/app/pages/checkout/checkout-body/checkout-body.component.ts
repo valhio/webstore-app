@@ -85,7 +85,7 @@ export class CheckoutBodyComponent implements OnDestroy {
       this.authenticationService.getUser().subscribe({
         next: (user) => {
           this.orderForm.patchValue({
-            userId: user.userId || null,
+            userId: user.id || null,
             totalAmount: this.orderForm.get('productsTotal')?.value + this.deliveryFee,
           });
           this.cartService.placeOrder(this.orderForm.value);

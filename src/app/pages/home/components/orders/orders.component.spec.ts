@@ -13,7 +13,7 @@ describe('OrdersComponent', () => {
   let fixture: ComponentFixture<OrdersComponent>;
   let authService: AuthenticationService;
   let storeService: StoreService;
-  const mockUser = { userId: "1" } as User;
+  const mockUser = { id: "1" } as User;
 
   beforeEach(async () => {
 

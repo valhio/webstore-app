@@ -16,7 +16,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 export class OrdersComponent {
 
   user$ = this.authenticationService.getUser();
-  orders$ = this.user$.pipe(switchMap(user => this.storeService.getOrdersForUser(user.userId)));
+  orders$ = this.user$.pipe(switchMap(user => this.storeService.getOrdersForUser(user.id)));
 
   constructor(private authenticationService: AuthenticationService, private storeService: StoreService, private dialog: MatDialog) { }
 
