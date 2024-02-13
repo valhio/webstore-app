@@ -21,8 +21,8 @@ export class OrderComponent {
   public orderItemStatus: typeof OrderItemStatus = OrderItemStatus;
   public orderStatus: typeof OrderStatus = OrderStatus;
 
-  orderId: string = this.route.snapshot.params['orderNumber'];
-  order$ = this.storeService.getOrderByOrderNumber(this.orderId).pipe(
+  orderNumber: string = this.route.snapshot.params['orderNumber'];
+  order$ = this.storeService.getOrderByOrderNumber(this.orderNumber).pipe(
     catchError(err => {
       // If the order is not found, redirect to home page
       this.router.navigate(['/']);
@@ -125,7 +125,7 @@ export class OrderComponent {
   }
 
   onSaveOrderStatus() {
-    this.order$ = this.storeService.updateOrderStatus(this.orderId, this.selectedOrderStatus!);
+    this.order$ = this.storeService.updateOrderStatus(this.orderNumber, this.selectedOrderStatus!);
   }
 
   onOrderItemStatusChanged($event: any, orderItemId: string) {
@@ -134,7 +134,7 @@ export class OrderComponent {
   }
 
   onSaveOrderItemStatus(orderItemId: string) {
-    this.order$ = this.storeService.updateOrderItemStatus(this.orderId, orderItemId, this.selectedOrderItemStatus!);
+    this.order$ = this.storeService.updateOrderItemStatus(this.orderNumber, orderItemId, this.selectedOrderItemStatus!);
   }
 
   hasAuthority(authority: string) {
