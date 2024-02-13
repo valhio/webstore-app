@@ -6,7 +6,7 @@
                     <p class="text-2xl mx-auto font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                         Order
                     </p>
-                    <a [routerLink]="'/orders/'+order.orderId+'/invoice/'+order.invoice.invoiceNumber"
+                    <a [routerLink]="'/orders/'+order.orderNumber+'/invoice/'+order.invoice.id"
                         class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block">
                         View invoice<span aria-hidden="true"> →</span></a>
                 </div>
