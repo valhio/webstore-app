@@ -21,7 +21,7 @@
                                     class="flex-1 grid grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                                     <div>
                                         <dt class="font-medium text-gray-900">Order number</dt>
-                                        <dd class="mt-1 text-gray-500 overflow-x-auto">{{order.orderId}}</dd>
+                                        <dd class="mt-1 text-gray-500 overflow-x-auto">{{order.id}}</dd>
                                     </div>
                                     <div class="hidden sm:block">
                                         <dt class="font-medium text-gray-900">Date placed</dt>
@@ -33,7 +33,7 @@
                                     </div>
                                     <div>
                                         <dt class="font-medium text-gray-900">Total amount</dt>
-                                        <dd class="mt-1 font-medium text-gray-900">{{order.totalAmount | currency:' '}}
+                                        <dd class="mt-1 text-gray-500">{{order.totalAmount | currency:' '}}
                                             лв.</dd>
                                     </div>
                                 </dl>
