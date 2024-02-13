@@ -21,7 +21,7 @@
                                     class="flex-1 grid grid-cols-2 gap-x-6 text-sm sm:col-span-3 sm:grid-cols-3 lg:col-span-2">
                                     <div>
                                         <dt class="font-medium text-gray-900">Order number</dt>
-                                        <dd class="mt-1 text-gray-500 overflow-x-auto">{{order.id}}</dd>
+                                        <dd class="mt-1 text-gray-500 overflow-x-auto">{{order.orderNumber}}</dd>
                                     </div>
                                     <div class="hidden sm:block">
                                         <dt class="font-medium text-gray-900">Date placed</dt>
@@ -67,9 +67,9 @@
                                         class="absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div class="py-1" role="none">
                                             <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                                            <button [routerLink]="'/orders/'+order.orderId"
-                                                    class="text-gray-700 block px-4 py-2 text-sm">
-                                              View Order
+                                            <button [routerLink]="'/orders/'+order.orderNumber"
+                                                class="text-gray-700 block px-4 py-2 text-sm">
+                                                View Order
                                             </button>
                                             <button (click)="openInvoice(order)"
                                                 class="text-gray-700 block px-4 py-2 text-sm">
@@ -80,15 +80,15 @@
                                 </div>
 
                                 <div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
-                                  <a [routerLink]="'/orders/'+order.orderId"
-                                     class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    <span>View Order</span>
-                                    <span class="sr-only">for order {{order.orderId}}</span>
-                                  </a>
+                                    <a [routerLink]="'/orders/'+ order.orderNumber"
+                                        class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        <span>View Order</span>
+                                        <span class="sr-only">for order {{order.orderNumber}}</span>
+                                    </a>
                                     <a (click)="openInvoice(order)"
                                         class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         <span>View Invoice</span>
-                                        <span class="sr-only">for order {{order.orderId}}</span>
+                                        <span class="sr-only">for order {{order.orderNumber}}</span>
                                     </a>
                                 </div>
                             </div>
@@ -141,31 +141,31 @@
                                         </div>
                                     </div>
 
-                                  <div class="mt-6 sm:flex sm:justify-between">
-                                    <div class="flex items-center">
-                                      <!-- Heroicon name: solid/check-circle -->
-                                      <svg [ngClass]="{'text-green-500':item.status === 'ORDER_PLACED' || item.status === 'PENDING' || item.status === 'IN_STOCK' || item.status === 'OUT_FOR_DELIVERY' || item.status === 'DELIVERED',
+                                    <div class="mt-6 sm:flex sm:justify-between">
+                                        <div class="flex items-center">
+                                            <!-- Heroicon name: solid/check-circle -->
+                                            <svg [ngClass]="{'text-green-500':item.status === 'ORDER_PLACED' || item.status === 'PENDING' || item.status === 'IN_STOCK' || item.status === 'OUT_FOR_DELIVERY' || item.status === 'DELIVERED',
                                             'text-red-400':item.status === 'CANCELED' || item.status === 'REFUNDED' || item.status === 'EXCHANGED' || item.status === 'RETURNED'}"
-                                           aria-hidden="true" class="w-5 h-5" fill="currentColor"
-                                           viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path clip-rule="evenodd"
-                                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                              fill-rule="evenodd"/>
-                                      </svg>
-                                      <p class="ml-2 text-sm font-medium text-gray-500">
-                                        {{getOrderItemStatus(item.status, item.lastModifiedDate)}}
-                                      </p>
-                                    </div>
+                                                aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path clip-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                    fill-rule="evenodd" />
+                                            </svg>
+                                            <p class="ml-2 text-sm font-medium text-gray-500">
+                                                {{getOrderItemStatus(item.status, item.lastModifiedDate)}}
+                                            </p>
+                                        </div>
 
-                                    <div
-                                      class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
-                                      <div class="flex-1 flex justify-center">
-                                        <a href="#"
-                                           class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">View
-                                          product</a>
-                                      </div>
-                                      <div class="flex-1 pl-4 flex justify-center">
-                                        <a href="#"
+                                        <div
+                                            class="mt-6 border-t border-gray-200 pt-4 flex items-center space-x-4 divide-x divide-gray-200 text-sm font-medium sm:mt-0 sm:ml-4 sm:border-none sm:pt-0">
+                                            <div class="flex-1 flex justify-center">
+                                                <a href="#"
+                                                    class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">View
+                                                    product</a>
+                                            </div>
+                                            <div class="flex-1 pl-4 flex justify-center">
+                                                <a href="#"
                                                     class="text-indigo-600 whitespace-nowrap hover:text-indigo-500">Buy
                                                     again</a>
                                             </div>
