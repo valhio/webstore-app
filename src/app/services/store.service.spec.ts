@@ -414,7 +414,7 @@ describe('StoreService', () => {
         expect(response.userId).toBe(userId);
       });
 
-      const req = httpMock.expectOne(`${ STORE_BASE_URL }/review-like/review/${ reviewId }/vote/add`);
+      const req = httpMock.expectOne(`${ STORE_BASE_URL }/product-review/${ reviewId }/like`);
       expect(req.request.method).toBe('POST');
       req.flush({
         status: 200,
