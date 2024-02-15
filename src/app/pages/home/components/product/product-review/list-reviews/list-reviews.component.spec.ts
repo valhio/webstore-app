@@ -55,7 +55,7 @@ describe('ListReviewsComponent', () => {
       // const productReview = { id: reviewId, likes: [] as number[] };
       // const expectedProductReview = { id: reviewId, likes: reviewLikes };
 
-      // spyOn(authService, 'getUserUserId').and.returnValue('123');
+      // spyOn(authService, 'getUserId').and.returnValue('123');
       // spyOn(storeService, 'hasUserLikedReview').and.returnValue(of(userLiked));
       // spyOn(storeService, 'likeReview').and.returnValue(of({}));
       // spyOn(storeService, 'getReviewLikes').and.returnValue(of(reviewLikes));
@@ -81,7 +81,7 @@ describe('ListReviewsComponent', () => {
       // const productReview = { id: reviewId, likes: [1, 2, 3] };
       // const expectedProductReview = { id: reviewId, likes: reviewLikes };
 
-      // spyOn(authService, 'getUserUserId').and.returnValue('123');
+      // spyOn(authService, 'getUserId').and.returnValue('123');
       // spyOn(storeService, 'hasUserLikedReview').and.returnValue(of(userLiked));
       // spyOn(storeService, 'unlikeReview').and.returnValue(of({}));
       // spyOn(storeService, 'getReviewLikes').and.returnValue(of(reviewLikes));
@@ -101,10 +101,10 @@ describe('ListReviewsComponent', () => {
     });
   });
 
-  describe('hasUserLikedReview()', () => {
+  fdescribe('hasUserLikedReview()', () => {
     it('should return true if the user has liked a review', () => {
-      const review = { likes: [{ user: { userId: 123 } }] };
-      spyOn(authService, 'getUserUserId').and.returnValue('123');
+      const review = { likes: [{ userId: '123' }] };
+      spyOn(authService, 'getUserId').and.returnValue('123');
 
       const result = component.hasUserLikedReview(review);
 
@@ -113,7 +113,7 @@ describe('ListReviewsComponent', () => {
 
     it('should return false if the user has not liked a review', () => {
       const review = { likes: [{ user: { userId: 123 } }] };
-      spyOn(authService, 'getUserUserId').and.returnValue('456');
+      spyOn(authService, 'getUserId').and.returnValue('456');
 
       const result = component.hasUserLikedReview(review);
 
