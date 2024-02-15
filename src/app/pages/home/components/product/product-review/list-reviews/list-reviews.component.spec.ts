@@ -101,7 +101,7 @@ describe('ListReviewsComponent', () => {
     });
   });
 
-  fdescribe('hasUserLikedReview()', () => {
+  describe('hasUserLikedReview()', () => {
     it('should return true if the user has liked a review', () => {
       const review = { likes: [{ userId: '123' }] };
       spyOn(authService, 'getUserId').and.returnValue('123');
