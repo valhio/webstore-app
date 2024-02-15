@@ -169,7 +169,7 @@ describe('StoreService', () => {
 
     service.getUserByUserId(user.id).subscribe((res) => {
       expect(res).toEqual(user);
-      expect(res.userId).toBe(user.id);
+      expect(res.id).toBe(user.id);
     });
 
     const req = httpMock.expectOne(STORE_BASE_URL + '/user/1');
