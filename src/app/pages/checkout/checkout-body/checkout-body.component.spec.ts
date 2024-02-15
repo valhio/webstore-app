@@ -112,18 +112,18 @@ describe('CheckoutBodyComponent', () => {
   });
 
   it('should place the order when form is submitted', () => {
-    spyOn(authenticationService, 'getUser').and.returnValue(of({ userId: "1" }) as any);
+    spyOn(authenticationService, 'getUser').and.returnValue(of({ id: "1" }) as any);
     
     let mockOrder = {
       userId: "1",
       firstName: "test",
       lastName: "test",
       email: "test@test",
+      phone: "test",
       address: "test",
       city: "test",
       zipCode: "test",
       country: "test",
-      phone: "test",
       paymentMethod: "test",
       totalAmount: mockCartTotal + component.deliveryFee,
       notes: "test",
