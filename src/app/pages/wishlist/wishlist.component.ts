@@ -11,7 +11,7 @@ import {CartItem} from '../../models/cart.model';
 })
 export class WishlistComponent {
 
-  wishlist$ = this.storeService.getWishlistedProducts(this.authService.getUserUserId());
+  wishlist$ = this.storeService.getWishlistedProducts(this.authService.getUserId());
 
   constructor(private storeService: StoreService, private authService: AuthenticationService, private cartService: CartService) {
   }

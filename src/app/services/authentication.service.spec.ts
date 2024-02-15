@@ -242,13 +242,13 @@ describe('AuthenticationService', () => {
     it('should return the user ID from the decoded token', () => {
       spyOn(jwtHelper, 'decodeToken').and.returnValue(mockUser);
       // const jwtHelper = TestBed.inject(JwtHelperService);
-      const result = service.getUserUserId();
+      const result = service.getUserId();
       expect(result).toEqual(mockUser.id);
     });
 
     it('should return an empty string if the decoded token does not have a user ID', () => {
       spyOn(jwtHelper, 'decodeToken').and.returnValue({});
-      const result = service.getUserUserId();
+      const result = service.getUserId();
       expect(result).toEqual('');
     });
   });

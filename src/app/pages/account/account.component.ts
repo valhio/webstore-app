@@ -12,7 +12,7 @@ import { StoreService } from '../../services/store.service';
 })
 export class AccountComponent {
 
-  user$ = this.storeService.getUserByUserId(this.authService.getUserUserId());
+  user$ = this.storeService.getUserByUserId(this.authService.getUserId());
   
   firstNameEditMode = false;
   lastNameEditMode = false;
@@ -23,11 +23,11 @@ export class AccountComponent {
   constructor(private authService: AuthenticationService, private storeService: StoreService) { }
 
   onUpdateFirstName(firstName: string) {
-    this.user$ = this.storeService.updateUserFirstName(this.authService.getUserUserId(), firstName);
+    this.user$ = this.storeService.updateUserFirstName(this.authService.getUserId(), firstName);
   }
 
   onUpdateLastName(lastName: string) {
-    this.user$ = this.storeService.updateUserLastName(this.authService.getUserUserId(), lastName);
+    this.user$ = this.storeService.updateUserLastName(this.authService.getUserId(), lastName);
   }
 
   onUpdateEmail(email: string) {
@@ -43,10 +43,10 @@ export class AccountComponent {
   }
 
   onUpdatePhoneNumber(phone: string) {
-    this.user$ = this.storeService.updateUserPhoneNumber(this.authService.getUserUserId(), phone);
+    this.user$ = this.storeService.updateUserPhoneNumber(this.authService.getUserId(), phone);
   }
 
   onUpdateAddress(address: string) {
-    this.user$ = this.storeService.updateUserAddress(this.authService.getUserUserId(), address);
+    this.user$ = this.storeService.updateUserAddress(this.authService.getUserId(), address);
   }
 }

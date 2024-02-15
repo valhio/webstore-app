@@ -27,7 +27,7 @@ export class ProductComponent {
   panelOpenState = false; // Used to toggle the expansion panel that displays the product description
   isReviewFormVisible = false; // Used to toggle the review form
 
-  isProductWishlisted$: Observable<any> = this.storeService.getProductWishlistStatus(this.productId, this.authService.getUserUserId()).pipe(
+  isProductWishlisted$: Observable<any> = this.storeService.getProductWishlistStatus(this.productId, this.authService.getUserId()).pipe(
     shareReplay(1), // shareReplay(1) is used to cache the value of the observable so that it is not re-evaluated every time the component is re-rendered
     catchError((err) => of(false)) // catchError is used to handle errors that may occur when the observable is evaluated
   )
@@ -65,13 +65,13 @@ export class ProductComponent {
 
   onAddToWishlist(product: Product): void {
     if (!this.authService.isAuthenticated()) this.router.navigate(['/login'])
-    this.isProductWishlisted$ = this.storeService.addToWishlist(product.id, this.authService.getUserUserId()).pipe(
+    this.isProductWishlisted$ = this.storeService.addToWishlist(product.id, this.authService.getUserId()).pipe(
       shareReplay(1)
     )
   }
 
   onRemoveFromWishlist(product: Product): void {
-    this.isProductWishlisted$ = this.storeService.removeFromWishlist(product.id, this.authService.getUserUserId()).pipe(
+    this.isProductWishlisted$ = this.storeService.removeFromWishlist(product.id, this.authService.getUserId()).pipe(
       shareReplay(1)
     )
   }

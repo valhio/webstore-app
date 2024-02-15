@@ -102,7 +102,7 @@ export class LeaveReviewComponent {
 
     if (this.reviewForm.valid) {
       this.subscriptions.push(
-        this.storeService.addProductReview(this.productId!, this.authService.getUserUserId(), this.reviewForm.value['rating']!, this.reviewForm.value['title']!, this.reviewForm.value['review']!)
+        this.storeService.addProductReview(this.productId!, this.authService.getUserId(), this.reviewForm.value['rating']!, this.reviewForm.value['title']!, this.reviewForm.value['review']!)
           .pipe(
             tap((productReview) => {
               this.reviewForm.reset();

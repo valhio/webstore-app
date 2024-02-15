@@ -42,7 +42,7 @@ export class ListReviewsComponent {
   }
 
   hasUserLikedReview(review: any) {
-    return review.likes && review.likes.find((like: any) => like.userId == this.authService.getUserUserId()) != undefined;
+    return review.likes && review.likes.find((like: any) => like.userId == this.authService.getUserId()) != undefined;
   }
 
   submitComment(productReviewId: string): void {
