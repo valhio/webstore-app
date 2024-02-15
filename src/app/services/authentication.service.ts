@@ -78,7 +78,7 @@ export class AuthenticationService {
   }
 
   getUserUserId(): string {
-    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.userId || '';
+    return this.jwtHelper.decodeToken(this.tokenSubject.value)?.id || '';
   }
 
   getUserEmail(): string {
