@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
         '',
         this.page,
         this.size,
-        this.sort
+        this.storeService.getSortBy() + '-' + this.storeService.getSortDirection()
         // this.currentCategory
       )
       .subscribe((_products: any) => {
@@ -100,7 +100,9 @@ export class HomeComponent implements OnInit {
   onSortChange(sort: string): void {
     this.productsData = [];
     this.displayedProducts = [];
-    this.sort = sort;
+    // this.sort = sort;
+    this.storeService.setSortBy(sort.split('-')[0]);
+    this.storeService.setSortDirection(sort.split('-')[1]);
     this.getProducts();
   }
 

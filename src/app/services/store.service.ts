@@ -137,4 +137,20 @@ export class StoreService {
   addCommentToReview(reviewId: string, commentText: string): Observable<any> {
     return this.http.post<any>(`${ STORE_BASE_URL }/product-review/${ reviewId }/comments`, { reviewId, comment: commentText });
   }
+
+  setSortBy(sort: string) {
+    localStorage.setItem('sortBy', sort);
+  }
+
+  getSortBy() {
+    return localStorage.getItem('sortBy') || 'id';
+  }
+
+  setSortDirection(sortDirection: string) {
+    localStorage.setItem('sortDirection', sortDirection);
+  }
+
+  getSortDirection() {
+    return localStorage.getItem('sortDirection') || 'asc';
+  }
 }

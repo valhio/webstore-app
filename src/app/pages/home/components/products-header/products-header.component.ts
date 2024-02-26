@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { StoreService } from '../../../../services/store.service';
 
 @Component({
   selector: 'app-products-header',
@@ -15,25 +16,28 @@ export class ProductsHeaderComponent implements OnInit {
   displaySort = 'Име (А-Я)';
   itemsShowCount = 12;
 
-  constructor() {
+  constructor(private storeService: StoreService) {
     this.innerWidth = window.innerWidth;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {    
+    this.sort = this.storeService.getSortBy() + '-' + this.storeService.getSortDirection();
+    this.onSortUpdate(this.sort);
+  }
 
-  onSortUpdate(sort: string): void {
+  onSortUpdate(sort: string): void {    
     this.sort = sort;
     switch (sort) {
-      case 'name asc':
+      case 'name-asc':
         this.displaySort = 'Име (А-Я)';
         break;
-      case 'name desc':
+      case 'name-desc':
         this.displaySort = 'Име (Я-А)';
         break;
-      case 'price asc':
+      case 'price-asc':
         this.displaySort = 'Цена (Ниска към Висока)';
         break;
-      case 'price desc':
+      case 'price-desc':
         this.displaySort = 'Цена (Висока към Ниска)';
         break;
     }
