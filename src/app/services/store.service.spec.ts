@@ -31,6 +31,10 @@ describe('StoreService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
+  afterEach(() => {
+    sessionStorage.clear();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
@@ -426,33 +430,24 @@ describe('StoreService', () => {
     });
   })
 
-  // Sort by and sort direction tests
-  describe('setSortBy()', () => {
-    it('should set the sort by value', () => {
-      const sort = 'name';
-      service.setSortBy(sort);
-      expect(service.getSortBy()).toBe(sort);
-    });
-
-    it('shold get the sort by value', () => {
-      const sort = 'name';
-      service.setSortBy(sort);
-      expect(service.getSortBy()).toBe(sort);
-    });
+  it('should set and get sort by value from session storage', () => {
+    const sortValue = 'name';
+    service.setSortBy(sortValue);
+    expect(service.getSortBy()).toEqual(sortValue);
   });
 
-  describe('setSortDirection()', () => {
-    it('should set the sort direction value', () => {
-      const direction = 'asc';
-      service.setSortDirection(direction);
-      expect(service.getSortDirection()).toBe(direction);
-    });
+  it('should set and get sort direction value from session storage', () => {
+    const sortDirection = 'desc';
+    service.setSortDirection(sortDirection);
+    expect(service.getSortDirection()).toEqual(sortDirection);
+  });
 
-    it('shold get the sort direction value', () => {
-      const direction = 'asc';
-      service.setSortDirection(direction);
-      expect(service.getSortDirection()).toBe(direction);
-    });
+  it('should return default sort by value when session storage is empty', () => {
+    expect(service.getSortBy()).toEqual('id');
+  });
+
+  it('should return default sort direction value when session storage is empty', () => {
+    expect(service.getSortDirection()).toEqual('asc');
   });
 
   // describe('unlikeReview()', () => {
