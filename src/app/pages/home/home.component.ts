@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit,} from '@angular/core';
+import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Product} from 'src/app/models/product.model';
 import {CartService} from 'src/app/services/cart.service';

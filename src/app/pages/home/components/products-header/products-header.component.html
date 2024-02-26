@@ -1,17 +1,18 @@
 <mat-card class="mb-4" [ngClass]="{'remove-padding':innerWidth<=415}">
     <div [ngClass]="{'grid justify-center text-center':innerWidth<=415, 'flex justify-between':innerWidth>415}">
         <div>
-            <button mat-button [matMenuTriggerFor]="sortByMenu"> {{innerWidth<=550 && innerWidth>415 ? "":"Сортирай по -"}} {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
+            <button mat-button [matMenuTriggerFor]="sortByMenu"> {{innerWidth<=550 && innerWidth>415 ? "":"Sort by -"}} {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
             <mat-menu #sortByMenu>
-                <button mat-menu-item (click)="onSortUpdate('name-asc')">Име: (А-Я)</button>
-                <button mat-menu-item (click)="onSortUpdate('name-desc')">Име: (Я-А)</button>
-                <button mat-menu-item (click)="onSortUpdate('price-asc')">Цена: (Ниска към Висока)</button>
-                <button mat-menu-item (click)="onSortUpdate('price-desc')">Цена: (Висока към Ниска)</button>
+                <button mat-menu-item (click)="onSortUpdate('id-asc')">Featured</button>
+                <button mat-menu-item (click)="onSortUpdate('name-asc')">Name: Ascending (A-Z)</button>
+                <button mat-menu-item (click)="onSortUpdate('name-desc')">Name: Descending (Z-A)</button>
+                <button mat-menu-item (click)="onSortUpdate('price-asc')">Price: Ascending (Low to High)</button>
+                <button mat-menu-item (click)="onSortUpdate('price-desc')">Price: Descending (High to Low)</button>
             </mat-menu>
         </div>
         <div class="sm:flex sm:justify-center hidden ">
             <div>
-                <button mat-button [matMenuTriggerFor]="menu">Покажи - {{itemsShowCount}} <mat-icon>expand_more</mat-icon> </button>
+                <button mat-button [matMenuTriggerFor]="menu">Show - {{itemsShowCount}} <mat-icon>expand_more</mat-icon> </button>
                 <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="onItemsShowCountUpdate(12)">12</button>
                 <button mat-menu-item (click)="onItemsShowCountUpdate(24)">24</button>
