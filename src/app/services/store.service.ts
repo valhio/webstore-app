@@ -139,18 +139,18 @@ export class StoreService {
   }
 
   setSortBy(sort: string) {
-    localStorage.setItem('sortBy', sort);
+    sessionStorage.setItem('sortBy', sort);
   }
 
   getSortBy() {
-    return localStorage.getItem('sortBy') || 'id';
+    return sessionStorage.getItem('sortBy') || 'id';
   }
 
   setSortDirection(sortDirection: string) {
-    localStorage.setItem('sortDirection', sortDirection);
+    sessionStorage.setItem('sortDirection', sortDirection);
   }
 
   getSortDirection() {
-    return localStorage.getItem('sortDirection') || 'asc';
+    return sessionStorage.getItem('sortDirection') || 'asc';
   }
 }
