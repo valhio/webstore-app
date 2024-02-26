@@ -98,6 +98,8 @@ export class HomeComponent implements OnInit {
   }
 
   onSortChange(sort: string): void {
+    this.productsData = [];
+    this.displayedProducts = [];
     this.sort = sort;
     this.getProducts();
   }
