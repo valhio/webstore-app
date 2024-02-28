@@ -1,7 +1,7 @@
 <mat-card class="mb-4" [ngClass]="{'remove-padding':innerWidth<=415}">
     <div [ngClass]="{'grid justify-center text-center':innerWidth<=415, 'flex justify-between':innerWidth>415}">
         <div>
-            <button mat-button [matMenuTriggerFor]="sortByMenu"> {{innerWidth<=550 && innerWidth>415 ? "":"Sort by -"}} {{displaySort}} <mat-icon>expand_more</mat-icon> </button>
+            <button mat-button [matMenuTriggerFor]="sortByMenu"> {{innerWidth<=550 && innerWidth>415 ? "":"Sort by -"}} {{getSortDisplay()}} <mat-icon>expand_more</mat-icon> </button>
             <mat-menu #sortByMenu>
                 <button mat-menu-item (click)="onSortUpdate('id-asc')">Featured</button>
                 <button mat-menu-item (click)="onSortUpdate('name-asc')">Name: Ascending (A-Z)</button>

@@ -20,30 +20,32 @@ export class ProductsHeaderComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.sort = this.storeService.getSortBy() + '-' + this.storeService.getSortDirection();
-    this.onSortUpdate(this.sort);
   }
 
-  onSortUpdate(sort: string): void {    
-    this.sort = sort;
-    switch (sort) {
-      case 'id-asc':
-        this.displaySort = 'Featured';
+  getSortDisplay(): string {
+    const sortArr = this.sort.split('-');
+    const sortField = sortArr[0];
+    const sortDirection = sortArr[1];
+    let displaySort = '';
+    switch (sortField) {
+      case 'id':
+        displaySort = 'Featured';
         break;
-      case 'name-asc':
-        this.displaySort = 'Name (A-Z)';
+      case 'price':
+        displaySort = 'Price';
         break;
-      case 'name-desc':
-        this.displaySort = 'Name (Z-A)';
-        break;
-      case 'price-asc':
-        this.displaySort = 'Price (Low to High)';
-        break;
-      case 'price-desc':
-        this.displaySort = 'Price (High to Low)';
+      case 'name':
+        displaySort = 'Name';
         break;
     }
+    displaySort += ' ' + (sortDirection === 'asc' ? 'Ascending' : 'Descending');
+    return displaySort;
+  }
+
+  onSortUpdate(sort: string): void {
+    this.sort = sort;
     this.sortChange.emit(sort);
   }
 
